@@ -1,4 +1,4 @@
-# javan-rhino
+# javan-rhino [![Build Status](https://travis-ci.org/canonical-ols/javan-rhino.svg?branch=travis)](https://travis-ci.org/canonical-ols/javan-rhino)
 
 Front-end to Ubuntu Store Payments
 
