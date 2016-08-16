@@ -6,7 +6,7 @@ export default class Html extends Component {
 
   render() {
 
-    const {assets, component} = this.props;
+    const {component} = this.props;
     const content = component ? ReactDOM.renderToString(component) : '';
     const head = Helmet.rewind();
 
@@ -22,7 +22,7 @@ export default class Html extends Component {
           <script src="/static/bundle.js" />
         </body>
       </html>
-    )
+    );
   }
 }
 
