@@ -6,10 +6,10 @@ export default class App extends Component {
     return (
       <div>
         <div>
-          <NavLink to="/" onlyActiveOnIndex={true}>Home</NavLink>
+          <NavLink to="/" onlyActiveOnIndex={ true }>Home</NavLink>
           <NavLink to="/about">About</NavLink>
         </div>
-        {this.props.children}
+        { this.props.children }
       </div>
     );
   }
