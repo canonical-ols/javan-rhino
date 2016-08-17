@@ -51,9 +51,10 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.12.2"
-  },
-  "devDependencies": {
-    "extract-text-webpack-plugin": "^1.0.1"
+    "webpack-hot-middleware": "^2.12.2",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "postcss-import": "^8.1.2",
+    "postcss-loader": "^0.10.0",
+    "postcss-simple-vars": "^3.0.0"
   }
 }
