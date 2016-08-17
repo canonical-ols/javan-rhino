@@ -9,9 +9,10 @@ export default class Html extends Component {
     const { component } = this.props;
     const content = component ? ReactDOM.renderToString(component) : '';
     const head = Helmet.rewind();
+    const attrs = head.htmlAttributes.toComponent();
 
     return (
-      <html>
+      <html {...attrs}>
         <head>
           {head.title.toComponent()}
           {head.meta.toComponent()}
@@ -20,7 +21,6 @@ export default class Html extends Component {
         <body>
           <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
           <script src="/static/bundle.js" />
-          <link rel="stylesheet" href="/static/style.css" />
         </body>
       </html>
     );
