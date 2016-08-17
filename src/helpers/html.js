@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 
@@ -6,7 +6,7 @@ export default class Html extends Component {
 
   render() {
 
-    const {component} = this.props;
+    const { component } = this.props;
     const content = component ? ReactDOM.renderToString(component) : '';
     const head = Helmet.rewind();
 
@@ -18,7 +18,7 @@ export default class Html extends Component {
           {head.link.toComponent()}
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
+          <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
           <script src="/static/bundle.js" />
           <link rel="stylesheet" href="/static/style.css" />
         </body>

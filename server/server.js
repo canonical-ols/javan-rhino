@@ -1,6 +1,6 @@
 import Express from 'express';
 import React from 'react';
-import {renderToString} from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import util from 'util';
 import webpack from 'webpack';

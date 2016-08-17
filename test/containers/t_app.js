@@ -1,6 +1,6 @@
 import React from 'react';
 import expect from 'expect';
-import {createRenderer} from 'react-addons-test-utils';
+import { createRenderer } from 'react-addons-test-utils';
 import App from '../../src/containers/app.js';
 
 describe('App container', () => {

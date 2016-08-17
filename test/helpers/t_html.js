@@ -1,6 +1,6 @@
 import React from 'react';
 import expect from 'expect';
-import {createRenderer} from 'react-addons-test-utils';
+import { createRenderer } from 'react-addons-test-utils';
 import Html from '../../src/helpers/html.js';
 
 describe('html component', () => {

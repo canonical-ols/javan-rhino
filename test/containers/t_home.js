@@ -1,6 +1,6 @@
 import React from 'react';
 import expect from 'expect';
-import {createRenderer} from 'react-addons-test-utils';
+import { createRenderer } from 'react-addons-test-utils';
 import Home from '../../src/containers/home.js';
 
 describe('Home container', () => {
