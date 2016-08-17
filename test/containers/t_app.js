@@ -1,15 +1,15 @@
 import React from 'react';
 import expect from 'expect';
-import { createRenderer } from 'react-addons-test-utils';
+import { shallow } from 'enzyme';
+
 import App from '../../src/containers/app.js';
 
-describe('App container', () => {
+describe('<App /> container', () => {
 
   it('should render a div', () => {
-    const renderer = createRenderer();
-    const el = renderer.render(<App />);
+    const el = shallow(<App />);
 
-    expect(el.type).toEqual('div');
+    expect(el.type()).toEqual('div');
   });
 
 });

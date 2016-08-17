@@ -1,15 +1,16 @@
 import React from 'react';
 import expect from 'expect';
-import { createRenderer } from 'react-addons-test-utils';
+import { shallow } from 'enzyme';
+import { Link } from 'react-router';
+
 import NavLink from '../../src/components/navlink.js';
 
-describe('NavLink', () => {
+describe('<NavLink /> component', () => {
 
   it('should render a react-router Link', () => {
-    const renderer = createRenderer();
-    const el = renderer.render(<NavLink />);
+    const el = shallow(<NavLink />);
 
-    expect(el.type.displayName).toEqual('Link');
+    expect(el.find(Link).length).toEqual(1);
   });
 
 });

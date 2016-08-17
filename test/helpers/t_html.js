@@ -1,14 +1,14 @@
 import React from 'react';
 import expect from 'expect';
-import { createRenderer } from 'react-addons-test-utils';
+import { shallow } from 'enzyme';
+
 import Html from '../../src/helpers/html.js';
 
-describe('html component', () => {
+describe('<Html /> helper', () => {
 
   it('should be an html block', () => {
-    const renderer = createRenderer();
-    const html = renderer.render(<Html />);
+    const html = shallow(<Html />);
 
-    expect(html.type).toEqual('html');
+    expect(html.type()).toEqual('html');
   });
 });
