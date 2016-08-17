@@ -2,16 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const atImport = require('postcss-import');
-const variables = require("postcss-simple-vars");
-
-const cssLoaderConfig = [
-  'css-loader',
-  [
-    'modules',
-    'importLoaders=1',
-    'localIdentName=[name]__[local]___[hash:base64:5]'
-  ].join('&')
-].join('?');
+const variables = require('postcss-simple-vars');
 
 module.exports = {
   entry: [
