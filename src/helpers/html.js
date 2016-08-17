@@ -1,13 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 
 export default class Html extends Component {
 
   render() {
 
-    const { component } = this.props;
-    const content = component ? ReactDOM.renderToString(component) : '';
     const head = Helmet.rewind();
     const attrs = head.htmlAttributes.toComponent();
 
@@ -19,7 +16,9 @@ export default class Html extends Component {
           {head.link.toComponent()}
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
+          <div id="content">
+            { this.props.children }
+          </div>
           <script src="/static/bundle.js" />
         </body>
       </html>
@@ -28,6 +27,6 @@ export default class Html extends Component {
 }
 
 Html.propTypes = {
-  component: PropTypes.node,
+  children: PropTypes.node,
   assets: PropTypes.object
 };
