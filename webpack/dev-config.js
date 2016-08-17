@@ -1,6 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const atImport = require('postcss-import');
+const variables = require("postcss-simple-vars");
+
+const cssLoaderConfig = [
+  'css-loader',
+  [
+    'modules',
+    'importLoaders=1',
+    'localIdentName=[name]__[local]___[hash:base64:5]'
+  ].join('&')
+].join('?');
 
 module.exports = {
   entry: [
@@ -28,10 +39,32 @@ module.exports = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+          [
+            'style-loader',
+            'postcss-loader'
+          ].join('!'),
+          [
+            loader(
+              'css-loader',
+              'modules',
+              'importLoaders=1',
+              'localIdentName=[name]__[local]___[hash:base64:5]'
+            ),
+            'postcss-loader'
+          ].join('!')
         )
       }
     ]
+  },
+  postcss: function () {
+    return [atImport, variables];
   }
 };
+
+function loader(name, ...options) {
+  if (options.length > 0) {
+    return name + '?' + options.join('&');
+  }
+
+  return name;
+}
