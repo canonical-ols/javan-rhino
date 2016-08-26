@@ -8,11 +8,10 @@ import Html from '../src/helpers/Html';
 
 const app = Express();
 
-module.exports = (webpackIsomorphicTools) => {
-  app.use(Express.static('public'));
+export default (webpackIsomorphicTools) => {
+  app.use(Express.static(__dirname + '/../public'));
 
   app.use('/', function (req, res) {
-
     if (process.env.NODE_ENV !== 'production') {
       // Do not cache webpack stats: the script file would change since
       // hot module replacement is enabled in the development env
@@ -32,7 +31,7 @@ module.exports = (webpackIsomorphicTools) => {
 
         res.status(200);
         res.send('<!doctype html>\n' +
-        renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} />));
+          renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} />));
       } else {
         res.status(404).send('Not found');
       }

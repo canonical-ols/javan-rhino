@@ -42,3 +42,6 @@ jspm_packages
 # Webpack assets
 webpack-assets.json
 webpack-stats.json
+
+# Distributable files
+dist
