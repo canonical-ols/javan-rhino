@@ -4,6 +4,10 @@
   padding: 5px;
 }
 
+.link:hover {
+  text-decoration: none;
+}
+
 .active {
   border-bottom: 1px solid $ubuntu-orange;
 }
