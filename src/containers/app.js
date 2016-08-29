@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import NavLink from '../components/navlink';
+import NavLink from '../components/navlink/navlink';
 import Helmet from 'react-helmet';
 
 export default class App extends Component {
