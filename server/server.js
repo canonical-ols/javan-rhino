@@ -9,6 +9,8 @@ import Html from '../src/helpers/Html';
 const app = Express();
 
 module.exports = (webpackIsomorphicTools) => {
+  app.use(Express.static('public'));
+
   app.use('/', function (req, res) {
 
     if (process.env.NODE_ENV !== 'production') {

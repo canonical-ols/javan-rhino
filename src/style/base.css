@@ -55,3 +55,7 @@ a:hover {
 a:focus {
   outline: thin dotted;
 }
+
+body {
+  background-color: $light-grey;
+}

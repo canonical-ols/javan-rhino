@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
 
 import styles from './navlink.css';
 
-export default React.createClass({
+export default class NavLink extends Component {
   render() {
-    return <Link {...this.props} className={ styles.link } activeClassName={ styles.active } />;
+    let { isLast, className, ...other } = this.props;
+
+    return <Link {...other} className={ `${className} ${isLast ? styles.lastLink : styles.link}` } activeClassName={ styles.active } />;
   }
-});
+}
+
+NavLink.propTypes = {
+  isLast: PropTypes.bool,
+  className: PropTypes.string
+};
