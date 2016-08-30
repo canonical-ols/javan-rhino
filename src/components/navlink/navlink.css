@@ -18,8 +18,7 @@ $border-color: #ccc;
   text-decoration: none;
 }
 
-.lastLink {
-  composes: link;
+.link:last-child {
   border-right: 1px solid $border-color;
 }
 

@@ -23,6 +23,10 @@
   display: block;
 }
 
-.login {
+.mainNav {
+  float: left;
+}
+
+.sideNav {
   float: right;
 }
