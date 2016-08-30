@@ -1,12 +1,11 @@
-$height: 50px;
 $link-color: $ubuntu-orange;
-$border-color: #ccc;
+$border-color: #e3e3e3;
 
 .link {
   box-sizing: border-box;
   display: inline-block;
-  height: $height;
-  line-height: $height;
+  height: 50px;
+  line-height: 50px;
   padding: 0 10px;
   color: $link-color;
   font-size: .875em;
@@ -23,5 +22,5 @@ $border-color: #ccc;
 }
 
 .active {
-  border-bottom: 2px solid $ubuntu-orange;
+  border-bottom: 2px solid $link-color;
 }
