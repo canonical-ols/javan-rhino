@@ -13,4 +13,11 @@ describe('<NavLink /> component', () => {
     expect(el.find(Link).length).toEqual(1);
   });
 
+  it('should render an HTML anchor', () => {
+    const el = shallow(<NavLink isAnchor={ true }/>);
+
+    expect(el.find(Link).length).toEqual(0);
+    expect(el.find('a').length).toEqual(1);
+  });
+
 });

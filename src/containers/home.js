@@ -7,7 +7,6 @@ export default class Home extends Component {
     return (
       <div className={ styles.container }>
         <div>1Hello again, World!</div>
-        <div><a href="/login/authenticate">Login with Ubuntu One</a></div>
       </div>
     );
   }
