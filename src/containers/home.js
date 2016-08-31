@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
+import styles from './container.css';
+
 export default class Home extends Component {
   render() {
     return (
-      <div>
+      <div className={ styles.container }>
         <div>1Hello again, World!</div>
         <div><a href="/login/authenticate">Login with Ubuntu One</a></div>
       </div>

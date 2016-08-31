@@ -14,18 +14,15 @@ const sharedVars = require('../src/style/variables');
 module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: [
-    'webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr',
-    'webpack/hot/only-dev-server',
     './src',
   ],
   output: {
-    path: path.join(__dirname, '../public/static'),
+    path: path.join(__dirname, '../dist/public/static'),
     filename: 'bundle.js',
-    publicPath: 'http://localhost:3001/static/'
+    publicPath: 'static/'
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('style.css', { allChunks: true }),
     webpackIsomorphicToolsPlugin
   ],

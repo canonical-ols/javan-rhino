@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
-import NavLink from '../components/navlink';
 import Helmet from 'react-helmet';
+
+import Header from '../components/header';
 
 export default class App extends Component {
   render() {
@@ -15,10 +16,7 @@ export default class App extends Component {
             { 'name': 'description', 'content': 'my.ubuntu.com payments ui' },
           ]}
         />
-        <div>
-          <NavLink to="/" onlyActiveOnIndex={ true }>Home</NavLink>
-          <NavLink to="/about">About</NavLink>
-        </div>
+        <Header />
         { this.props.children }
       </div>
     );

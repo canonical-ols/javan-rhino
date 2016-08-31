@@ -25,6 +25,7 @@ app.use(session({
 }));
 
 function serve(webpackIsomorphicTools) {
+  app.use(Express.static(__dirname + '/../public'));
   app.use('/', login);
   app.use('/', function (req, res) {
 

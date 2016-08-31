@@ -1,0 +1,9 @@
+/* TODO: it's just a placeholder styles for dummy content */
+
+.container {
+  box-sizing: border-box;
+  width: 940px;
+  margin: 20px auto;
+  background: white;
+  padding: 20px;
+}

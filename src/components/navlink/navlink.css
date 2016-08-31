@@ -1,0 +1,26 @@
+$link-color: $ubuntu-orange;
+$border-color: #e3e3e3;
+
+.link {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 10px;
+  color: $link-color;
+  font-size: .875em;
+  text-align: center;
+  border-left: 1px solid $border-color;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.link:last-child {
+  border-right: 1px solid $border-color;
+}
+
+.active {
+  border-bottom: 2px solid $link-color;
+}

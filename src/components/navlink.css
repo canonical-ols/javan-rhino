@@ -1,9 +1,0 @@
-.link {
-  color: $ubuntu-orange;
-  display: inline-block;
-  padding: 5px;
-}
-
-.active {
-  border-bottom: 1px solid $ubuntu-orange;
-}

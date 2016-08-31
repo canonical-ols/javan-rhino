@@ -45,3 +45,6 @@ webpack-stats.json
 
 # MongoDB
 data/
+
+# Distributable files
+dist

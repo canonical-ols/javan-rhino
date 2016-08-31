@@ -1,0 +1,34 @@
+$border-color: #e3e3e3;
+
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid $border-color;
+}
+
+.container {
+  width: 940px;
+  margin: 0 auto;
+}
+
+.container:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.logo {
+  float: left;
+  padding: 13px 15px 13px 0;
+}
+
+.logo img {
+  display: block;
+}
+
+.mainNav {
+  float: left;
+}
+
+.sideNav {
+  float: right;
+}
