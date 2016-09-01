@@ -9,6 +9,20 @@ If you have nvm istalled (https://github.com/creationix/nvm) simple do
 in project root and you'll be switched to the correct version of node
 for this project.
 
+# mongodb
+
+Ubuntu:
+```
+apt install mongodb
+```
+
+[OS X](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/):
+```
+brew install mongodb
+mkdir -p ~/.mongodb/data
+mongod --dbpath ~/.mongodb/data
+```
+
 # Running
 
 Install dependencies:
