@@ -9,6 +9,7 @@ module.exports = {
       'eslint:recommended',
       'plugin:react/recommended'
     ],
+    "parser": "babel-eslint",
     'parserOptions': {
         'ecmaFeatures': {
             'experimentalObjectRestSpread': true,
@@ -23,7 +24,10 @@ module.exports = {
     'rules': {
         'indent': [
             'error',
-            2
+            2,
+            {
+              'SwitchCase': 1
+            }
         ],
         'linebreak-style': [
             'error',

@@ -1,8 +1,14 @@
 import React, { PropTypes, Component } from 'react';
 import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
 
 import Header from '../components/header';
 import Footer from '../components/footer';
+import * as authActions from '../redux/auth';
+
+@connect(
+  state => ({ loggedIn: state.auth.loggedIn }),
+  authActions)
 export default class App extends Component {
   render() {
     // FIXME sstewart 17-Aug-16 move some of this to config
@@ -16,7 +22,7 @@ export default class App extends Component {
             { 'name': 'description', 'content': 'my.ubuntu.com payments ui' },
           ]}
         />
-        <Header />
+        <Header onLoginClick={ this.props.login } loggedIn={ this.props.loggedIn } />
         { this.props.children }
         <Footer />
       </div>
@@ -25,5 +31,7 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  login: PropTypes.func,
+  loggedIn: PropTypes.bool
 };
