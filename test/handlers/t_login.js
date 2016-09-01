@@ -4,10 +4,11 @@ import conf from '../../server/configure.js';
 import { logout, createRelyingParty } from '../../server/handlers/login.js';
 
 describe('relying party', () => {
+  const rp = createRelyingParty();
+  const identifier = conf.get('UBUNTU_SSO_URL');
+
   describe('authenticate method', () => {
     it('should fail with wrong identifier', () => {
-      const rp = createRelyingParty();
-
       rp.authenticate('http://example.com', false, (error) => {
         expect(error).toEqual({
           message:
@@ -18,9 +19,6 @@ describe('relying party', () => {
 
     describe('authUrl query string', () => {
       it('should have the correct realm', () => {
-        const rp = createRelyingParty();
-        const identifier = conf.get('UBUNTU_SSO_URL');
-
         rp.authenticate(identifier, false, (error, authUrl) => {
           const query = qs.parse(authUrl);
           expect(error).toEqual(null);
@@ -29,9 +27,6 @@ describe('relying party', () => {
       });
 
       it('should have the correct profile', () => {
-        const rp = createRelyingParty();
-        const identifier = conf.get('UBUNTU_SSO_URL');
-
         rp.authenticate(identifier, false, (error, authUrl) => {
           const query = qs.parse(authUrl);
           expect(query['openid.sreg.optional']).toEqual('nickname,email,fullname,language');
@@ -39,9 +34,6 @@ describe('relying party', () => {
       });
 
       it('should have the correct return to url', () => {
-        const rp = createRelyingParty();
-        const identifier = conf.get('UBUNTU_SSO_URL');
-
         rp.authenticate(identifier, false, (error, authUrl) => {
           const query = qs.parse(authUrl);
           expect(query['openid.return_to']).toEqual(conf.get('OPENID:VERIFY_URL'));
