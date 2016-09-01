@@ -47,4 +47,6 @@ export default (webpackIsomorphicTools) => {
 
     util.log('🚂  Express server listening on http://%s:%s 🚂', host, port);
   });
+
+  return app;
 };
