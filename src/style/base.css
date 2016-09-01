@@ -56,6 +56,11 @@ a:focus {
   outline: thin dotted;
 }
 
+html {
+  min-height: 100%;
+  position: relative;
+}
+
 body {
   background-color: $light-grey;
 }

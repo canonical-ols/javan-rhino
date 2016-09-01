@@ -1,0 +1,30 @@
+$border-color: #e3e3e3;
+
+.footer {
+  background-color: #fff;
+  border-top: 1px solid $border-color;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+
+  font-size: 12px;
+  padding: 1em 0 1em;
+}
+
+.container {
+  width: 940px;
+  margin: 0 auto;
+}
+
+.container:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.copyright {
+  margin-bottom: 0.3em;
+}

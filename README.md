@@ -9,6 +9,27 @@ If you have nvm istalled (https://github.com/creationix/nvm) simple do
 in project root and you'll be switched to the correct version of node
 for this project.
 
+# Running
+
+Install dependencies:
+
+    $ npm install
+
+and run it:
+
+    $ npm start
+
+    > javan-rhino@1.0.0 start /Users/cprov/Canonical/ols/javan-rhino
+    > NODE_ENV=development concurrently --kill-others "npm run watch-client" "node server/"
+
+    [0]
+    [0] > javan-rhino@1.0.0 watch-client /Users/cprov/Canonical/ols/javan-rhino
+    [0] > node webpack/webpack-dev-server.js
+    [0]
+    [0] 31 Aug 16:56:25 - 🚧  WebPack development server listening on http://127.0.0.1:3001 🚧
+    [1] 31 Aug 16:56:25 - 🚂  Express server listening on http://127.0.0.1:3000 🚂
+    ...
+
 # Why javan-rhino?
 
 Win a prize if you figure it out!
