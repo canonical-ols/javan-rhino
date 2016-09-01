@@ -1,10 +1,5 @@
-import LaunchpadTeams from '../lib/openid/teams';
-import Macaroons from '../lib/openid/macaroons.js';
 import conf from '../configure.js';
 import openid from 'openid';
-
-openid['LaunchpadTeams'] = LaunchpadTeams;
-openid['Macaroons'] = Macaroons;
 
 const createRelyingParty = (/**teams, cid**/) => {
   const extensions = [
@@ -15,25 +10,6 @@ const createRelyingParty = (/**teams, cid**/) => {
       'language' : true
     })
   ];
-
-  /** TODO
-  if (teams) {
-    extensions.push(
-      new openid.LaunchpadTeams({
-        'teams': teams
-      })
-    );
-  }
-
-  // TODO macaroon refresh
-  if (cid) {
-    extensions.push(
-      new openid.Macaroons({
-        'cid': cid
-      })
-    );
-  }
-   **/
 
   return new openid.RelyingParty(
     conf.get('OPENID:VERIFY_URL'),
