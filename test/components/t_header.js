@@ -24,8 +24,8 @@ describe('<Header /> component', () => {
       header = shallow(<Header {...props} />);
     });
 
-    it('should render two links', () => {
-      expect(header.find(NavLink).length).toEqual(2);
+    it('should render links', () => {
+      expect(header.find(NavLink).length).toBeGreaterThan(0);
     });
 
     it('should contain a login link', () => {

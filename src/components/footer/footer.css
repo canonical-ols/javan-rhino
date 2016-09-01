@@ -1,5 +1,15 @@
 $border-color: #e3e3e3;
 
+/* html and body styles needed for footer positioning */
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+body {
+  margin-bottom: 75px;
+}
+
 .footer {
   background-color: #fff;
   border-top: 1px solid $border-color;

@@ -8,6 +8,7 @@ module.exports = {
   'light-aubergine':     '#77216f', // light aubergine (consumer)
   'mid-aubergine':       '#5e2750', // mid aubergine (both)
   'dark-aubergine':      '#2c001e', // dark aubergine (enterprise)
+  'mid-grey':            '#cdcdcd',
   'warm-grey':           '#888888', // warm grey
   'cool-grey':           '#333333', // cool grey
   'light-grey':          '#f7f7f7', // light grey

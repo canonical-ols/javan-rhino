@@ -19,6 +19,7 @@ export default class Header extends Component {
           </Link>
           <div className={ styles.mainNav }>
             <NavLink to="/" onlyActiveOnIndex={ true }>Home</NavLink>
+            <NavLink to="/pay/add-card">Add card</NavLink>
             <NavLink to="/about">About</NavLink>
           </div>
           <div className={ styles.sideNav }>

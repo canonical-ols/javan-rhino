@@ -1,0 +1,37 @@
+.form ul {
+  margin-left: 0;
+  list-style: none;
+}
+
+.form label {
+  cursor: pointer;
+  display: block;
+  margin-bottom: 4px;
+
+  /*@each $state, $color in $states {
+    &.has-#{$state} {
+      color: $color;
+    }
+  }*/
+}
+
+.textInput {
+  -webkit-appearance: textfield;
+  border-radius: 2px;
+  border: 1px solid $mid-grey;
+  font-size: 16px;
+  margin: 0;
+  outline: none;
+  padding: .5em .7em;
+  vertical-align: baseline;
+  font-weight: 300;
+
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.textInput:active,
+.textInput:focus {
+  border-color: $warm-grey;
+  outline: none;
+}
