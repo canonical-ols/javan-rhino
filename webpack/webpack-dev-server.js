@@ -9,7 +9,7 @@ var app = Express();
 var compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
-  contentBase: 'http://localhost:3001',
+  contentBase: 'http://' + webpackConfig.address + ':' + webpackConfig.port,
   hot: true,
   noInfo: true,
   headers: { 'Access-Control-Allow-Origin': '*' },
@@ -20,10 +20,7 @@ app.use(webpackHotMiddleware(compiler));
 
 app.use(Express.static('public'));
 
-var port = process.env.PORT || 3001;
-var address = process.env.ADDRESS || 'localhost';
-
-var server = app.listen(port, address, () => {
+var server = app.listen(webpackConfig.port, webpackConfig.address, () => {
   var host = server.address().address;
   var port = server.address().port;
 

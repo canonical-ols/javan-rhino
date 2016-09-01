@@ -10,18 +10,22 @@ const webpackIsomorphicToolsPlugin =
   .development();
 
 const sharedVars = require('../src/style/variables');
+const port = process.env.WEBPACK_PORT || '3001';
+const address = process.env.ADDRESS || 'localhost';
 
 module.exports = {
   context: path.resolve(__dirname, '..'),
+  port: port,
+  address: address,
   entry: [
-    'webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr',
+    'webpack-hot-middleware/client?path=http://' + address + ':' + port + '/__webpack_hmr',
     'webpack/hot/only-dev-server',
     './src',
   ],
   output: {
     path: path.join(__dirname, '../public/static'),
     filename: 'bundle.js',
-    publicPath: 'http://localhost:3001/static/'
+    publicPath: 'http://' + address + ':' + port + '/static/'
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
