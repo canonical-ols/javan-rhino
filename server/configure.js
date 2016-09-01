@@ -5,9 +5,8 @@ var base = require('../settings');
 nconf.env([
   'APP:PORT',
   'APP:HOST',
-  'REDIS:HOST',
-  'REDIS:PORT',
-  'REDIS:SECRET'
+  'DATABASE:URL',
+  'DATABASE:SECRET'
 ]);
 nconf.defaults(base);
 

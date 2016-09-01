@@ -12,7 +12,7 @@ import { renderToString } from 'react-dom/server';
 
 const MongoStore = MongoConnect(session);
 const sesssionStore = new MongoStore({
-  url: 'mongodb://localhost/javan-rhino'
+  url: conf.get('DATABASE:URL')
 });
 
 const app = Express();

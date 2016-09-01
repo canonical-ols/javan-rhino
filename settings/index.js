@@ -8,8 +8,7 @@ module.exports = {
     REALM: 'http://localhost:3000',
   },
   DATABASE: {
-    HOST: 'localhost',
-    PORT: 6379,
+    URL: 'mongodb://localhost/javan-rhino',
     SECRET: 'javan rhino'
   },
   UBUNTU_SSO_URL: 'https://login.staging.ubuntu.com'
