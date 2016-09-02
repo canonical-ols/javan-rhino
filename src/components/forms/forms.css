@@ -1,18 +1,16 @@
-.form ul {
-  margin-left: 0;
-  list-style: none;
+.fieldset {
+  width: 500px;
+  margin-bottom: 2em;
 }
 
-.form label {
+.inputField {
+  margin-bottom: 0.5em;
+}
+
+.label {
   cursor: pointer;
   display: block;
   margin-bottom: 4px;
-
-  /*@each $state, $color in $states {
-    &.has-#{$state} {
-      color: $color;
-    }
-  }*/
 }
 
 .textInput {
@@ -34,4 +32,8 @@
 .textInput:focus {
   border-color: $warm-grey;
   outline: none;
+}
+
+.tickInput {
+  margin-right: 0.5em;
 }
