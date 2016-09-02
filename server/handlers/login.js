@@ -1,29 +1,13 @@
 import conf from '../configure.js';
-import openid from 'openid';
+import RelyingParty from '../openid/relyingparty.js';
 
-const createRelyingParty = (/**teams, cid**/) => {
-  const extensions = [
-    new openid.SimpleRegistration({
-      'nickname' : true,
-      'email' : true,
-      'fullname' : true,
-      'language' : true
-    })
-  ];
+let rp;
 
-  return new openid.RelyingParty(
-    conf.get('OPENID:VERIFY_URL'),
-    conf.get('OPENID:REALM'),
-    false, // Use stateless verification
-    false, // Strict mode
-    extensions
-  );
 };
 
-let rp = createRelyingParty();
-
-const authenticate = (req, res) => {
+export const authenticate = (req, res) => {
   const identifier = conf.get('UBUNTU_SSO_URL');
+  rp = RelyingParty();
 
   // Resolve identifier, associate, and build authentication URL
   rp.authenticate(identifier, false, (error, authUrl) => {
@@ -41,7 +25,7 @@ const authenticate = (req, res) => {
   });
 };
 
-const verify = (req, res) => {
+export const verify = (req, res) => {
   rp.verifyAssertion(req, (error, result) => {
     // TODO handle error
     if (!error) {
@@ -51,11 +35,10 @@ const verify = (req, res) => {
     } else {
       res.send('Authentication failed: ' + error.message);
     }
-
   });
 };
 
-const logout = (req, res) => {
+export const logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       // TODO handle error
@@ -63,5 +46,3 @@ const logout = (req, res) => {
     res.redirect('/');
   });
 };
-
-export { authenticate, verify, logout, createRelyingParty };

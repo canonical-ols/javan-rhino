@@ -20,7 +20,7 @@ export default class Header extends Component {
             <NavLink to="/about">About</NavLink>
           </div>
           <div className={ styles.sideNav }>
-            <NavLink to="/login/authenticate" isAnchor={ true }>Login</NavLink>
+            <a href="/login/authenticate" >Login</a>
           </div>
         </nav>
       </div>

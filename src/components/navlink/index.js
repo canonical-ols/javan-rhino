@@ -5,20 +5,10 @@ import styles from './navlink.css';
 
 export default class NavLink extends Component {
   render() {
-    const { isAnchor } = this.props;
-    let link;
-
-    if (isAnchor) {
-      link = <a href={ this.props.to } className={ styles.link } activeClassName={ styles.active } />;
-    } else {
-      link = <Link {...this.props} className={ styles.link } activeClassName={ styles.active } />;
-    }
-
-    return link;
+      return <Link {...this.props} className={ styles.link } activeClassName={ styles.active } />;
   }
 }
 
 NavLink.propTypes = {
-  to: PropTypes.string.isRequired,
-  isAnchor: PropTypes.bool
+  to: PropTypes.string.isRequired
 };

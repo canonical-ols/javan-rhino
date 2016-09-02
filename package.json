@@ -54,6 +54,7 @@
     "express-session": "^1.14.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
+    "macaroons.js": "^0.3.6",
     "mocha": "^3.0.2",
     "nconf": "^0.8.4",
     "nconf-yaml": "^1.0.2",
