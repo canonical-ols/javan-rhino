@@ -5,7 +5,7 @@ import styles from './navlink.css';
 
 export default class NavLink extends Component {
   render() {
-      return <Link {...this.props} className={ styles.link } activeClassName={ styles.active } />;
+    return <Link {...this.props} className={ styles.link } activeClassName={ styles.active } />;
   }
 }
 

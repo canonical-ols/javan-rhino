@@ -10,7 +10,7 @@ describe('<Header /> component', () => {
   it('should render two links', () => {
     const el = shallow(<Header />);
 
-    expect(el.find(NavLink).length).toEqual(3);
+    expect(el.find(NavLink).length).toEqual(2);
   });
 
 });

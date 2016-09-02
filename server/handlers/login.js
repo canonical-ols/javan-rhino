@@ -3,13 +3,20 @@ import RelyingParty from '../openid/relyingparty.js';
 
 let rp;
 
+export const macaroon = (req, res, next) => {
+  // get macaroon from store
+  // store on req
+  next();
 };
 
 export const authenticate = (req, res) => {
   const identifier = conf.get('UBUNTU_SSO_URL');
   rp = RelyingParty();
 
-  // Resolve identifier, associate, and build authentication URL
+  _authenticate(rp, identifier, res);
+};
+
+export const _authenticate = (rp, identifier, res) => {
   rp.authenticate(identifier, false, (error, authUrl) => {
     if (error) {
       // TODO auth failure view
@@ -26,6 +33,10 @@ export const authenticate = (req, res) => {
 };
 
 export const verify = (req, res) => {
+  _verify(rp, req, res);
+};
+
+export const _verify = (rp, req, res) => {
   rp.verifyAssertion(req, (error, result) => {
     // TODO handle error
     if (!error) {
