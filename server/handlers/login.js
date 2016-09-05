@@ -1,17 +1,38 @@
+import request from 'request';
+import { extractCaveatId, formatMacaroonAuthHeader } from '../macaroons';
 import conf from '../configure.js';
 import RelyingParty from '../openid/relyingparty.js';
 
 let rp;
 
-export const macaroon = (req, res, next) => {
+export const getMacaroon = (req, res, next) => {
   // get macaroon from store
   // store on req
-  next();
+  //
+  const options = {
+    url: `${conf.get('UBUNTU_SCA:URL')}/dev/api/acl/`,
+    method: 'POST',
+    json: {
+      'permissions': ['package_access']
+    }
+  };
+
+  request(options, (error, response, body) => {
+    // TODO handle macaroon failure
+    if (error) {
+      res.send('Get macaroon failed');
+    }
+
+    req.session.macaroon = body.macaroon;
+    req.session.cid = extractCaveatId(body.macaroon);
+    next();
+  });
+
 };
 
 export const authenticate = (req, res) => {
   const identifier = conf.get('UBUNTU_SSO_URL');
-  rp = RelyingParty();
+  rp = RelyingParty(req.session.cid);
 
   rp.authenticate(identifier, false, (error, authUrl) => {
     if (error) {
@@ -34,6 +55,7 @@ export const verify = (req, res) => {
     if (!error) {
       req.session.name = result.fullname;
       req.session.teams = result.teams;
+      req.session.auth = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
       res.redirect('/');
     } else {
       res.send('Authentication failed: ' + error.message);

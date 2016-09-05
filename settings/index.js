@@ -15,5 +15,8 @@ module.exports = {
     SECRET: 'javan rhino'
   },
   UBUNTU_SSO_HOST: 'login.staging.ubuntu.com',
-  UBUNTU_SSO_URL: 'https://login.staging.ubuntu.com'
+  UBUNTU_SSO_URL: 'https://login.staging.ubuntu.com',
+  UBUNTU_SCA: {
+    URL: 'https://myapps.developer.staging.ubuntu.com'
+  }
 };
