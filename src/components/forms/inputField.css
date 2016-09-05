@@ -1,3 +1,16 @@
 .inputField {
   margin-bottom: 0.5em;
 }
+
+.full {
+  width: 100%;
+}
+
+.small {
+  width: 50%;
+  margin-right: 10px;
+}
+
+.small:last-child {
+  margin-right: 0;
+}
