@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { uniqueId } from 'lodash/core';
 
 import Label from './label';
 import Input from './input';
@@ -6,18 +7,18 @@ import Input from './input';
 import styles from './inputField.css';
 
 export default function InputField(props) {
-  let { id, label, type, ...other } = props;
-
-  type = type || 'text';
+  const { name, label, type='text', placeholder } = props;
+  const id = uniqueId(name);
 
   return <div className={ styles.inputField }>
     <Label htmlFor={ id }>{ label }:</Label>
-    <Input id={ id } type={ type } {...other} />
+    <Input {...{ id, type, placeholder }} />
   </div>;
 }
 
 InputField.propTypes = {
-  id: PropTypes.string,
+  name: PropTypes.string,
   label: PropTypes.string,
+  placeholder: PropTypes.string,
   type: PropTypes.string
 };
