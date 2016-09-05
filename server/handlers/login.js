@@ -66,7 +66,8 @@ export const verify = (req, res) => {
 export const logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      // TODO handle error
+      // TODO handle logout failure
+      res.send('Logout failed');
     }
     res.redirect('/');
   });
