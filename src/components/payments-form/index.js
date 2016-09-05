@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 
 import { CheckboxField, Fieldset, Form, InputField } from '../forms';
-
+import Button from '../button';
 import styles from './payments-form.css';
 
 
-export default class Header extends Component {
+export default class PaymentsForm extends Component {
+  onSubmit(event) {
+    event.preventDefault();
+  }
+
   render() {
     return (
       <div className={ styles.paymentsForm }>
-      <Form>
+      <Form onSubmit={ this.onSubmit.bind(this) }>
         <h3>Payment details</h3>
 
         <Fieldset>
@@ -51,7 +55,7 @@ export default class Header extends Component {
           <InputField name="billingPhone" label="Phone number" placeholder="Optional" />
         </Fieldset>
 
-        <button>Add payment details</button>
+        <Button type='secondary'>Add payment details</Button>
         </Form>
       </div>
     );
