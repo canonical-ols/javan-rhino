@@ -13,10 +13,6 @@ export const authenticate = (req, res) => {
   const identifier = conf.get('UBUNTU_SSO_URL');
   rp = RelyingParty();
 
-  _authenticate(rp, identifier, res);
-};
-
-export const _authenticate = (rp, identifier, res) => {
   rp.authenticate(identifier, false, (error, authUrl) => {
     if (error) {
       // TODO auth failure view
@@ -33,10 +29,6 @@ export const _authenticate = (rp, identifier, res) => {
 };
 
 export const verify = (req, res) => {
-  _verify(rp, req, res);
-};
-
-export const _verify = (rp, req, res) => {
   rp.verifyAssertion(req, (error, result) => {
     // TODO handle error
     if (!error) {
