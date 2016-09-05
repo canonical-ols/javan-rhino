@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import Label from './label';
 
-import style from './forms.css';
+import style from './checkboxField.css';
 
 export default function CheckboxField(props) {
   const { id, label, ...other } = props;

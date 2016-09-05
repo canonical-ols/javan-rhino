@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import style from './forms.css';
+import style from './fieldset.css';
 
 export default function Fieldset(props) {
   return <fieldset className={ style.fieldset }>
