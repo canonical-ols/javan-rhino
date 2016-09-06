@@ -1,50 +1,40 @@
 import { app } from '../../server/server.js';
-import conf from '../../settings';
+import conf from '../../server/configure.js';
 import supertest from 'supertest';
 
-describe('simple app routes', () => {
-  it('should be 200 for /', () => {
-    supertest(app)
-      .get('/')
-      .expect('Content-Type', /text\/html/)
-      .expect(200)
-      .end(function(err) {
-        if (err) throw err;
-      });
-  });
-
-  it('should be 200 for /about', () => {
-    supertest(app)
-      .get('/about')
-      .expect('Content-Type', /text\/html/)
-      .expect(200)
-      .end(function(err) {
-        if (err) throw err;
-      });
-  });
-
-  it('should be 404 for /example-404-url', () => {
-    supertest(app)
-      .get('/example-404-url-haroo')
-      .expect('Content-Type', /text\/html/)
-      .expect(404)
-      .end(function(err) {
-        if (err) throw err;
-      });
-  });
-});
-
 describe('login routes', () => {
-  it('should should redirect from /login/authenticate to SSO', () => {
-    supertest(app)
-      .get('/login/authenticate')
-      .expect('Content-Type', /text\/html/)
-      .expect(302)
-      .end(function(err, res) {
-        if (err) throw err;
 
-        res.header['location'].should.include(conf.get('UBUNTU_SSO_URL'));
-        res.header['location'].should.include(conf.get('OPENID:VERIFY_URL'));
-      });
+  describe('authenticate', () => {
+    it('should redirect from /login/authenticate to SSO', (done) => {
+      supertest(app)
+        .get('/login/authenticate')
+        .expect('location', new RegExp(conf.get('UBUNTU_SSO_HOST')))
+        .expect(302, done);
+    });
+
+    it('should include verify url in redirect header', (done) => {
+      supertest(app)
+        .get('/login/authenticate')
+        .expect('location',
+          new RegExp(encodeURIComponent(conf.get('OPENID:VERIFY_URL'))),
+          done
+        );
+    });
   });
+
+  // FIXME verify handlers need work and more tests
+  describe('verify', () => {
+    it('is an http POST', (done) => {
+      supertest(app)
+        .get('/login/verify')
+        .expect(404, done);
+    });
+
+    it('should return http 401 on failure', (done) => {
+      supertest(app)
+        .post('/login/verify')
+        .expect(401, done);
+    });
+  });
+
 });
