@@ -5,18 +5,19 @@ import { Teams, Macaroons } from './extensions';
 openid['LaunchpadTeams'] = Teams;
 openid['Macaroons'] = Macaroons;
 
-const extensions = [
-  new openid.SimpleRegistration({
-    'nickname' : true,
-    'email' : true,
-    'fullname' : true,
-    'language' : true
-  }),
-  new openid.LaunchpadTeams(conf.get('OPENID:TEAMS'))
-];
 
 
 export default (cid) => {
+  const extensions = [
+    new openid.SimpleRegistration({
+      'nickname' : true,
+      'email' : true,
+      'fullname' : true,
+      'language' : true
+    }),
+    new openid.LaunchpadTeams(conf.get('OPENID:TEAMS'))
+  ];
+
   if (cid) {
     extensions.push(
       new openid.Macaroons(cid)
