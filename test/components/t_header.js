@@ -29,7 +29,7 @@ describe('<Header /> component', () => {
     });
 
     it('should contain a login link', () => {
-      expect(header.find('NavLink[to="/login"]').length).toEqual(1);
+      expect(header.find('a[children="Login"]').length).toEqual(1);
     });
 
     context('and login link is clicked', () => {
@@ -56,7 +56,7 @@ describe('<Header /> component', () => {
     });
 
     it('should contain a logout link', () => {
-      expect(header.find('NavLink[to="/logout"]').length).toEqual(1);
+      expect(header.find('a[children="Logout"]').length).toEqual(1);
     });
   });
 });
