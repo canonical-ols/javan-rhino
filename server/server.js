@@ -11,7 +11,7 @@ import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
 
 const MongoStore = MongoConnect(session);
-const sesssionStore = new MongoStore({
+const sessionStore = new MongoStore({
   url: conf.get('DATABASE:URL')
 });
 
@@ -19,14 +19,14 @@ const app = Express();
 
 app.use(session({
   secret: conf.get('DATABASE:SECRET'),
-  store: sesssionStore,
+  store: sessionStore,
   resave: false,
   saveUninitialized: false
 }));
+app.use('/', login);
 
 function serve(webpackIsomorphicTools) {
   app.use(Express.static(__dirname + '/../public'));
-  app.use('/', login);
   app.use('/', function (req, res) {
 
     if (process.env.NODE_ENV !== 'production') {
