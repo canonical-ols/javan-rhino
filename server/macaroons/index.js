@@ -6,7 +6,8 @@ import conf from '../configure';
  * @return {String} login.ubuntu.com cid
 **/
 export const extractCaveatId = (macaroon) => {
-  let m = MacaroonsBuilder.deserialize(macaroon);
+  const m = MacaroonsBuilder.deserialize(macaroon);
+
   let ssocid;
   m.inspect();
 
@@ -29,10 +30,11 @@ export const extractCaveatId = (macaroon) => {
 **/
 export const formatMacaroonAuthHeader = (macaroon, discharge) => {
 
-  let macaroonObj = MacaroonsBuilder.deserialize(macaroon);
-  let dischargeObj = MacaroonsBuilder.deserialize(discharge);
+  const macaroonObj = MacaroonsBuilder.deserialize(macaroon);
+  const dischargeObj = MacaroonsBuilder.deserialize(discharge);
 
-  let dischargeBound = MacaroonsBuilder.modify(macaroonObj)
+
+  const dischargeBound = MacaroonsBuilder.modify(macaroonObj)
     .prepare_for_request(dischargeObj)
     .getMacaroon();
 
