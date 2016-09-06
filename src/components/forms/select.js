@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 
-import styleSelect from './select.css';
+import style from './select.css';
 
 export default function Select(props) {
-  return <div className={ styleSelect.select }>
-    <select {...props} className={ `${styleSelect.selectInput}` }/>
+  return <div className={ style.select }>
+    <select {...props} className={ style.selectInput }/>
   </div>;
 }
 
