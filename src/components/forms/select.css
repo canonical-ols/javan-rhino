@@ -1,0 +1,19 @@
+$color: $mid-grey;
+
+.select {
+  position: relative;
+}
+
+.select:after {
+  content: "∨";
+  position: absolute;
+  right: 10px;
+  font-size: 25px;
+  color: $color;
+}
+
+.selectInput {
+  composes: textInput from "./input.css";
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}

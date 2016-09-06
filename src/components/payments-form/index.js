@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 
-import { CheckboxField, Fieldset, FieldRow, Form, InputField } from '../forms';
 import Button from '../button';
-import styles from './payments-form.css';
+import countries from './countries';
+import { CheckboxField, Fieldset, FieldRow, Form, InputField, SelectField } from '../forms';
 
+import styles from './payments-form.css';
 
 export default class PaymentsForm extends Component {
   onSubmit(event) {
     event.preventDefault();
+  }
+
+  mapCountriesToOptions(countries) {
+    let options = countries.map(country => ({ value: country.iso, name: country.name }));
+    options = [ { value: '', name: '-----------' }, ...options ];
+    return options;
   }
 
   render() {
@@ -17,7 +24,7 @@ export default class PaymentsForm extends Component {
         <h3>Payment details</h3>
 
         <Fieldset>
-          <InputField name="customerCountry" label="Country" placeholder="United Kingdom" /> {/* TODO: select? */}
+          <SelectField name="customerCountry" label="Country" options={ this.mapCountriesToOptions(countries) } />
         </Fieldset>
 
         <Fieldset>
@@ -31,7 +38,7 @@ export default class PaymentsForm extends Component {
             <InputField name="customerPostcode" label="Postcode" placeholder="e.g EC1 6DU" size="small" />
           </FieldRow>
           <FieldRow>
-            <InputField name="customerCountryCode" label="Country code" size="small" /> {/* TODO: select? */}
+            <InputField name="customerCountryCode" label="Country code" size="small" /> {/* TODO: confirm if needed */}
             <InputField name="customerPhone" label="Phone number" placeholder="Optional" />
           </FieldRow>
         </Fieldset>
@@ -45,10 +52,9 @@ export default class PaymentsForm extends Component {
           <CheckboxField name="billingAddressCheck" label="Credit or debit card address is the same as above" />
         </Fieldset>
 
-
         <Fieldset>
           <h4>Billing address</h4>
-          <InputField name="billingCountry" label="Country" placeholder="United Kingdom" /> {/* TODO: select? */}
+          <SelectField name="billingCountry" label="Country" options={ this.mapCountriesToOptions(countries) } />
           <InputField name="billingFullname" label="Full name" placeholder="John Doe" />
           <InputField name="billingAddress1" label="Address line 1" placeholder="e.g 20 Ingram Street" />
           <InputField name="billingAddress2" label="Address line 2" placeholder="Optional" />

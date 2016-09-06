@@ -5,5 +5,6 @@ import Form from './form';
 import Input from './input';
 import InputField from './inputField';
 import Label from './label';
+import SelectField from './selectField';
 
-export { CheckboxField, Fieldset, FieldRow, Form, Input, InputField, Label };
+export { CheckboxField, Fieldset, FieldRow, Form, Input, InputField, Label, SelectField };

@@ -9,7 +9,6 @@ export default function Input(props) {
 Input.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
-  label: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.string
 };
