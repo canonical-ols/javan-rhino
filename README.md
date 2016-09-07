@@ -23,15 +23,16 @@ mkdir -p ~/.mongodb/data
 mongod --dbpath ~/.mongodb/data
 ```
 
-# Running
+# Running developer instance
 
 Install dependencies:
 
-    $ npm install
+    $ make install
 
-and run it:
+and start:
 
-    $ npm start
+    $ make start-db
+    $ make start-dev -j2
 
     > javan-rhino@1.0.0 start /Users/cprov/Canonical/ols/javan-rhino
     > NODE_ENV=development concurrently --kill-others "npm run watch-client" "node server/"
