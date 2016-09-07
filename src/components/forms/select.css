@@ -13,7 +13,7 @@ $color: $mid-grey;
 }
 
 .selectInput {
-  composes: textInput from "./input.css";
+  composes: textInput from "./inputField.css";
   -webkit-appearance: none;
   -moz-appearance: none;
 }

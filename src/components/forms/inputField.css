@@ -1,3 +1,7 @@
+$border-color: $mid-grey;
+$border-color-focus: $warm-grey;
+$background-color: #FFF;
+
 .inputField {
   margin-bottom: 0.5em;
 }
@@ -13,4 +17,26 @@
 
 .small:last-child {
   margin-right: 0;
+}
+
+.textInput {
+  -webkit-appearance: textfield;
+  border-radius: 2px;
+  border: 1px solid $border-color;
+  background-color: $background-color;
+  font-size: 16px;
+  margin: 0;
+  outline: none;
+  padding: .5em .7em;
+  vertical-align: baseline;
+  font-weight: 300;
+
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.textInput:active,
+.textInput:focus {
+  border-color: $border-color-focus;
+  outline: none;
 }

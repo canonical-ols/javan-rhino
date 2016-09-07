@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
 import Label from './label';
-import Input from './input';
 
 import styles from './inputField.css';
 
@@ -12,7 +11,7 @@ export default function InputField(props) {
   const className = `${styles.inputField} ${styles[size]}`;
   return <div className={ className }>
     <Label htmlFor={ id }>{ label }:</Label>
-    <Input id={ id } type={ type } placeholder={ placeholder } />
+    <input id={ id } name={ name } type={ type } placeholder={ placeholder } className={ styles.textInput } />
   </div>;
 }
 
