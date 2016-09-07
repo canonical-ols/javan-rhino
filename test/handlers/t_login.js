@@ -5,29 +5,18 @@ import { logout } from '../../server/handlers/login.js';
 describe('login handler', () => {
 
   // session.destroy stub
-  let destroy;
-
-  const req = {
-    session: {
-      destroy: () => {}
-    }
-  };
-  const res = {
-    send: () => {},
-    redirect: () => {}
-  };
+  let req, res;
 
   beforeEach(() => {
-    destroy = stub(req.session, 'destroy')
-      .callsArg(0);
-    spy(res, 'redirect');
-    spy(res, 'send');
-  });
-
-  afterEach(() => {
-    req.session.destroy.restore();
-    res.redirect.restore();
-    res.send.restore();
+    req = {
+      session: {
+        destroy: stub().callsArg(0)
+      }
+    };
+    res = {
+      send: spy(),
+      redirect: spy()
+    };
   });
 
   it('logout destroys session', () => {
@@ -36,13 +25,13 @@ describe('login handler', () => {
   });
 
   it('happy path redirects to home', () => {
-    destroy.callsArgWith(0, false);
+    req.session.destroy.callsArgWith(0, false);
     logout(req, res);
     expect(res.redirect.calledWith('/')).toBe(true);
   });
 
   it('sad path sends basic error message', () => {
-    destroy.callsArgWith(0, true);
+    req.session.destroy.callsArgWith(0, true);
     logout(req, res);
     expect(res.send.calledWith('Logout failed')).toBe(true);
   });
