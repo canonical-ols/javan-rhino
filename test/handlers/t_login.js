@@ -9,9 +9,7 @@ describe('login handler', () => {
 
   const req = {
     session: {
-      destroy: (cb) => {
-        cb();
-      }
+      destroy: () => {}
     }
   };
   const res = {
@@ -20,7 +18,8 @@ describe('login handler', () => {
   };
 
   beforeEach(() => {
-    destroy = stub(req.session, 'destroy');
+    destroy = stub(req.session, 'destroy')
+      .callsArg(0);
     spy(res, 'redirect');
     spy(res, 'send');
   });
