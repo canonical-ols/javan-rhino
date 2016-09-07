@@ -45,3 +45,4 @@ webpack-stats.json
 
 # Distributable files
 dist
+data
