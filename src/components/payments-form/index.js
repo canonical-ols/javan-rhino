@@ -69,7 +69,7 @@ export default class PaymentsForm extends Component {
           </FieldRow>
         </Fieldset>
 
-        <Button type='secondary'>Add payment details</Button>
+        <Button appearance='secondary'>Add payment details</Button>
         </Form>
       </div>
     );
