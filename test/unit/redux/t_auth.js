@@ -1,6 +1,6 @@
 import expect from 'expect';
-import reducer from '../../src/redux/auth';
-import { login } from '../../src/redux/auth';
+import reducer from '../../../src/redux/auth';
+import { login } from '../../../src/redux/auth';
 
 describe('The "login" authentication action', () => {
   it('should create an action to log in', () => {

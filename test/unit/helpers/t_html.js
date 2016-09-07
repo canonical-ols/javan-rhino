@@ -2,7 +2,7 @@ import React from 'react';
 import expect from 'expect';
 import { render, shallow } from 'enzyme';
 
-import Html from '../../src/helpers/html.js';
+import Html from '../../../src/helpers/html.js';
 
 describe('<Html /> helper', () => {
   const assets = {

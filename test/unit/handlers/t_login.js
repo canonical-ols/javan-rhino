@@ -1,6 +1,6 @@
 import expect from 'expect';
 import { spy, stub } from 'sinon';
-import { logout } from '../../server/handlers/login.js';
+import { logout } from '../../../server/handlers/login.js';
 
 describe('login handler', () => {
 

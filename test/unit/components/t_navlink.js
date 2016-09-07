@@ -3,7 +3,7 @@ import expect from 'expect';
 import { shallow } from 'enzyme';
 import { Link } from 'react-router';
 
-import NavLink from '../../src/components/navlink';
+import NavLink from '../../../src/components/navlink';
 
 describe('<NavLink /> component', () => {
 

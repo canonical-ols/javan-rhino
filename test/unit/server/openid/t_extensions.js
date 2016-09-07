@@ -1,5 +1,5 @@
 import expect from 'expect';
-import { Teams, Macaroons } from '../../../server/openid/extensions.js';
+import { Teams, Macaroons } from '../../../../server/openid/extensions.js';
 
 describe('Teams', () => {
   it('should have lp namespace', () => {

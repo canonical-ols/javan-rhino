@@ -2,8 +2,8 @@ import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
 
-import Header from '../../src/components/header';
-import NavLink from '../../src/components/navlink';
+import Header from '../../../src/components/header';
+import NavLink from '../../../src/components/navlink';
 
 const eventMock = {
   preventDefault: expect.createSpy()

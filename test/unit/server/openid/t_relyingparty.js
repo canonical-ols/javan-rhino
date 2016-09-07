@@ -1,6 +1,6 @@
 import expect from 'expect';
-import conf from '../../../server/configure.js';
-import RelyingParty from '../../../server/openid/relyingparty.js';
+import conf from '../../../../server/configure.js';
+import RelyingParty from '../../../../server/openid/relyingparty.js';
 
 describe('RelyingParty', () => {
   let rp;

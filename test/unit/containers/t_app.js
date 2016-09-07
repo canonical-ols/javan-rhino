@@ -3,7 +3,7 @@ import expect from 'expect';
 import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 
-import App from '../../src/containers/app.js';
+import App from '../../../src/containers/app.js';
 const mockStore = configureStore();
 
 describe('<App /> container', () => {

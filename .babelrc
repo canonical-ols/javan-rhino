@@ -3,18 +3,5 @@
   "plugins": [
     "transform-object-rest-spread",
     "transform-es2015-destructuring"
-  ],
-  "env": {
-    "TEST": {
-      "plugins": [
-        [
-          "babel-plugin-webpack-loaders",
-          {
-            "config": "./webpack/test-config.js",
-            "verbose": false,
-          }
-        ]
-      ]
-    }
-  }
+  ]
 }
