@@ -1,5 +1,4 @@
 import Express from 'express';
-import MongoConnect from 'connect-mongo';
 import React from 'react';
 import { createStore } from 'redux';
 import session from 'express-session';
@@ -11,21 +10,12 @@ import reducers from '../src/redux/';
 import conf from './configure.js';
 import login from './routes/login';
 import routes from '../src/routes';
+import sessionStorage from './helpers/sessionStorage';
 import Html from '../src/helpers/html';
-
-const MongoStore = MongoConnect(session);
-const sessionStore = new MongoStore({
-  url: conf.get('DATABASE:URL')
-});
 
 const app = Express();
 
-app.use(session({
-  secret: conf.get('DATABASE:SECRET'),
-  store: sessionStore,
-  resave: false,
-  saveUninitialized: false
-}));
+app.use(session(sessionStorage(conf)));
 app.use('/', login);
 
 function serve(webpackIsomorphicTools) {
