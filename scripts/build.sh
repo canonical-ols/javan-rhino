@@ -3,6 +3,9 @@
 # Build server files
 babel --out-dir=dist/server server --copy-files
 
+# Build settings files
+babel --out-dir=dist/settings settings --copy-files
+
 # Build WebPack config files
 babel --out-dir=dist/webpack webpack --copy-files
 
