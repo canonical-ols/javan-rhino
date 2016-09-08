@@ -18,7 +18,7 @@ export const orders = (req, res) => {
   const auth = req.session.authorization;
 
   const options = {
-    uri: conf.get('SCA_PURCHASES_ORDERS_API'),
+    uri: `${conf.get('UBUNTU_SCA:URL')}/purchases/orders`,
     headers: {
       authorization: auth
     }
