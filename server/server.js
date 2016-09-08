@@ -5,6 +5,7 @@ import React from 'react';
 import session from 'express-session';
 import conf from './configure.js';
 import login from './routes/login';
+import api from './routes/api';
 import routes from '../src/routes';
 import util from 'util';
 import { match, RouterContext } from 'react-router';
@@ -24,6 +25,7 @@ app.use(session({
   saveUninitialized: false
 }));
 app.use('/', login);
+app.use('/api', api);
 
 function serve(webpackIsomorphicTools) {
   app.use(Express.static(__dirname + '/../public'));

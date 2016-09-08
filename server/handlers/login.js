@@ -13,7 +13,7 @@ export const getMacaroon = (req, res, next) => {
     url: `${conf.get('UBUNTU_SCA:URL')}/dev/api/acl/`,
     method: 'POST',
     json: {
-      'permissions': ['package_access']
+      'permissions': ['package_access', 'package_purchase']
     }
   };
 
@@ -27,7 +27,6 @@ export const getMacaroon = (req, res, next) => {
     req.session.cid = extractCaveatId(body.macaroon);
     next();
   });
-
 };
 
 export const authenticate = (req, res) => {
@@ -52,10 +51,11 @@ export const authenticate = (req, res) => {
 export const verify = (req, res) => {
   rp.verifyAssertion(req, (error, result) => {
     // TODO handle error
-    if (!error) {
+    if (!error && result.authenticated) {
+      req.session.authenticated = result.authenticated;
       req.session.name = result.fullname;
       req.session.teams = result.teams;
-      req.session.auth = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
+      req.session.authorization = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
       res.redirect('/');
     } else {
       res.send(401, 'Authentication failed: ' + error.message);
