@@ -71,11 +71,11 @@ describe('purchases api', () => {
       .filteringRequestBody(() => {
         return body;
       })
-      .post('/purchases/customers', body)
+      .post('/purchases/orders', body)
       .reply(200);
 
     testagent
-      .post('/api/purchases/customers')
+      .post('/api/purchases/orders')
       .send(body)
       .expect(200, done);
   });
