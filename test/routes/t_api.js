@@ -5,6 +5,10 @@ import { agent } from 'supertest';
 
 describe('purchases api', () => {
 
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
   const authorization = 'Macaroon root=foo discharge=bar';
 
   // test only routes to populate session
@@ -40,11 +44,8 @@ describe('purchases api', () => {
     };
 
     // mock the request to SCA
-    nock(conf.get('UBUNTU_SCA:URL'), {
-      reqheaders: {
-        'authorization': authorization
-      }
-    })
+    const sca = nock(conf.get('UBUNTU_SCA:URL'))
+      .matchHeader('authorization', authorization)
       .filteringRequestBody(() => {
         return body;
       })
@@ -54,20 +55,21 @@ describe('purchases api', () => {
     testagent
       .post('/api/purchases/customers')
       .send(body)
-      .expect(200, done);
+      .expect(200, () => {
+        sca.done();
+        done();
+      });
   });
 
   it('should stream responses from SCA orders endpoint', (done) => {
 
     const body = {
-      'snap_id': 'bar'
+      'stripe_token': 'foo'
     };
 
-    nock(conf.get('UBUNTU_SCA:URL'), {
-      reqheaders: {
-        'authorization': authorization
-      }
-    })
+    // mock the request to SCA
+    const sca = nock(conf.get('UBUNTU_SCA:URL'))
+      .matchHeader('authorization', authorization)
       .filteringRequestBody(() => {
         return body;
       })
@@ -77,7 +79,11 @@ describe('purchases api', () => {
     testagent
       .post('/api/purchases/orders')
       .send(body)
-      .expect(200, done);
+      .expect(200, () => {
+        sca.done();
+        done();
+      });
   });
+
 
 });
