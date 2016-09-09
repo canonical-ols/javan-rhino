@@ -32,5 +32,5 @@ export default class Header extends Component {
 }
 
 Header.propTypes = {
-  authenticatedUser: PropTypes.object
+  user: PropTypes.object.isRequired
 };
