@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import Header from '../components/header';
 import Footer from '../components/footer';
-import * as authActions from '../redux/auth';
 
 class App extends Component {
   render() {
+    const { authenticatedUser } = this.props;
     // FIXME sstewart 17-Aug-16 move some of this to config
     return (
       <div>
@@ -19,7 +19,7 @@ class App extends Component {
             { 'name': 'description', 'content': 'my.ubuntu.com payments ui' },
           ]}
         />
-        <Header onLoginClick={ this.props.login } loggedIn={ this.props.loggedIn } />
+        <Header user={ authenticatedUser }/>
         { this.props.children }
         <Footer />
       </div>
@@ -29,10 +29,17 @@ class App extends Component {
 
 App.propTypes = {
   children: PropTypes.node,
-  login: PropTypes.func,
-  loggedIn: PropTypes.bool
+  authenticatedUser: PropTypes.object
 };
 
-const mapStateToProps = state => ({ loggedIn: state.auth.loggedIn });
+function mapStateToProps(state) {
+  const {
+    authenticatedUser
+  } = state;
 
-export default connect(mapStateToProps, authActions)(App);
+  return {
+    authenticatedUser
+  };
+}
+
+export default connect(mapStateToProps)(App);
