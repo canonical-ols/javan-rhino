@@ -1,16 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducers from '../redux/';
 
 export default class Html extends Component {
   render() {
-    const { assets, component } = this.props;
+    const { assets, store, component } = this.props;
     const head = Helmet.rewind();
     const attrs = head.htmlAttributes.toComponent();
-    const store = createStore(reducers);
+    const preloadedState = store.getState();
     const content = component ? this.renderComponent(component, store) : '';
 
     return (
@@ -23,6 +21,8 @@ export default class Html extends Component {
         </head>
         <body>
           <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
+          <script
+            dangerouslySetInnerHTML={{ __html: `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}` }} />
           <script src={ assets.javascript.main } charSet="UTF-8"/>
         </body>
       </html>
@@ -40,6 +40,7 @@ export default class Html extends Component {
 
 Html.propTypes = {
   component: PropTypes.node,
+  store: PropTypes.object,
   assets: React.PropTypes.shape({
     styles: React.PropTypes.shape({
       main: React.PropTypes.string.isRequired

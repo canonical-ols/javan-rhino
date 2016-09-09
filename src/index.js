@@ -12,7 +12,8 @@ import { Provider } from 'react-redux';
 import routes from './routes';
 import reducers from './redux/';
 
-const store = createStore(reducers);
+const preloadedState = window.__PRELOADED_STATE__;
+const store = createStore(reducers, preloadedState);
 
 const component = (
   <Router routes={routes} history={browserHistory} />
