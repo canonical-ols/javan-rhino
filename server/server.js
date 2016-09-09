@@ -1,18 +1,17 @@
 import Express from 'express';
 import MongoConnect from 'connect-mongo';
 import React from 'react';
-import { createStore } from 'redux';
 import session from 'express-session';
 import util from 'util';
 import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
 
-import reducers from '../src/redux/';
 import conf from './configure.js';
 import login from './routes/login';
 import api from './routes/api';
 import routes from '../src/routes';
 import Html from '../src/helpers/html';
+import configureStore from '../src/store/configureStore';
 
 const MongoStore = MongoConnect(session);
 const sessionStore = new MongoStore({
@@ -46,7 +45,23 @@ function serve(webpackIsomorphicTools) {
       } else if (redirectLocation) {
         res.redirect(302, redirectLocation.pathname + redirectLocation.search);
       } else if (renderProps) {
-        const store = createStore(reducers);
+
+        // FIXME defend against no session
+        const isDev = (
+          req.session &&
+            req.session.teams &&
+            req.session.teams.length
+        );
+
+        // FIXME defend against no session
+        const initialState = {
+          authenticatedUser: {
+            isAuthenticated: req.session.authenticated,
+            isDev: isDev,
+            name: req.session.name
+          }
+        };
+        const store = configureStore(initialState);
 
         // You can also check renderProps.components or renderProps.routes for
         // your "not found" component or route respectively, and send a 404 as
