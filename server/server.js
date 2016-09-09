@@ -54,7 +54,7 @@ function serve(webpackIsomorphicTools) {
         );
 
         const initialState = {
-          user: {
+          authenticatedUser: {
             isAuthenticated: req.session.authenticated,
             isDev: isDev,
             name: req.session.name
