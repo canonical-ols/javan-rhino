@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import style from './root.css';
+import style from './user.css';
 
 export default class User extends Component {
   render() {
