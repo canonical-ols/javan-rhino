@@ -1,4 +1,5 @@
 import * as ActionTypes from '../actions';
+import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 
 // FIXME do we need this?
@@ -20,6 +21,7 @@ function authenticatedUser(state = {
 }
 
 const rootReducer = combineReducers({
+  routing,
   authenticatedUser
 });
 
