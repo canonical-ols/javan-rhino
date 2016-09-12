@@ -3,9 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import style from './user.css';
 
 export default class User extends Component {
-  render() {
-    const { user } = this.props;
+  renderAuthenticatedLink(user) {
     let link;
+
     if (user.isAuthenticated) {
       link = <div className={ style.link }>
         <span className={ style.username }>{ user.name }</span>{ ' ' }
@@ -16,6 +16,12 @@ export default class User extends Component {
     }
 
     return link;
+  }
+
+  render() {
+    const { user } = this.props;
+
+    return this.renderAuthenticatedLink(user);
   }
 }
 
