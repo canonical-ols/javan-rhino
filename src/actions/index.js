@@ -58,8 +58,9 @@ export function postStripeToken(token) {
     // TODO try-sandbox :(
     return fetch('/api/purchases/customers', {
       method: 'POST',
+      credentials: 'same-origin',
       body: JSON.stringify({
-        token
+        stripe_token: token
       })
     })
       .then(checkStatus)
