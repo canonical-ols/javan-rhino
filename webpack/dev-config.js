@@ -21,6 +21,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '../public/static'),
     filename: 'bundle.js',
+    sourceMapFilename: '[file].map',
     publicPath: 'http://localhost:3001/static/'
   },
   plugins: [
@@ -32,6 +33,7 @@ module.exports = {
   module: {
     loaders: require('./loaders-config.js')
   },
+  devtool: 'source-map',
   postcss: function () {
     return [ vars({ variables: () => sharedVars }), autoprefixer ];
   }
