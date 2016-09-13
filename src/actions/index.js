@@ -12,6 +12,8 @@ export function authenticateUser(isAuthenticated, isDev, name) {
 }
 
 export const SEND_STRIPE_TOKEN = 'SEND_STRIPE_TOKEN';
+export const SEND_STRIPE_TOKEN_SUCCESS = 'SEND_STRIPE_TOKEN_SUCCESS';
+export const SEND_STRIPE_TOKEN_FAILURE = 'SEND_STRIPE_TOKEN_FAILURE';
 
 export function sendStripeToken(token) {
   return {
@@ -20,13 +22,10 @@ export function sendStripeToken(token) {
   };
 }
 
-export const SEND_STRIPE_TOKEN_SUCCESS = 'SEND_STRIPE_TOKEN_SUCCESS';
-export const SEND_STRIPE_TOKEN_FAILURE= 'SEND_STRIPE_TOKEN_FAILURE';
-
-export function sendStripeTokenSuccess(json) {
+export function sendStripeTokenSuccess(tosAccepted) {
   return {
     type: SEND_STRIPE_TOKEN_SUCCESS,
-    tos_accepted: json.tos_accepted
+    tosAccepted
   };
 }
 
@@ -69,7 +68,7 @@ export function postStripeToken(token) {
     })
       .then(checkStatus)
       .then(response => response.json())
-      .then(json => dispatch(sendStripeTokenSuccess(json)))
+      .then(json => dispatch(sendStripeTokenSuccess(json.tos_accepted)))
       .catch(errors => dispatch(sendStripeTokenFailure(errors)));
   };
 }
