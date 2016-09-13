@@ -17,3 +17,11 @@ $color: $mid-grey;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
+.success {
+  composes: success from "./inputField.css";
+}
+
+.error {
+  composes: error from "./inputField.css";
+}
