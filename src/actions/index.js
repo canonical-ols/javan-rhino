@@ -59,6 +59,10 @@ export function postStripeToken(token) {
     return fetch('/api/purchases/customers', {
       method: 'POST',
       credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         stripe_token: token
       })
