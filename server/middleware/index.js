@@ -1,5 +1,4 @@
 export const requireAuthentication = (req, res, next) => {
-  console.log(req.session);
   if (req.session.authenticated) {
     next();
   } else {
@@ -10,7 +9,6 @@ export const requireAuthentication = (req, res, next) => {
 };
 
 export const requireAuthorization = (req, res, next) => {
-  console.log(req.session);
   if (req.session.authorization) {
     next();
   } else {
