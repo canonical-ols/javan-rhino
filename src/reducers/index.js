@@ -1,14 +1,15 @@
-import * as ActionTypes from '../actions';
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 
-// FIXME do we need this?
+import * as ActionTypes from '../actions';
+
 function authenticatedUser(state = {
   isAuthenticated: false,
   isDev: false,
   name: undefined
 }, action) {
   switch(action.type) {
+      // TODO COMPLETE_LOGOUT
     case ActionTypes.COMPLETE_LOGIN:
       return {
         isAuthenticated: action.isAuthenticated,
@@ -20,8 +21,31 @@ function authenticatedUser(state = {
   }
 }
 
+function sendStripeToken(state = { isFetching: false }, action) {
+  switch(action.type) {
+    case ActionTypes.SEND_STRIPE_TOKEN:
+      return {
+        isFetching: true,
+        token: action.token
+      };
+    case ActionTypes.SEND_STRIPE_TOKEN_SUCCESS:
+      return {
+        isFetching: false,
+        tos_accepted: action.tos_accepted
+      };
+    case ActionTypes.SEND_STRIPE_TOKEN_FAILURE:
+      return {
+        isFetching: false,
+        errors: action.errors
+      };
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   routing,
+  sendStripeToken,
   authenticatedUser
 });
 

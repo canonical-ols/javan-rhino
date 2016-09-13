@@ -14,6 +14,7 @@ const sharedVars = require('../src/style/variables');
 module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: [
+    'whatwg-fetch',
     'webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr',
     'webpack/hot/only-dev-server',
     './src',
