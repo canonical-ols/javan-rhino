@@ -1,5 +1,4 @@
 import Express from 'express';
-import MongoConnect from 'connect-mongo';
 import React from 'react';
 import session from 'express-session';
 import util from 'util';
@@ -10,22 +9,13 @@ import conf from './configure.js';
 import login from './routes/login';
 import api from './routes/api';
 import routes from '../src/routes';
+import sessionStorage from './helpers/sessionStorage';
 import Html from '../src/helpers/html';
 import configureStore from '../src/store/configureStore';
 
-const MongoStore = MongoConnect(session);
-const sessionStore = new MongoStore({
-  url: conf.get('DATABASE:URL')
-});
-
 const app = Express();
 
-app.use(session({
-  secret: conf.get('DATABASE:SECRET'),
-  store: sessionStore,
-  resave: false,
-  saveUninitialized: false
-}));
+app.use(session(sessionStorage(conf)));
 app.use('/', login);
 app.use('/api', api);
 

@@ -10,10 +10,6 @@ module.exports = {
       'ubuntuone-hackers'
     ]
   },
-  DATABASE: {
-    URL: 'mongodb://localhost/javan-rhino',
-    SECRET: 'javan rhino'
-  },
   UBUNTU_SSO_HOST: 'login.staging.ubuntu.com',
   UBUNTU_SSO_URL: 'https://login.staging.ubuntu.com',
   UBUNTU_SCA: {
