@@ -9,7 +9,6 @@ function authenticatedUser(state = {
   name: undefined
 }, action) {
   switch(action.type) {
-      // TODO COMPLETE_LOGOUT
     case ActionTypes.COMPLETE_LOGIN:
       return {
         isAuthenticated: action.isAuthenticated,
@@ -31,7 +30,7 @@ function sendStripeToken(state = { isFetching: false }, action) {
     case ActionTypes.SEND_STRIPE_TOKEN_SUCCESS:
       return {
         isFetching: false,
-        tos_accepted: action.tos_accepted
+        tosAccepted: action.tosAccepted
       };
     case ActionTypes.SEND_STRIPE_TOKEN_FAILURE:
       return {
