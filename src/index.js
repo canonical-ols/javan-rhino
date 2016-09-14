@@ -2,7 +2,6 @@
 import './style/normalize.css';
 import './style/base.css';
 
-import 'babel-polyfill';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';

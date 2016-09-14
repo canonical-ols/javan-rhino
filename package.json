@@ -56,6 +56,7 @@
     "express-session": "^1.14.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
+    "isomorphic-fetch": "^2.2.1",
     "macaroons.js": "^0.3.6",
     "mocha": "^3.0.2",
     "nconf": "^0.8.4",
@@ -87,7 +88,6 @@
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2",
-    "webpack-isomorphic-tools": "^2.5.7",
-    "whatwg-fetch": "^1.0.0"
+    "webpack-isomorphic-tools": "^2.5.7"
   }
 }
