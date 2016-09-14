@@ -23,34 +23,32 @@ export default class PaymentsForm extends Component {
     };
 
     const names = [
-      'customerCountry',
+      'customerCountry', // value is ISO code from select, TODO: do we need to store name?
       'customerFullname',
       'customerAddress1',
       'customerAddress2',
       'customerState',
       'customerCity',
       'customerPostcode',
-      'customerCountryCode',
+      //'customerCountryCode', TODO: do we need separate code field?
       'customerPhone',
       'cardNumber',
       'expiryDate',
       'securityNumber',
-      'billingCountry',
+      'billingCountry', // value is ISO code from select, TODO: do we need to store name?
       'billingFullname',
       'billingAddress1',
       'billingAddress2',
       'billingState',
       'billingCity',
       'billingPostcode',
-      'billingCountryCode',
+      //'billingCountryCode', TODO: do we need separate code field?
       'billingPhone'
     ];
 
     const optional = [
       'customerAddress2',
       'billingAddress2',
-      'customerCountryCode',
-      'billingCountryCode',
       'customerPhone',
       'billingPhone'
     ];
@@ -112,15 +110,6 @@ export default class PaymentsForm extends Component {
         <h3>Payment details</h3>
 
         <Fieldset>
-          <SelectField
-            label="Country"
-            options={ this.mapCountriesToOptions(countries) }
-            {...this.state.fields.customerCountry}
-            onChange={ this.onChange.bind(this) }
-          />
-        </Fieldset>
-
-        <Fieldset>
           <h4>Name and address</h4>
           <InputField
             label="Full name"
@@ -164,16 +153,17 @@ export default class PaymentsForm extends Component {
             />
           </FieldRow>
           <FieldRow>
-            {/* TODO: confirm if customerCountryCode needed */}
-            <InputField
-              label="Country code"
+            <SelectField
+              label="Country"
               size="small"
-              {...this.state.fields.customerCountryCode}
+              options={ this.mapCountriesToOptions(countries) }
+              {...this.state.fields.customerCountry}
               onChange={ this.onChange.bind(this) }
             />
             <InputField
               label="Phone number"
               placeholder="Optional"
+              size="small"
               {...this.state.fields.customerPhone}
               onChange={ this.onChange.bind(this) }
             />
@@ -211,12 +201,6 @@ export default class PaymentsForm extends Component {
 
         <Fieldset>
           <h4>Billing address</h4>
-          <SelectField
-            label="Country"
-            options={ this.mapCountriesToOptions(countries) }
-            {...this.state.fields.billingCountry}
-            onChange={ this.onChange.bind(this) }
-          />
           <InputField
             label="Full name"
             placeholder="John Doe"
@@ -259,16 +243,17 @@ export default class PaymentsForm extends Component {
             />
           </FieldRow>
           <FieldRow>
-            {/* TODO: confirm if billingCountryCode needed */}
-            <InputField
-              label="Country code"
+            <SelectField
+              label="Country"
               size="small"
-              {...this.state.fields.billingCountryCode}
+              options={ this.mapCountriesToOptions(countries) }
+              {...this.state.fields.billingCountry}
               onChange={ this.onChange.bind(this) }
             />
             <InputField
               label="Phone number"
               placeholder="Optional"
+              size="small"
               {...this.state.fields.billingPhone}
               onChange={ this.onChange.bind(this) }
             />
