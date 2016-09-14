@@ -68,8 +68,10 @@ export default class PaymentsForm extends Component {
       // field is required but empty
       if (field.required && !field.value) {
         field.valid = false;
-        field.touched = true;
+      } else {
+        field.valid = true;
       }
+      field.touched = true;
     });
 
     return fields;

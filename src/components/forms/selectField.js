@@ -10,9 +10,12 @@ export default function SelectField(props) {
   const id = `ID_SELECT_FIELD_${name}`;
 
   const className = `${styles.inputField} ${styles[size]}`;
+
+  const status = props.touched ? (props.valid ? 'success' : 'error') : null;
+
   return <div className={ className }>
     <Label htmlFor={ id }>{ label }:</Label>
-    <Select id={ id } name={ name } required={ required } value={ props.value } onChange={ props.onChange }>
+    <Select id={ id } name={ name } required={ required } value={ props.value } status={ status } onChange={ props.onChange }>
       {options.map(function(option){
         return <option key={ `${id}_${option.value}`} value={ option.value }>{ option.name }</option>;
       })}
