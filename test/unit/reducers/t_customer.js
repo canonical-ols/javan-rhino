@@ -4,6 +4,7 @@ import { customer } from '../../../src/reducers/customer';
 import * as ActionTypes from '../../../src/actions/customer';
 
 describe('customer reducers', () => {
+
   it('should return the initial state', () => {
     expect(customer(undefined, {})).toEqual({
       errors: false,
@@ -14,14 +15,22 @@ describe('customer reducers', () => {
   });
 
   it('should add token to state', () => {
+    const state = {
+      errors: false,
+      isFetching: false,
+      token: false,
+      tosAccepted: 'date string'
+    };
     const action = {
       type: ActionTypes.SEND_STRIPE_TOKEN,
       token: 'foo'
     };
 
-    expect(customer({}, action)).toEqual({
+    expect(customer(state, action)).toEqual({
+      errors: false,
       isFetching: true,
-      token: 'foo'
+      token: 'foo',
+      tosAccepted: 'date string'
     });
   });
 
