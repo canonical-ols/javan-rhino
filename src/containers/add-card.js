@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 
-import { postStripeToken } from '../actions/';
+import { postStripeToken } from '../actions/customer';
 import PaymentsForm from '../components/payments-form';
 
 import styles from './container.css';

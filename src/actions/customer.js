@@ -1,15 +1,4 @@
-import 'whatwg-fetch';
-
-export const COMPLETE_LOGIN = 'COMPLETE_LOGIN';
-
-export function authenticateUser(isAuthenticated, isDev, name) {
-  return {
-    type: COMPLETE_LOGIN,
-    isAuthenticated,
-    isDev,
-    name
-  };
-}
+import 'isomorphic-fetch';
 
 export const SEND_STRIPE_TOKEN = 'SEND_STRIPE_TOKEN';
 export const SEND_STRIPE_TOKEN_SUCCESS = 'SEND_STRIPE_TOKEN_SUCCESS';
@@ -55,7 +44,7 @@ export function postStripeToken(token) {
     dispatch(sendStripeToken(token));
 
     // TODO try-sandbox :(
-    return fetch('/api/purchases/customers', {
+    return fetch('http://localhost:3000/api/purchases/customers', {
       method: 'POST',
       credentials: 'same-origin',
       headers: {

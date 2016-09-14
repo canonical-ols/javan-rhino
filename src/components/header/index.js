@@ -10,7 +10,7 @@ import logo from './ubuntu-logo.svg';
 
 export default class Header extends Component {
   render() {
-    const { user } = this.props;
+    const { identity } = this.props;
     return (
       <div className={ styles.header }>
         <nav className={ styles.container }>
@@ -23,7 +23,7 @@ export default class Header extends Component {
             <NavLink to="/about">About</NavLink>
           </div>
           <div className={ styles.sideNav }>
-            <User user={ user } />
+            <User identity={ identity } />
           </div>
         </nav>
       </div>
@@ -32,5 +32,5 @@ export default class Header extends Component {
 }
 
 Header.propTypes = {
-  user: PropTypes.object.isRequired
+  identity: PropTypes.object.isRequired
 };
