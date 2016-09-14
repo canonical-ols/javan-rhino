@@ -12,7 +12,7 @@ describe('<User /> component', () => {
 
     beforeEach(() => {
       props = {
-        user: {
+        identity: {
           isAuthenticated: false,
           isDev: false,
           name: ''
@@ -33,7 +33,7 @@ describe('<User /> component', () => {
 
     beforeEach(() => {
       props = {
-        user: {
+        identity: {
           isAuthenticated: true,
           isDev: false,
           name: 'Foo'

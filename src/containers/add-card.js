@@ -1,14 +1,13 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
-import { postStripeToken } from '../actions/';
+import { postStripeToken } from '../actions/customer';
 import PaymentsForm from '../components/payments-form';
 
 import styles from './container.css';
 
 export class AddCard extends Component {
   handleClick() {
-    console.log('aaa');
     const { dispatch } = this.props;
     dispatch(postStripeToken('hello-ricardo'));
   }

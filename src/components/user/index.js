@@ -19,12 +19,12 @@ export default class User extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { identity } = this.props;
 
-    return this.renderAuthenticatedLink(user);
+    return this.renderAuthenticatedLink(identity);
   }
 }
 
 User.propTypes = {
-  user: PropTypes.object.isRequired
+  identity: PropTypes.object.isRequired
 };

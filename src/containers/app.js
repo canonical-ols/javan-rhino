@@ -7,7 +7,7 @@ import Footer from '../components/footer';
 
 class App extends Component {
   render() {
-    const { authenticatedUser } = this.props;
+    const { identity } = this.props;
     // FIXME sstewart 17-Aug-16 move some of this to config
     return (
       <div>
@@ -19,7 +19,7 @@ class App extends Component {
             { 'name': 'description', 'content': 'my.ubuntu.com payments ui' },
           ]}
         />
-        <Header user={ authenticatedUser }/>
+        <Header identity={ identity }/>
         { this.props.children }
         <Footer />
       </div>
@@ -29,16 +29,16 @@ class App extends Component {
 
 App.propTypes = {
   children: PropTypes.node,
-  authenticatedUser: PropTypes.object.isRequired
+  identity: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   const {
-    authenticatedUser
+    identity
   } = state;
 
   return {
-    authenticatedUser
+    identity
   };
 }
 
