@@ -9,6 +9,6 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={Home}/>
     <Route path="/about" component={About}/>
-    <Route path="/pay/add-card" component={AddCard}/>
+    <Route path="/payment/edit" component={AddCard}/>
   </Route>
 );
