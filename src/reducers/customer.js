@@ -8,23 +8,20 @@ export function customer(state = {
 }, action) {
   switch(action.type) {
     case ActionTypes.SEND_STRIPE_TOKEN:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         isFetching: true,
         token: action.token
-      };
+      });
     case ActionTypes.SEND_STRIPE_TOKEN_SUCCESS:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         isFetching: false,
         tosAccepted: action.tosAccepted
-      };
+      });
     case ActionTypes.SEND_STRIPE_TOKEN_FAILURE:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         isFetching: false,
         errors: action.errors
-      };
+      });
     default:
       return state;
   }
