@@ -43,7 +43,6 @@ export function postStripeToken(token) {
   return (dispatch) => {
     dispatch(sendStripeToken(token));
 
-    // TODO try-sandbox :(
     return fetch('http://localhost:3000/api/purchases/customers', {
       method: 'POST',
       credentials: 'same-origin',
