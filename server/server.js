@@ -8,6 +8,7 @@ import { renderToString } from 'react-dom/server';
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
+import url from 'url';
 
 import conf from './configure.js';
 import login from './routes/login';
@@ -90,7 +91,8 @@ function serve(webpackIsomorphicTools) {
     });
   });
 
-  const server = app.listen(conf.get('APP:PORT'), conf.get('APP:HOST'), () => {
+  const appUrl = url.parse(conf.get('APP_URL'));
+  const server = app.listen(appUrl.port, appUrl.hostname, () => {
     const host = server.address().address;
     const port = server.address().port;
 

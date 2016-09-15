@@ -5,6 +5,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const vars = require('postcss-simple-vars');
 const autoprefixer = require('autoprefixer');
 
+const conf = require('../server/configure.js');
+const webpackDevUrl = conf.get('WEBPACK_DEV_URL');
+
 const webpackIsomorphicToolsPlugin =
   new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools-configuration'))
   .development();
@@ -15,7 +18,7 @@ module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: [
     'babel-polyfill',
-    'webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr',
+    `webpack-hot-middleware/client?path=${webpackDevUrl}/__webpack_hmr`,
     'webpack/hot/only-dev-server',
     './src',
   ],
@@ -23,7 +26,7 @@ module.exports = {
     path: path.join(__dirname, '../public/static'),
     filename: 'bundle.js',
     sourceMapFilename: '[file].map',
-    publicPath: 'http://localhost:3001/static/'
+    publicPath: `${webpackDevUrl}/static/`
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
