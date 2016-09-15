@@ -67,6 +67,9 @@ export default class PaymentsForm extends Component {
   validate(fields, { forceTouched }={}) {
     Object.keys(fields).forEach((name) => {
       const field = fields[name];
+
+      field.valid = true; // every field is valid until said otherwise
+
       // field is required but empty
       if (field.required) {
         field.valid = validateNonEmpty(field.value);
