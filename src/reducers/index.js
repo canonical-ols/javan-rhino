@@ -4,14 +4,9 @@ import { combineReducers } from 'redux';
 import * as identity from '../reducers/identity';
 import * as customer from '../reducers/customer';
 
-const reducers = Object.assign(
-  {},
-  identity,
-  customer
-);
-
 const rootReducer = combineReducers({
-  ...reducers,
+  ...identity,
+  ...customer,
   routing: routerReducer
 });
 
