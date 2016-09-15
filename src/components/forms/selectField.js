@@ -15,7 +15,13 @@ export default function SelectField(props) {
 
   return <div className={ className }>
     <Label htmlFor={ id }>{ label }:</Label>
-    <Select id={ id } name={ name } required={ required } value={ props.value } status={ status } onChange={ props.onChange }>
+    <Select id={ id } name={ name }
+      required={ required }
+      value={ props.value }
+      status={ status }
+      onChange={ props.onChange }
+      onBlur={ props.onBlur }
+    >
       {options.map(function(option){
         return <option key={ `${id}_${option.value}`} value={ option.value }>{ option.name }</option>;
       })}
@@ -32,5 +38,6 @@ SelectField.propTypes = {
   valid: PropTypes.bool,
   touched: PropTypes.bool,
   value: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func
 };

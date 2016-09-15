@@ -62,7 +62,7 @@ export default class PaymentsForm extends Component {
     return fields;
   }
 
-  validate(fields) {
+  validate(fields, { forceTouched }={}) {
     Object.keys(fields).forEach((name) => {
       const field = fields[name];
       // field is required but empty
@@ -71,14 +71,17 @@ export default class PaymentsForm extends Component {
       } else {
         field.valid = true;
       }
-      field.touched = true;
+
+      if (forceTouched) {
+        field.touched = true;
+      }
     });
 
     return fields;
   }
 
   onSubmit(event) {
-    const fields = this.validate(this.state.fields);
+    const fields = this.validate(this.state.fields, { forceTouched: true });
 
     this.setState({
       fields: fields
@@ -93,6 +96,20 @@ export default class PaymentsForm extends Component {
     // update fields state with new value
     const fields = { ...this.state.fields };
     fields[target.name].value = target.value;
+
+    this.setState({
+      fields: fields
+    });
+  }
+
+  onBlur(event) {
+    const { target } = event;
+
+    // update fields state with new value
+    let fields = { ...this.state.fields };
+    fields[target.name].touched = true;
+
+    fields = this.validate(fields);
 
     this.setState({
       fields: fields
@@ -118,24 +135,28 @@ export default class PaymentsForm extends Component {
             placeholder="John Doe"
             {...this.state.fields.customerFullname}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <InputField
             label="Address line 1"
             placeholder="e.g 20 Ingram Street"
             {...this.state.fields.customerAddress1}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <InputField
             label="Address line 2"
             placeholder="Optional"
             {...this.state.fields.customerAddress2}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <InputField
             label="State/County"
             placeholder="e.g Essex"
             {...this.state.fields.customerState}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <FieldRow>
             <InputField
@@ -144,6 +165,7 @@ export default class PaymentsForm extends Component {
               size="small"
               {...this.state.fields.customerCity}
               onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
             />
             <InputField
               name="customerPostcode"
@@ -152,6 +174,7 @@ export default class PaymentsForm extends Component {
               size="small"
               {...this.state.fields.customerPostcode}
               onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
             />
           </FieldRow>
           <FieldRow>
@@ -161,6 +184,7 @@ export default class PaymentsForm extends Component {
               options={ this.mapCountriesToOptions(countries) }
               {...this.state.fields.customerCountry}
               onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
             />
             <InputField
               label="Phone number"
@@ -168,6 +192,7 @@ export default class PaymentsForm extends Component {
               size="small"
               {...this.state.fields.customerPhone}
               onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
             />
           </FieldRow>
         </Fieldset>
@@ -180,18 +205,21 @@ export default class PaymentsForm extends Component {
             placeholder="1234 5678 9012"
             {...this.state.fields.cardNumber}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <InputField
             label="Expiry date"
             placeholder="MM/YY"
             {...this.state.fields.expiryDate}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <InputField
             label="Security number"
             placeholder="CVC"
             {...this.state.fields.securityNumber}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
 
           {/* TODO: how to handle clicking this? */}
@@ -208,24 +236,28 @@ export default class PaymentsForm extends Component {
             placeholder="John Doe"
             {...this.state.fields.billingFullname}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <InputField
             label="Address line 1"
             placeholder="e.g 20 Ingram Street"
             {...this.state.fields.billingAddress1}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <InputField
             label="Address line 2"
             placeholder="Optional"
             {...this.state.fields.billingAddress2}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <InputField
             label="State/County"
             placeholder="e.g Essex"
             {...this.state.fields.billingState}
             onChange={ this.onChange.bind(this) }
+            onBlur={ this.onBlur.bind(this) }
           />
           <FieldRow>
             <InputField
@@ -234,6 +266,7 @@ export default class PaymentsForm extends Component {
               size="small"
               {...this.state.fields.billingCity}
               onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
             />
             <InputField
               name="customerPostcode"
@@ -242,6 +275,7 @@ export default class PaymentsForm extends Component {
               size="small"
               {...this.state.fields.billingPostcode}
               onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
             />
           </FieldRow>
           <FieldRow>
@@ -251,6 +285,7 @@ export default class PaymentsForm extends Component {
               options={ this.mapCountriesToOptions(countries) }
               {...this.state.fields.billingCountry}
               onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
             />
             <InputField
               label="Phone number"
@@ -258,6 +293,7 @@ export default class PaymentsForm extends Component {
               size="small"
               {...this.state.fields.billingPhone}
               onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
             />
           </FieldRow>
         </Fieldset>

@@ -12,7 +12,7 @@ export default function Select(props) {
     success: status === 'success'
   });
   return <div className={ styles.select }>
-    <select {...rest} className={ selectClassName } onChange={ props.onChange }/>
+    <select {...rest} className={ selectClassName } onChange={ props.onChange } onBlur={ props.onBlur } />
   </div>;
 }
 
@@ -21,5 +21,6 @@ Select.propTypes = {
   name: PropTypes.string,
   children: PropTypes.node,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   status: PropTypes.oneOf(['success', 'error'])
 };

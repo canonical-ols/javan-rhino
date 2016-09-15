@@ -29,6 +29,7 @@ export default function InputField(props) {
       placeholder={ placeholder }
       className={ inputClassName }
       onChange={ props.onChange }
+      onBlur={ props.onBlur }
       value={ props.value || '' }
       />
   </div>;
@@ -44,5 +45,6 @@ InputField.propTypes = {
   valid: PropTypes.bool,
   touched: PropTypes.bool,
   value: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func
 };
