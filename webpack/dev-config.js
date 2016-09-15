@@ -29,6 +29,9 @@ module.exports = {
     publicPath: `${webpackDevUrl}/static/`
   },
   plugins: [
+    new webpack.DefinePlugin({
+      URL: JSON.stringify(conf.get('APP_URL'))
+    }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('style.css', { allChunks: true }),

@@ -1,3 +1,6 @@
+/**
+ * Expose settings to the browser via DefinePlugin in webpack/*-config.js
+ */
 module.exports = {
   APP_URL: 'http://localhost:3000',
   UBUNTU_SSO_URL: 'https://login.staging.ubuntu.com',
