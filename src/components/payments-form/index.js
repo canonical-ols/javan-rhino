@@ -4,6 +4,8 @@ import Button from '../button';
 import countries from './countries';
 import { CheckboxField, Fieldset, FieldRow, Form, InputField, SelectField } from '../forms';
 
+import { validateNonEmpty } from '../../validation';
+
 import styles from './payments-form.css';
 
 export default class PaymentsForm extends Component {
@@ -66,10 +68,8 @@ export default class PaymentsForm extends Component {
     Object.keys(fields).forEach((name) => {
       const field = fields[name];
       // field is required but empty
-      if (field.required && !field.value) {
-        field.valid = false;
-      } else {
-        field.valid = true;
+      if (field.required) {
+        field.valid = validateNonEmpty(field.value);
       }
 
       if (forceTouched) {
