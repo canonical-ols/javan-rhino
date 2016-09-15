@@ -8,6 +8,10 @@ export const customers = (req, res) => {
     uri: `${conf.get('UBUNTU_SCA:URL')}/purchases/customers`,
     headers: {
       authorization: auth
+    },
+    json: true,
+    body: {
+      stripe_token: req.body.token
     }
   };
 
@@ -21,6 +25,10 @@ export const orders = (req, res) => {
     uri: `${conf.get('UBUNTU_SCA:URL')}/purchases/orders`,
     headers: {
       authorization: auth
+    },
+    json: true,
+    body: {
+      'stripe_token': req.body.token
     }
   };
 

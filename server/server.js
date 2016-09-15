@@ -5,6 +5,9 @@ import session from 'express-session';
 import util from 'util';
 import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
+import morgan from 'morgan';
+import fs from 'fs';
+import path from 'path';
 
 import conf from './configure.js';
 import login from './routes/login';
@@ -17,9 +20,15 @@ const MongoStore = MongoConnect(session);
 const sessionStore = new MongoStore({
   url: conf.get('DATABASE:URL')
 });
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, '../logs/', 'access.log'),
+  { flags: 'a' }
+);
+
 
 const app = Express();
 
+app.use(morgan('combined', { stream: accessLogStream }));
 app.use(session({
   secret: conf.get('DATABASE:SECRET'),
   store: sessionStore,
@@ -54,7 +63,7 @@ function serve(webpackIsomorphicTools) {
         );
 
         const initialState = {
-          authenticatedUser: {
+          identity: {
             isAuthenticated: req.session.authenticated,
             isDev: isDev,
             name: req.session.name

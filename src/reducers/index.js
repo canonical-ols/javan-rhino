@@ -1,26 +1,13 @@
-import * as ActionTypes from '../actions';
+import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 
-// FIXME do we need this?
-function authenticatedUser(state = {
-  isAuthenticated: false,
-  isDev: false,
-  name: undefined
-}, action) {
-  switch(action.type) {
-    case ActionTypes.COMPLETE_LOGIN:
-      return {
-        isAuthenticated: action.isAuthenticated,
-        isDev: action.isDev,
-        name
-      };
-    default:
-      return state;
-  }
-}
+import * as identity from '../reducers/identity';
+import * as customer from '../reducers/customer';
 
 const rootReducer = combineReducers({
-  authenticatedUser
+  ...identity,
+  ...customer,
+  routing: routerReducer
 });
 
 export default rootReducer;

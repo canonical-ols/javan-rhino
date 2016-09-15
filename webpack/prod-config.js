@@ -14,6 +14,7 @@ const sharedVars = require('../src/style/variables');
 module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: [
+    'babel-polyfill',
     './src',
   ],
   output: {
