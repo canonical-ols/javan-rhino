@@ -34,6 +34,18 @@ describe('customer reducers', () => {
     });
   });
 
+  it('should handle success', () => {
+    const action = {
+      type: ActionTypes.SEND_STRIPE_TOKEN_SUCCESS,
+      tosAccepted: 'datetime'
+    };
+
+    expect(customer({}, action)).toEqual({
+      isFetching: false,
+      tosAccepted: 'datetime'
+    });
+  });
+
   it('should handle failure', () => {
     const action = {
       type: ActionTypes.SEND_STRIPE_TOKEN_FAILURE,
