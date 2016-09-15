@@ -2,6 +2,9 @@ $border-color: $mid-grey;
 $border-color-focus: $warm-grey;
 $background-color: #FFF;
 
+$error-color: $error;
+$success-color: $success;
+
 .inputField {
   margin-bottom: 0.5em;
 }
@@ -42,9 +45,9 @@ $background-color: #FFF;
 }
 
 .textInput.error {
-  border-color: red;
+  border-color: $error-color;
 }
 
 .textInput.success {
-  border-color: green;
+  border-color: $success-color;
 }

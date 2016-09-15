@@ -13,6 +13,11 @@ module.exports = {
   'cool-grey':           '#333333', // cool grey
   'light-grey':          '#f7f7f7', // light grey
 
+  'error':               '#df382c', // error notifications
+  'warning':             '#eca918', // warning notifications
+  'success':             '#38b44a', // success notifications
+  'information':         '#19b6ee', // information notifications
+
   'base-font-family':    'Ubuntu, Arial, "libra sans", sans-serif',
   'base-font-weight':    '300',
   'base-font-size':      '16px',
