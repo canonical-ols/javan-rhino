@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Button from '../button';
 import countries from './countries';
-import { CheckboxField, Fieldset, FieldRow, Form, InputField, SelectField } from '../forms';
+import { CheckboxField, Fieldset, FieldRow, Form, InputField, Message, SelectField } from '../forms';
 
 import { validateNonEmpty, validateCardNumber, validateExpiry, validateCVC } from '../../validation';
 
@@ -225,7 +225,7 @@ export default class PaymentsForm extends Component {
 
         <Fieldset>
           <h4>Payment information</h4>
-          <p>{"You won't be charged until your next purchase"}</p>
+          <Message status="info" text="You won't be charged until your next purchase" />
           <InputField
             label="Card number"
             placeholder="1234 5678 9012"
