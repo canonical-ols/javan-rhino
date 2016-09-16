@@ -1,5 +1,6 @@
 import expect from 'expect';
-import { validateNonEmpty } from '../../../src/validation';
+
+import { validateNonEmpty, validateCardNumber, validateExpiry, validateCVC } from '../../../src/validation';
 
 describe('validation', () => {
 
@@ -21,5 +22,23 @@ describe('validation', () => {
     });
   });
 
+  // we use Stripe.js implementation, so no need to test results
+  describe('validateCardNumber', () => {
+    it('should be a function', () => {
+      expect(validateCardNumber).toBeA('function');
+    });
+  });
+
+  describe('validateExpiry', () => {
+    it('should be a function', () => {
+      expect(validateExpiry).toBeA('function');
+    });
+  });
+
+  describe('validateCVC', () => {
+    it('should be a function', () => {
+      expect(validateCVC).toBeA('function');
+    });
+  });
 
 });

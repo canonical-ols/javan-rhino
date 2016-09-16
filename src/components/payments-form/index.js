@@ -4,13 +4,14 @@ import Button from '../button';
 import countries from './countries';
 import { CheckboxField, Fieldset, FieldRow, Form, InputField, SelectField } from '../forms';
 
-import { validateNonEmpty } from '../../validation';
+import { validateNonEmpty, validateCardNumber, validateExpiry, validateCVC } from '../../validation';
 
 import styles from './payments-form.css';
 
 export default class PaymentsForm extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       fields: this.getInitialValues()
     };
@@ -73,6 +74,18 @@ export default class PaymentsForm extends Component {
       // field is required but empty
       if (field.required) {
         field.valid = validateNonEmpty(field.value);
+      }
+
+      if (name === 'cardNumber') {
+        field.valid = validateCardNumber(field.value);
+      }
+
+      if (name === 'expiryDate') {
+        field.valid = validateExpiry(field.value);
+      }
+
+      if (name === 'securityNumber') {
+        field.valid = validateCVC(field.value);
       }
 
       if (forceTouched) {
