@@ -121,7 +121,7 @@ export default class PaymentsForm extends Component {
 
     // update fields state with new value
     const fields = { ...this.state.fields };
-    fields[target.name].value = target.value;
+    fields[target.dataset.name].value = target.value;
 
     this.setState({
       fields: fields
@@ -133,7 +133,7 @@ export default class PaymentsForm extends Component {
 
     // update fields state with new value
     let fields = { ...this.state.fields };
-    fields[target.name].touched = true;
+    fields[target.dataset.name].touched = true;
 
     fields = this.validate(fields);
 
@@ -229,6 +229,7 @@ export default class PaymentsForm extends Component {
           <InputField
             label="Card number"
             placeholder="1234 5678 9012"
+            secret={ true }
             {...this.state.fields.cardNumber}
             onChange={ this.onChange.bind(this) }
             onBlur={ this.onBlur.bind(this) }
@@ -236,6 +237,7 @@ export default class PaymentsForm extends Component {
           <InputField
             label="Expiry date"
             placeholder="MM/YY"
+            secret={ true }
             {...this.state.fields.expiryDate}
             onChange={ this.onChange.bind(this) }
             onBlur={ this.onBlur.bind(this) }
@@ -243,6 +245,7 @@ export default class PaymentsForm extends Component {
           <InputField
             label="Security number"
             placeholder="CVC"
+            secret={ true }
             {...this.state.fields.securityNumber}
             onChange={ this.onChange.bind(this) }
             onBlur={ this.onBlur.bind(this) }

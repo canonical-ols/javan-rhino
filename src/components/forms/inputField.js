@@ -15,7 +15,7 @@ export default function InputField(props) {
 
   return <div className={ className }>
     <label htmlFor={ id } className={ labelClassName }>{ label }:</label>
-    <input id={ id } name={ name } type={ type }
+    <input id={ id } name={ props.secret ? null : name } data-name={ name } type={ type }
       required={ props.required }
       placeholder={ placeholder }
       className={ inputClassName }
@@ -34,6 +34,7 @@ InputField.propTypes = {
   required: PropTypes.bool,
   type: PropTypes.string,
   size: PropTypes.oneOf(['full', 'small']),
+  secret: PropTypes.bool,
   valid: PropTypes.bool,
   touched: PropTypes.bool,
   value: PropTypes.string,

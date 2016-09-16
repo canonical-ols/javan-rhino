@@ -16,7 +16,7 @@ export default function SelectField(props) {
 
   return <div className={ className }>
     <label htmlFor={ id } className={ labelClassName }>{ label }:</label>
-    <Select id={ id } name={ name }
+    <Select id={ id } name={ props.secret ? null : name } data-name={ name }
       required={ required }
       value={ props.value }
       status={ status }
@@ -37,9 +37,11 @@ SelectField.propTypes = {
   options: PropTypes.array,
   required: PropTypes.bool,
   size: PropTypes.oneOf(['full', 'small']),
+  secret: PropTypes.bool,
   valid: PropTypes.bool,
   touched: PropTypes.bool,
   value: PropTypes.string,
+  errorMsg: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func
 };
