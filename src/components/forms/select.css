@@ -5,10 +5,14 @@ $color: $mid-grey;
 }
 
 .select:after {
-  content: "∨";
+  content: "\25BC";
   position: absolute;
-  right: 10px;
-  font-size: 25px;
+  font-size: 18px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: -10px;
+  top: 50%;
+  right: 5px;
   color: $color;
 }
 
