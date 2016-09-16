@@ -17,10 +17,6 @@ export class AddCard extends Component {
     const boundClick = this.handleClick.bind(this);
     return (
       <div className={ styles.container }>
-        <Helmet
-          script={[
-            { src: 'https://js.stripe.com/v2/' }
-          ]} />
         <PaymentsForm />
         <button onClick={ boundClick }>Test Send Stripe Token</button>
       </div>
