@@ -1,16 +1,12 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
 
 import styles from './select.css';
-const cx = classNames.bind(styles);
 
 export default function Select(props) {
   const { status, ...rest } = props;
-  const selectClassName = cx({
-    selectInput: true,
-    error: status === 'error',
-    success: status === 'success'
-  });
+
+  const selectClassName = `${styles.selectInput} ${styles[status]}`;
+
   return <div className={ styles.select }>
     <select {...rest} className={ selectClassName } onChange={ props.onChange } onBlur={ props.onBlur } />
   </div>;

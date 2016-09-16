@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Label from './label';
 import Select from './select';
 
 import styles from './inputField.css';
@@ -9,12 +8,14 @@ export default function SelectField(props) {
   const { name, label, size='full', required, options } = props;
   const id = `ID_SELECT_FIELD_${name}`;
 
-  const className = `${styles.inputField} ${styles[size]}`;
-
   const status = props.touched ? (props.valid ? 'success' : 'error') : null;
 
+  const className = `${styles.inputField} ${styles[size]}`;
+  const labelClassName = `${styles.label} ${styles[status]}`;
+  const errorMsgClassName = `${styles.errorMsg} ${styles[status]}`;
+
   return <div className={ className }>
-    <Label htmlFor={ id }>{ label }:</Label>
+    <label htmlFor={ id } className={ labelClassName }>{ label }:</label>
     <Select id={ id } name={ name }
       required={ required }
       value={ props.value }
@@ -26,6 +27,7 @@ export default function SelectField(props) {
         return <option key={ `${id}_${option.value}`} value={ option.value }>{ option.name }</option>;
       })}
     </Select>
+    <label htmlFor={ id } className={ errorMsgClassName }>{ props.errorMsg }</label>
   </div>;
 }
 

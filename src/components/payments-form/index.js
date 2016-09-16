@@ -17,6 +17,34 @@ export default class PaymentsForm extends Component {
     };
   }
 
+  getFieldsNames() {
+    return [
+      'customerFullname',
+      'customerAddress1',
+      'customerAddress2',
+      'customerState',
+      'customerCity',
+      'customerCountry', // value is ISO code from select, TODO: do we need to store name?
+      'customerPostcode',
+      //'customerCountryCode', TODO: do we need separate code field?
+      'customerPhone',
+
+      'cardNumber',
+      'expiryDate',
+      'securityNumber',
+
+      'billingFullname',
+      'billingAddress1',
+      'billingAddress2',
+      'billingState',
+      'billingCity',
+      'billingCountry', // value is ISO code from select, TODO: do we need to store name?
+      'billingPostcode',
+      //'billingCountryCode', TODO: do we need separate code field?
+      'billingPhone'
+    ];
+  }
+
   getInitialValues() {
     const initialState = {
       value: '',
@@ -25,29 +53,7 @@ export default class PaymentsForm extends Component {
       required: true
     };
 
-    const names = [
-      'customerCountry', // value is ISO code from select, TODO: do we need to store name?
-      'customerFullname',
-      'customerAddress1',
-      'customerAddress2',
-      'customerState',
-      'customerCity',
-      'customerPostcode',
-      //'customerCountryCode', TODO: do we need separate code field?
-      'customerPhone',
-      'cardNumber',
-      'expiryDate',
-      'securityNumber',
-      'billingCountry', // value is ISO code from select, TODO: do we need to store name?
-      'billingFullname',
-      'billingAddress1',
-      'billingAddress2',
-      'billingState',
-      'billingCity',
-      'billingPostcode',
-      //'billingCountryCode', TODO: do we need separate code field?
-      'billingPhone'
-    ];
+    const names = this.getFieldsNames();
 
     const optional = [
       'customerAddress2',
@@ -74,18 +80,22 @@ export default class PaymentsForm extends Component {
       // field is required but empty
       if (field.required) {
         field.valid = validateNonEmpty(field.value);
+        field.errorMsg = 'This field is required';
       }
 
       if (name === 'cardNumber') {
         field.valid = validateCardNumber(field.value);
+        field.errorMsg = 'This is not a valid card number';
       }
 
       if (name === 'expiryDate') {
         field.valid = validateExpiry(field.value);
+        field.errorMsg = 'This is not a valid expiry date';
       }
 
       if (name === 'securityNumber') {
         field.valid = validateCVC(field.value);
+        field.errorMsg = 'This is not a valid CVC security number';
       }
 
       if (forceTouched) {

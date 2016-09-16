@@ -6,16 +6,8 @@ export function validateNonEmpty(value) {
   return !!value;
 }
 
-// use global Stripe from Stripe.js if available in the browser
-// or mock it empty if
-const Stripe = (typeof window !== 'undefined' && window.Stripe) ? window.Stripe : {
-  card: {
-    validateCardNumber: () => true,
-    validateExpiry: () => true,
-    validateCVC: () => true
-  }
-};
-
-export const validateCardNumber = Stripe.card.validateCardNumber;
-export const validateExpiry = Stripe.card.validateExpiry;
-export const validateCVC = Stripe.card.validateCVC;
+/* global Stripe */
+// use global Stripe from Stripe.js for validation in browser
+export const validateCardNumber = (number) => Stripe.card.validateCardNumber(number);
+export const validateExpiry = (date) => Stripe.card.validateExpiry(date);
+export const validateCVC = (cvc) => Stripe.card.validateCVC(cvc);

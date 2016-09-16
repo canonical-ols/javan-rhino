@@ -1,29 +1,20 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-
-import Label from './label';
 
 import styles from './inputField.css';
-const cx = classNames.bind(styles);
 
 export default function InputField(props) {
   const { name, label, type='text', size='full', placeholder } = props;
   const id = `ID_INPUT_FIELD_${name}`;
 
-  const className = cx({
-    inputField: true,
-    full: size === 'full',
-    small: size === 'small'
-  });
+  const status = props.touched ? (props.valid ? 'success' : 'error') : null;
 
-  const inputClassName = cx({
-    textInput: true,
-    success: props.touched && props.valid,
-    error: props.touched && !props.valid
-  });
+  const className = `${styles.inputField} ${styles[size]}`;
+  const inputClassName = `${styles.textInput} ${styles[status]}`;
+  const labelClassName = `${styles.label} ${styles[status]}`;
+  const errorMsgClassName = `${styles.errorMsg} ${styles[status]}`;
 
   return <div className={ className }>
-    <Label htmlFor={ id }>{ label }:</Label>
+    <label htmlFor={ id } className={ labelClassName }>{ label }:</label>
     <input id={ id } name={ name } type={ type }
       required={ props.required }
       placeholder={ placeholder }
@@ -32,6 +23,7 @@ export default function InputField(props) {
       onBlur={ props.onBlur }
       value={ props.value || '' }
       />
+    <label htmlFor={ id } className={ errorMsgClassName }>{ props.errorMsg }</label>
   </div>;
 }
 
@@ -45,6 +37,7 @@ InputField.propTypes = {
   valid: PropTypes.bool,
   touched: PropTypes.bool,
   value: PropTypes.string,
+  errorMsg: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func
 };
