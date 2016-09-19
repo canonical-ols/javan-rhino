@@ -394,11 +394,9 @@ export default class PaymentsForm extends Component {
     let fields = this.state.fields;
 
     if (event.target.checked) {
-      //console.log("update fields")
       Object.keys(fields).forEach((name) => {
         const field = fields[name];
         if (field.addressBinding) {
-          //console.log("update", name);
           fields[ field.addressBinding ].value = field.value;
         }
       });
