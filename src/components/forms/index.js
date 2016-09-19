@@ -5,5 +5,15 @@ import Form from './form';
 import InputField from './inputField';
 import Message from './message';
 import SelectField from './selectField';
+import SensitiveInputField from './SensitiveInputField';
 
-export { CheckboxField, Fieldset, FieldRow, Form, InputField, Message, SelectField };
+export {
+  CheckboxField,
+  Fieldset,
+  FieldRow,
+  Form,
+  InputField,
+  Message,
+  SelectField,
+  SensitiveInputField
+};

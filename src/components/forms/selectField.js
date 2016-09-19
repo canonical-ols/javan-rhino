@@ -7,16 +7,19 @@ import styles from './inputField.css';
 export default function SelectField(props) {
   const { name, label, size='full', required, options } = props;
   const id = `ID_SELECT_FIELD_${name}`;
-
   const status = props.touched ? (props.valid ? 'success' : 'error') : null;
 
-  const className = `${styles.inputField} ${styles[size]}`;
-  const labelClassName = `${styles.label} ${styles[status]}`;
-  const errorMsgClassName = `${styles.errorMsg} ${styles[status]}`;
-
-  return <div className={ className }>
-    <label htmlFor={ id } className={ labelClassName }>{ label }:</label>
-    <Select id={ id } name={ props.secret ? null : name } data-name={ name }
+  return <div className={ `${styles.inputField} ${styles[size]}` }>
+    <label
+      htmlFor={ id }
+      className={ `${styles.label} ${styles[status]}` }
+    >
+      { label }:
+    </label>
+    <Select
+      id={ id }
+      name={ props.sensitive ? null : name }
+      data-name={ name }
       required={ required }
       value={ props.value }
       status={ status }
@@ -27,17 +30,22 @@ export default function SelectField(props) {
         return <option key={ `${id}_${option.value}`} value={ option.value }>{ option.name }</option>;
       })}
     </Select>
-    <label htmlFor={ id } className={ errorMsgClassName }>{ props.errorMsg }</label>
+    <label
+      htmlFor={ id }
+      className={ `${styles.errorMsg} ${styles[status]}` }
+    >
+      { props.errorMsg }
+    </label>
   </div>;
 }
 
 SelectField.propTypes = {
-  name: PropTypes.string,
-  label: PropTypes.string,
-  options: PropTypes.array,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
   required: PropTypes.bool,
   size: PropTypes.oneOf(['full', 'small']),
-  secret: PropTypes.bool,
+  sensitive: PropTypes.bool,
   valid: PropTypes.bool,
   touched: PropTypes.bool,
   value: PropTypes.string,

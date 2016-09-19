@@ -2,7 +2,16 @@ import React, { Component } from 'react';
 
 import Button from '../button';
 import countries from './countries';
-import { CheckboxField, Fieldset, FieldRow, Form, InputField, Message, SelectField } from '../forms';
+import {
+  CheckboxField,
+  Fieldset,
+  FieldRow,
+  Form,
+  InputField,
+  Message,
+  SelectField,
+  SensitiveInputField
+} from '../forms';
 
 import { validateNonEmpty, validateCardNumber, validateExpiry, validateCVC } from '../../validation';
 
@@ -151,183 +160,180 @@ export default class PaymentsForm extends Component {
   render() {
     return (
       <div className={ styles.paymentsForm }>
-      <Form onSubmit={ this.onSubmit.bind(this) }>
-        <h3>Payment details</h3>
+        <Form onSubmit={ this.onSubmit.bind(this) }>
+          <h3>Payment details</h3>
 
-        <Fieldset>
-          <h4>Name and address</h4>
-          <InputField
-            label="Full name"
-            placeholder="John Doe"
-            {...this.state.fields.customerFullname}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <InputField
-            label="Address line 1"
-            placeholder="e.g 20 Ingram Street"
-            {...this.state.fields.customerAddress1}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <InputField
-            label="Address line 2"
-            placeholder="Optional"
-            {...this.state.fields.customerAddress2}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <InputField
-            label="State/County"
-            placeholder="e.g Essex"
-            {...this.state.fields.customerState}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <FieldRow>
+          <Fieldset>
+            <h4>Name and address</h4>
             <InputField
-              label="Town/City"
-              placeholder="London"
-              size="small"
-              {...this.state.fields.customerCity}
+              label="Full name"
+              placeholder="John Doe"
+              {...this.state.fields.customerFullname}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
             />
             <InputField
-              name="customerPostcode"
-              label="Postcode"
-              placeholder="e.g EC1 6DU"
-              size="small"
-              {...this.state.fields.customerPostcode}
-              onChange={ this.onChange.bind(this) }
-              onBlur={ this.onBlur.bind(this) }
-            />
-          </FieldRow>
-          <FieldRow>
-            <SelectField
-              label="Country"
-              size="small"
-              options={ this.mapCountriesToOptions(countries) }
-              {...this.state.fields.customerCountry}
+              label="Address line 1"
+              placeholder="e.g 20 Ingram Street"
+              {...this.state.fields.customerAddress1}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
             />
             <InputField
-              label="Phone number"
+              label="Address line 2"
               placeholder="Optional"
-              size="small"
-              {...this.state.fields.customerPhone}
-              onChange={ this.onChange.bind(this) }
-              onBlur={ this.onBlur.bind(this) }
-            />
-          </FieldRow>
-        </Fieldset>
-
-        <Fieldset>
-          <h4>Payment information</h4>
-          <Message status="info" text="You won't be charged until your next purchase" />
-          <InputField
-            label="Card number"
-            placeholder="1234 5678 9012"
-            secret={ true }
-            {...this.state.fields.cardNumber}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <InputField
-            label="Expiry date"
-            placeholder="MM/YY"
-            secret={ true }
-            {...this.state.fields.expiryDate}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <InputField
-            label="Security number"
-            placeholder="CVC"
-            secret={ true }
-            {...this.state.fields.securityNumber}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-
-          {/* TODO: how to handle clicking this? */}
-          <CheckboxField
-            name="billingAddressCheck"
-            label="Credit or debit card address is the same as above"
-          />
-        </Fieldset>
-
-        <Fieldset>
-          <h4>Billing address</h4>
-          <InputField
-            label="Full name"
-            placeholder="John Doe"
-            {...this.state.fields.billingFullname}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <InputField
-            label="Address line 1"
-            placeholder="e.g 20 Ingram Street"
-            {...this.state.fields.billingAddress1}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <InputField
-            label="Address line 2"
-            placeholder="Optional"
-            {...this.state.fields.billingAddress2}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <InputField
-            label="State/County"
-            placeholder="e.g Essex"
-            {...this.state.fields.billingState}
-            onChange={ this.onChange.bind(this) }
-            onBlur={ this.onBlur.bind(this) }
-          />
-          <FieldRow>
-            <InputField
-              label="Town/City"
-              placeholder="London"
-              size="small"
-              {...this.state.fields.billingCity}
+              {...this.state.fields.customerAddress2}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
             />
             <InputField
-              name="customerPostcode"
-              label="Postcode"
-              placeholder="e.g EC1 6DU"
-              size="small"
-              {...this.state.fields.billingPostcode}
+              label="State/County"
+              placeholder="e.g Essex"
+              {...this.state.fields.customerState}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
             />
-          </FieldRow>
-          <FieldRow>
-            <SelectField
-              label="Country"
-              size="small"
-              options={ this.mapCountriesToOptions(countries) }
-              {...this.state.fields.billingCountry}
+            <FieldRow>
+              <InputField
+                label="Town/City"
+                placeholder="London"
+                size="small"
+                {...this.state.fields.customerCity}
+                onChange={ this.onChange.bind(this) }
+                onBlur={ this.onBlur.bind(this) }
+              />
+              <InputField
+                name="customerPostcode"
+                label="Postcode"
+                placeholder="e.g EC1 6DU"
+                size="small"
+                {...this.state.fields.customerPostcode}
+                onChange={ this.onChange.bind(this) }
+                onBlur={ this.onBlur.bind(this) }
+              />
+            </FieldRow>
+            <FieldRow>
+              <SelectField
+                label="Country"
+                size="small"
+                options={ this.mapCountriesToOptions(countries) }
+                {...this.state.fields.customerCountry}
+                onChange={ this.onChange.bind(this) }
+                onBlur={ this.onBlur.bind(this) }
+              />
+              <InputField
+                label="Phone number"
+                placeholder="Optional"
+                size="small"
+                {...this.state.fields.customerPhone}
+                onChange={ this.onChange.bind(this) }
+                onBlur={ this.onBlur.bind(this) }
+              />
+            </FieldRow>
+          </Fieldset>
+
+          <Fieldset>
+            <h4>Payment information</h4>
+            <Message status="info" text="You won't be charged until your next purchase" />
+            <SensitiveInputField
+              label="Card number"
+              placeholder="1234 5678 9012"
+              {...this.state.fields.cardNumber}
+              onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
+            />
+            <SensitiveInputField
+              label="Expiry date"
+              placeholder="MM/YY"
+              {...this.state.fields.expiryDate}
+              onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
+            />
+            <SensitiveInputField
+              label="Security number"
+              placeholder="CVC"
+              {...this.state.fields.securityNumber}
+              onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
+            />
+
+            {/* TODO: how to handle clicking this? */}
+            <CheckboxField
+              name="billingAddressCheck"
+              label="Credit or debit card address is the same as above"
+            />
+          </Fieldset>
+
+          <Fieldset>
+            <h4>Billing address</h4>
+            <InputField
+              label="Full name"
+              placeholder="John Doe"
+              {...this.state.fields.billingFullname}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
             />
             <InputField
-              label="Phone number"
+              label="Address line 1"
+              placeholder="e.g 20 Ingram Street"
+              {...this.state.fields.billingAddress1}
+              onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
+            />
+            <InputField
+              label="Address line 2"
               placeholder="Optional"
-              size="small"
-              {...this.state.fields.billingPhone}
+              {...this.state.fields.billingAddress2}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
             />
-          </FieldRow>
-        </Fieldset>
+            <InputField
+              label="State/County"
+              placeholder="e.g Essex"
+              {...this.state.fields.billingState}
+              onChange={ this.onChange.bind(this) }
+              onBlur={ this.onBlur.bind(this) }
+            />
+            <FieldRow>
+              <InputField
+                label="Town/City"
+                placeholder="London"
+                size="small"
+                {...this.state.fields.billingCity}
+                onChange={ this.onChange.bind(this) }
+                onBlur={ this.onBlur.bind(this) }
+              />
+              <InputField
+                name="customerPostcode"
+                label="Postcode"
+                placeholder="e.g EC1 6DU"
+                size="small"
+                {...this.state.fields.billingPostcode}
+                onChange={ this.onChange.bind(this) }
+                onBlur={ this.onBlur.bind(this) }
+              />
+            </FieldRow>
+            <FieldRow>
+              <SelectField
+                label="Country"
+                size="small"
+                options={ this.mapCountriesToOptions(countries) }
+                {...this.state.fields.billingCountry}
+                onChange={ this.onChange.bind(this) }
+                onBlur={ this.onBlur.bind(this) }
+              />
+              <InputField
+                label="Phone number"
+                placeholder="Optional"
+                size="small"
+                {...this.state.fields.billingPhone}
+                onChange={ this.onChange.bind(this) }
+                onBlur={ this.onBlur.bind(this) }
+              />
+            </FieldRow>
+          </Fieldset>
 
-        <Button appearance='secondary'>Add payment details</Button>
+          <Button appearance='secondary'>Add payment details</Button>
         </Form>
       </div>
     );
