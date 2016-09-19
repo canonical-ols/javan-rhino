@@ -36,7 +36,8 @@ $success-color: $success;
   font-size: 16px;
   margin: 0;
   outline: none;
-  padding: .5em .7em;
+  padding: 8px 11px;
+  height: 42px; /* hardcoded height to make sure all inputs (including selects) have same height */
   vertical-align: baseline;
   font-weight: 300;
 
