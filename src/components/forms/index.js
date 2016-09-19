@@ -5,7 +5,7 @@ import Form from './form';
 import InputField from './inputField';
 import Message from './message';
 import SelectField from './selectField';
-import SensitiveInputField from './SensitiveInputField';
+import SensitiveInputField from './sensitiveInputField';
 
 export {
   CheckboxField,
