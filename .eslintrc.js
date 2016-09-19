@@ -28,6 +28,18 @@ module.exports = {
               'SwitchCase': 1
             }
         ],
+        'react/jsx-indent': [
+          'error',
+          2
+        ],
+        'react/jsx-indent-props': [
+          'error',
+          2
+        ],
+        'react/jsx-closing-bracket-location': [
+          'error',
+          'tag-aligned'
+        ],
         'linebreak-style': [
             'error',
             'unix'

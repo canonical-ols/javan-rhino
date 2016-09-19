@@ -82,7 +82,8 @@ function serve(webpackIsomorphicTools) {
             <Html
               assets={ webpackIsomorphicTools.assets() }
               store={ store }
-              component={ component } />
+              component={ component }
+            />
           ));
       } else {
         res.status(404).send('Not found');

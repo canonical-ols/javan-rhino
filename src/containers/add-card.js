@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 
 import { postStripeToken } from '../actions/customer';
