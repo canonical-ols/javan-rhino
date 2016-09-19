@@ -9,7 +9,7 @@ export default function SelectField(props) {
   const id = `ID_SELECT_FIELD_${name}`;
   const status = props.touched ? (props.valid ? 'success' : 'error') : null;
 
-  return <div className={ `${styles.inputField} ${styles[size]}` }>
+  return <div className={ `${styles.inputField} ${styles[size]} ${props.disabled ? styles.disabled : ''}` }>
     <label
       htmlFor={ id }
       className={ `${styles.label} ${styles[status]}` }
@@ -21,6 +21,7 @@ export default function SelectField(props) {
       name={ props.sensitive ? null : name }
       data-name={ name }
       required={ required }
+      disabled={ props.disabled }
       value={ props.value }
       status={ status }
       onChange={ props.onChange }
@@ -44,6 +45,7 @@ SelectField.propTypes = {
   label: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
   required: PropTypes.bool,
+  disabled: PropTypes.bool,
   size: PropTypes.oneOf(['full', 'small']),
   sensitive: PropTypes.bool,
   valid: PropTypes.bool,

@@ -7,7 +7,7 @@ export default function InputField(props) {
   const id = `ID_INPUT_FIELD_${name}`;
   const status = props.touched ? (props.valid ? 'success' : 'error') : null;
 
-  return <div className={ `${styles.inputField} ${styles[size]}` }>
+  return <div className={ `${styles.inputField} ${styles[size]} ${props.disabled && styles.disabled}` }>
     <label
       htmlFor={ id }
       className={ `${styles.label} ${styles[status]}` }
@@ -25,6 +25,7 @@ export default function InputField(props) {
       onChange={ props.onChange }
       onBlur={ props.onBlur }
       value={ props.value || '' }
+      disabled={ props.disabled }
     />
     <label
       htmlFor={ id }
@@ -40,6 +41,7 @@ InputField.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
+  disabled: PropTypes.bool,
   type: PropTypes.string,
   size: PropTypes.oneOf(['full', 'small']),
   sensitive: PropTypes.bool,

@@ -25,6 +25,7 @@ export default class PaymentsForm extends Component {
     super(props);
 
     this.state = {
+      isBillingAddressTheSame: false,
       fields: this.getInitialValues()
     };
   }
@@ -74,9 +75,21 @@ export default class PaymentsForm extends Component {
       'billingPhone'
     ];
 
+    // binding between customer and billing address (if checkbox is checked)
+    const addressBindings = {
+      'customerCountry': 'billingCountry',
+      'customerFullname': 'billingFullname',
+      'customerAddress1': 'billingAddress1',
+      'customerAddress2': 'billingAddress2',
+      'customerState': 'billingState',
+      'customerCity': 'billingCity',
+      'customerPostcode': 'billingPostcode',
+      'customerPhone': 'billingPhone'
+    };
+
     const fields = {};
     // initialise all fields with default values and state
-    names.forEach(name => fields[name] = { ...initialState, name });
+    names.forEach(name => fields[name] = { ...initialState, addressBinding: addressBindings[name], name });
     // mark optional field as not required
     optional.forEach(name => fields[name].required = false);
 
@@ -185,10 +198,10 @@ export default class PaymentsForm extends Component {
               onBlur={ this.onBlur.bind(this) }
             />
 
-            {/* TODO: how to handle clicking this? */}
             <CheckboxField
               name="billingAddressCheck"
               label="Credit or debit card address is the same as above"
+              onChange={ this.onBillingAddressClick.bind(this) }
             />
           </Fieldset>
 
@@ -197,6 +210,7 @@ export default class PaymentsForm extends Component {
             <InputField
               label="Full name"
               placeholder="John Doe"
+              disabled={ this.state.isBillingAddressTheSame }
               {...this.state.fields.billingFullname}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
@@ -204,6 +218,7 @@ export default class PaymentsForm extends Component {
             <InputField
               label="Address line 1"
               placeholder="e.g 20 Ingram Street"
+              disabled={ this.state.isBillingAddressTheSame }
               {...this.state.fields.billingAddress1}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
@@ -211,6 +226,7 @@ export default class PaymentsForm extends Component {
             <InputField
               label="Address line 2"
               placeholder="Optional"
+              disabled={ this.state.isBillingAddressTheSame }
               {...this.state.fields.billingAddress2}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
@@ -218,6 +234,7 @@ export default class PaymentsForm extends Component {
             <InputField
               label="State/County"
               placeholder="e.g Essex"
+              disabled={ this.state.isBillingAddressTheSame }
               {...this.state.fields.billingState}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
@@ -227,6 +244,7 @@ export default class PaymentsForm extends Component {
                 label="Town/City"
                 placeholder="London"
                 size="small"
+                disabled={ this.state.isBillingAddressTheSame }
                 {...this.state.fields.billingCity}
                 onChange={ this.onChange.bind(this) }
                 onBlur={ this.onBlur.bind(this) }
@@ -236,6 +254,7 @@ export default class PaymentsForm extends Component {
                 label="Postcode"
                 placeholder="e.g EC1 6DU"
                 size="small"
+                disabled={ this.state.isBillingAddressTheSame }
                 {...this.state.fields.billingPostcode}
                 onChange={ this.onChange.bind(this) }
                 onBlur={ this.onBlur.bind(this) }
@@ -246,6 +265,7 @@ export default class PaymentsForm extends Component {
                 label="Country"
                 size="small"
                 options={ this.mapCountriesToOptions(countries) }
+                disabled={ this.state.isBillingAddressTheSame }
                 {...this.state.fields.billingCountry}
                 onChange={ this.onChange.bind(this) }
                 onBlur={ this.onBlur.bind(this) }
@@ -254,6 +274,7 @@ export default class PaymentsForm extends Component {
                 label="Phone number"
                 placeholder="Optional"
                 size="small"
+                disabled={ this.state.isBillingAddressTheSame }
                 {...this.state.fields.billingPhone}
                 onChange={ this.onChange.bind(this) }
                 onBlur={ this.onBlur.bind(this) }
@@ -273,6 +294,10 @@ export default class PaymentsForm extends Component {
     let options = countries.map(country => ({ value: country.iso, name: country.name }));
     options = [ { value: '', name: '-----------' }, ...options ];
     return options;
+  }
+
+  isFormValid(fields) {
+    return !Object.keys(fields).map(name => fields[name]).filter(field => !field.valid).length;
   }
 
   /* VALIDATION */
@@ -321,6 +346,13 @@ export default class PaymentsForm extends Component {
       fields: fields
     });
 
+    // TODO:
+    // if (this.isFormValid(fields)) {
+    //
+    // } else {
+    //
+    // }
+
     event.preventDefault();
   }
 
@@ -328,8 +360,16 @@ export default class PaymentsForm extends Component {
     const { target } = event;
 
     // update fields state with new value
-    const fields = { ...this.state.fields };
-    fields[target.dataset.name].value = target.value;
+    let fields = { ...this.state.fields };
+    const name = target.dataset.name;
+    fields[name].value = target.value;
+
+    if (this.state.isBillingAddressTheSame && fields[name].addressBinding) {
+      fields[ fields[name].addressBinding ].value = target.value;
+    }
+
+    // revalidate fields to update validation status (especally of bound address fields)
+    fields = this.validate(fields);
 
     this.setState({
       fields: fields
@@ -346,6 +386,29 @@ export default class PaymentsForm extends Component {
     fields = this.validate(fields);
 
     this.setState({
+      fields: fields
+    });
+  }
+
+  onBillingAddressClick(event) {
+    let fields = this.state.fields;
+
+    if (event.target.checked) {
+      //console.log("update fields")
+      Object.keys(fields).forEach((name) => {
+        const field = fields[name];
+        if (field.addressBinding) {
+          //console.log("update", name);
+          fields[ field.addressBinding ].value = field.value;
+        }
+      });
+    }
+
+    // revalidate fields to update validation status (especally of bound address fields)
+    fields = this.validate(fields);
+
+    this.setState({
+      isBillingAddressTheSame: event.target.checked,
       fields: fields
     });
   }

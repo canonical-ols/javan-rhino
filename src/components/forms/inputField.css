@@ -77,3 +77,13 @@ $success-color: $success;
 .errorMsg.error {
   display: block;
 }
+
+.disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+.disabled .label,
+.disabled .textInput {
+  cursor: not-allowed;
+}
