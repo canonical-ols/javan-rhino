@@ -3,11 +3,11 @@ import React, { PropTypes } from 'react';
 import styles from './inputField.css';
 
 export default function InputField(props) {
-  const { name, label, type='text', size='full', placeholder } = props;
+  const { disabled, name, label, type='text', size='full', placeholder } = props;
   const id = `ID_INPUT_FIELD_${name}`;
   const status = props.touched ? (props.valid ? 'success' : 'error') : null;
 
-  return <div className={ `${styles.inputField} ${styles[size]} ${props.disabled && styles.disabled}` }>
+  return <div className={ `${styles.inputField} ${styles[size]} ${disabled ? styles.disabled : ''}` }>
     <label
       htmlFor={ id }
       className={ `${styles.label} ${styles[status]}` }
@@ -20,12 +20,12 @@ export default function InputField(props) {
       data-name={ name }
       type={ type }
       required={ props.required }
+      disabled={ disabled }
       placeholder={ placeholder }
       className={ `${styles.textInput} ${styles[status]}` }
       onChange={ props.onChange }
       onBlur={ props.onBlur }
       value={ props.value || '' }
-      disabled={ props.disabled }
     />
     <label
       htmlFor={ id }

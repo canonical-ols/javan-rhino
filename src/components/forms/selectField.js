@@ -5,11 +5,11 @@ import Select from './select';
 import styles from './inputField.css';
 
 export default function SelectField(props) {
-  const { name, label, size='full', required, options } = props;
+  const { disabled, name, label, size='full', required, options } = props;
   const id = `ID_SELECT_FIELD_${name}`;
   const status = props.touched ? (props.valid ? 'success' : 'error') : null;
 
-  return <div className={ `${styles.inputField} ${styles[size]} ${props.disabled ? styles.disabled : ''}` }>
+  return <div className={ `${styles.inputField} ${styles[size]} ${disabled ? styles.disabled : ''}` }>
     <label
       htmlFor={ id }
       className={ `${styles.label} ${styles[status]}` }
@@ -21,7 +21,7 @@ export default function SelectField(props) {
       name={ props.sensitive ? null : name }
       data-name={ name }
       required={ required }
-      disabled={ props.disabled }
+      disabled={ disabled }
       value={ props.value }
       status={ status }
       onChange={ props.onChange }
