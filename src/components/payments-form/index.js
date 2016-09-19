@@ -18,6 +18,9 @@ import { validateNonEmpty, validateCardNumber, validateExpiry, validateCVC } fro
 import styles from './payments-form.css';
 
 export default class PaymentsForm extends Component {
+
+  /* INITIALISATION */
+
   constructor(props) {
     super(props);
 
@@ -80,82 +83,7 @@ export default class PaymentsForm extends Component {
     return fields;
   }
 
-  validate(fields, { forceTouched }={}) {
-    Object.keys(fields).forEach((name) => {
-      const field = fields[name];
-
-      field.valid = true; // every field is valid until said otherwise
-
-      // field is required but empty
-      if (field.required) {
-        field.valid = validateNonEmpty(field.value);
-        field.errorMsg = 'This field is required';
-      }
-
-      if (name === 'cardNumber') {
-        field.valid = validateCardNumber(field.value);
-        field.errorMsg = 'This is not a valid card number';
-      }
-
-      if (name === 'expiryDate') {
-        field.valid = validateExpiry(field.value);
-        field.errorMsg = 'This is not a valid expiry date';
-      }
-
-      if (name === 'securityNumber') {
-        field.valid = validateCVC(field.value);
-        field.errorMsg = 'This is not a valid CVC security number';
-      }
-
-      if (forceTouched) {
-        field.touched = true;
-      }
-    });
-
-    return fields;
-  }
-
-  onSubmit(event) {
-    const fields = this.validate(this.state.fields, { forceTouched: true });
-
-    this.setState({
-      fields: fields
-    });
-
-    event.preventDefault();
-  }
-
-  onChange(event) {
-    const { target } = event;
-
-    // update fields state with new value
-    const fields = { ...this.state.fields };
-    fields[target.dataset.name].value = target.value;
-
-    this.setState({
-      fields: fields
-    });
-  }
-
-  onBlur(event) {
-    const { target } = event;
-
-    // update fields state with new value
-    let fields = { ...this.state.fields };
-    fields[target.dataset.name].touched = true;
-
-    fields = this.validate(fields);
-
-    this.setState({
-      fields: fields
-    });
-  }
-
-  mapCountriesToOptions(countries) {
-    let options = countries.map(country => ({ value: country.iso, name: country.name }));
-    options = [ { value: '', name: '-----------' }, ...options ];
-    return options;
-  }
+  /* RENDER */
 
   render() {
     return (
@@ -338,4 +266,88 @@ export default class PaymentsForm extends Component {
       </div>
     );
   }
+
+  /* HELPERS */
+
+  mapCountriesToOptions(countries) {
+    let options = countries.map(country => ({ value: country.iso, name: country.name }));
+    options = [ { value: '', name: '-----------' }, ...options ];
+    return options;
+  }
+
+  /* VALIDATION */
+
+  validate(fields, { forceTouched }={}) {
+    Object.keys(fields).forEach((name) => {
+      const field = fields[name];
+
+      field.valid = true; // every field is valid until said otherwise
+
+      // field is required but empty
+      if (field.required) {
+        field.valid = validateNonEmpty(field.value);
+        field.errorMsg = 'This field is required';
+      }
+
+      if (name === 'cardNumber') {
+        field.valid = validateCardNumber(field.value);
+        field.errorMsg = 'This is not a valid card number';
+      }
+
+      if (name === 'expiryDate') {
+        field.valid = validateExpiry(field.value);
+        field.errorMsg = 'This is not a valid expiry date';
+      }
+
+      if (name === 'securityNumber') {
+        field.valid = validateCVC(field.value);
+        field.errorMsg = 'This is not a valid CVC security number';
+      }
+
+      if (forceTouched) {
+        field.touched = true;
+      }
+    });
+
+    return fields;
+  }
+
+  /* EVENT HANDLERS */
+
+  onSubmit(event) {
+    const fields = this.validate(this.state.fields, { forceTouched: true });
+
+    this.setState({
+      fields: fields
+    });
+
+    event.preventDefault();
+  }
+
+  onChange(event) {
+    const { target } = event;
+
+    // update fields state with new value
+    const fields = { ...this.state.fields };
+    fields[target.dataset.name].value = target.value;
+
+    this.setState({
+      fields: fields
+    });
+  }
+
+  onBlur(event) {
+    const { target } = event;
+
+    // update fields state with new value
+    let fields = { ...this.state.fields };
+    fields[target.dataset.name].touched = true;
+
+    fields = this.validate(fields);
+
+    this.setState({
+      fields: fields
+    });
+  }
+
 }
