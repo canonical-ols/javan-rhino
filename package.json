@@ -9,7 +9,7 @@
     "start-prod": "NODE_ENV=production node dist/server/",
     "build": "./scripts/build.sh",
     "watch-client": "node webpack/webpack-dev-server.js",
-    "lint": "eslint -c .eslintrc.js '**/*.js'; exit 0",
+    "lint": "eslint -c .eslintrc.js '**/*.js'",
     "test": "nyc npm run test:run && npm run lint",
     "test:run": "npm run test:unit && npm run test:routes",
     "test:unit": "BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --require babel-core/register --compilers js:babel-register ./test/unit/setup.js ./test/unit/**/*",
