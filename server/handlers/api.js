@@ -5,7 +5,7 @@ export const customers = (req, res) => {
   const auth = req.session.authorization;
 
   const options = {
-    uri: `${conf.get('UBUNTU_SCA:URL')}/purchases/customers`,
+    uri: `${conf.get('UBUNTU_SCA:URL')}/purchases/v1/customers`,
     headers: {
       authorization: auth
     },
@@ -22,7 +22,7 @@ export const orders = (req, res) => {
   const auth = req.session.authorization;
 
   const options = {
-    uri: `${conf.get('UBUNTU_SCA:URL')}/purchases/orders`,
+    uri: `${conf.get('UBUNTU_SCA:URL')}/purchases/v1/orders`,
     headers: {
       authorization: auth
     },
