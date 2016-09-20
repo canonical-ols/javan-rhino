@@ -30,7 +30,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      URL: JSON.stringify(conf.get('APP_URL'))
+      APP_URL: JSON.stringify(conf.get('APP_URL'))
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),

@@ -3,6 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import nock from 'nock';
 
+import conf from '../../../server/configure.js';
 import {
   postStripeToken,
   sendStripeToken,
@@ -13,6 +14,10 @@ import * as ActionTypes from '../../../src/actions/customer';
 
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
+
+/** global APP_URL **/
+/** Webpack sets this global from DefinePlugin **/
+GLOBAL.APP_URL = conf.get('APP_URL');
 
 describe('customer actions', () => {
   it('should create an action to send stripe token', () => {
