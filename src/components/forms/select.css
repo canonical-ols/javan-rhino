@@ -5,10 +5,14 @@ $color: $mid-grey;
 }
 
 .select:after {
-  content: "∨";
+  content: "\25BC";
   position: absolute;
-  right: 10px;
-  font-size: 25px;
+  font-size: 18px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: -10px;
+  top: 50%;
+  right: 5px;
   color: $color;
 }
 
@@ -16,4 +20,12 @@ $color: $mid-grey;
   composes: textInput from "./inputField.css";
   -webkit-appearance: none;
   -moz-appearance: none;
+}
+
+.success {
+  composes: success from "./inputField.css";
+}
+
+.error {
+  composes: error from "./inputField.css";
 }
