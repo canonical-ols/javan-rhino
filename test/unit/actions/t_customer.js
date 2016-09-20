@@ -15,8 +15,10 @@ import * as ActionTypes from '../../../src/actions/customer';
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 
+/** Webpack sets this global from DefinePlugin, tests don't use webpack so
+ * we're adding it the old fashioned way.
+ */
 /** global APP_URL **/
-/** Webpack sets this global from DefinePlugin **/
 GLOBAL.APP_URL = conf.get('APP_URL');
 
 describe('customer actions', () => {
