@@ -36,11 +36,11 @@ export const authenticate = (req, res) => {
   rp.authenticate(identifier, false, (error, authUrl) => {
     if (error) {
       // TODO auth failure view
-      res.send(401, 'Authentication failed: ' + error.message);
+      res.status(401).send('Authentication failed: ' + error.message);
     }
     else if (!authUrl) {
       // TODO auth failure view
-      res.send(401, 'Authentication failed');
+      res.status(401).send('Authentication failed');
     }
     else {
       res.redirect(authUrl);
@@ -58,7 +58,7 @@ export const verify = (req, res) => {
       req.session.authorization = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
       res.redirect('/');
     } else {
-      res.send(401, 'Authentication failed: ' + error.message);
+      res.status(401).send('Authentication failed: ' + error.message);
     }
   });
 };
