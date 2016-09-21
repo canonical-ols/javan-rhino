@@ -11,7 +11,7 @@ export const customers = (req, res) => {
     },
     json: true,
     body: {
-      stripe_token: req.body.token
+      stripe_token: req.body.stripe_token
     }
   };
 
@@ -28,7 +28,7 @@ export const orders = (req, res) => {
     },
     json: true,
     body: {
-      'stripe_token': req.body.token
+      'stripe_token': req.body.stripe_token
     }
   };
 
