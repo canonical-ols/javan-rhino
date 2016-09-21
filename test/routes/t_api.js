@@ -46,9 +46,6 @@ describe('purchases api', () => {
     // mock the request to SCA
     const sca = nock(conf.get('UBUNTU_SCA:URL'))
       .matchHeader('authorization', authorization)
-      .filteringRequestBody(() => {
-        return body;
-      })
       .post('/purchases/v1/customers', body)
       .reply(200);
 
@@ -71,9 +68,6 @@ describe('purchases api', () => {
     // mock the request to SCA
     const sca = nock(conf.get('UBUNTU_SCA:URL'))
       .matchHeader('authorization', authorization)
-      .filteringRequestBody(() => {
-        return body;
-      })
       .post('/purchases/v1/orders', body)
       .reply(200);
 
