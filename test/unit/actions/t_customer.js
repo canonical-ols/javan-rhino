@@ -15,11 +15,6 @@ import * as ActionTypes from '../../../src/actions/customer';
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 
-/** Webpack sets this global from DefinePlugin, tests don't use webpack so
- * we're adding it the old fashioned way.
- */
-/** global APP_URL **/
-GLOBAL.APP_URL = conf.get('APP_URL');
 
 describe('customer actions', () => {
   it('should create an action to send stripe token', () => {
@@ -62,14 +57,27 @@ describe('async actions', () => {
   let store;
   let scope;
 
+  before(() => {
+    /** Webpack sets this global from DefinePlugin, tests don't use webpack so
+     * we're adding it the old fashioned way.
+     */
+    /** global APP_URL **/
+    GLOBAL.APP_URL = conf.get('APP_URL');
+  });
+
   beforeEach(() => {
+    scope = nock('http://localhost:3000/');
     token = 'my stripe token';
     store = mockStore({ tosAccepted: false });
-    scope = nock('http://localhost:3000/');
   });
 
   afterEach(() => {
     nock.cleanAll();
+  });
+
+  after(() => {
+    delete GLOBAL.APP_URL;
+    expect(GLOBAL.APP_URL).toNotExist();
   });
 
   it('creates SEND_STRIPE_TOKEN_SUCCESS when posting stripe token is successful', () => {
