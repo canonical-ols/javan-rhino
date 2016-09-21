@@ -49,9 +49,10 @@ describe('purchases api', () => {
       .filteringRequestBody(() => {
         return body;
       })
-      .post('/purchases/customers', body)
+      .post('/purchases/v1/customers', body)
       .reply(200);
 
+    // send the request via our handler
     testagent
       .post('/api/purchases/customers')
       .send(body)
@@ -73,9 +74,10 @@ describe('purchases api', () => {
       .filteringRequestBody(() => {
         return body;
       })
-      .post('/purchases/orders', body)
+      .post('/purchases/v1/orders', body)
       .reply(200);
 
+    // send the request via our handler
     testagent
       .post('/api/purchases/orders')
       .send(body)
