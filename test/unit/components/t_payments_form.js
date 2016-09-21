@@ -10,7 +10,14 @@ describe('<PaymentsForm /> component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<PaymentsForm  />);
+    // mocking redux props
+    const props = {
+      stripe: {},
+      customer: {},
+      dispatch: () => {}
+    }
+
+    wrapper = shallow(<PaymentsForm {...props} />);
   });
 
   it('should render a <Form> component', () => {

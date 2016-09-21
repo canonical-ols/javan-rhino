@@ -102,6 +102,8 @@ export class PaymentsForm extends Component {
   /* RENDER */
 
   render() {
+    const isFetching = this.props.customer.isFetching || this.props.stripe.isFetching;
+
     return (
       <div className={ styles.paymentsForm }>
         <Form onSubmit={ this.onSubmit.bind(this) }>
@@ -285,7 +287,9 @@ export class PaymentsForm extends Component {
             </FieldRow>
           </Fieldset>
 
-          <Button appearance='secondary'>Add payment details</Button>
+          <Button appearance='secondary' disabled={isFetching}>
+            Add payment details
+          </Button>
         </Form>
       </div>
     );
@@ -427,17 +431,20 @@ export class PaymentsForm extends Component {
 }
 
 PaymentsForm.propTypes = {
-  stripe: PropTypes.object,
-  dispatch: PropTypes.func
+  stripe: PropTypes.object.isRequired,
+  customer: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   const {
-    stripe
+    stripe,
+    customer
   } = state;
 
   return {
-    stripe
+    stripe,
+    customer
   };
 }
 
