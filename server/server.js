@@ -1,5 +1,4 @@
 import Express from 'express';
-import MongoConnect from 'connect-mongo';
 import React from 'react';
 import session from 'express-session';
 import util from 'util';
@@ -15,26 +14,19 @@ import api from './routes/api';
 import routes from '../src/routes';
 import Html from '../src/helpers/html';
 import configureStore from '../src/store/configureStore';
+import sessionConfig from './helpers/session';
 
-const MongoStore = MongoConnect(session);
-const sessionStore = new MongoStore({
-  url: conf.get('DATABASE:URL')
-});
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, '../logs/', 'access.log'),
   { flags: 'a' }
 );
 
-
 const app = Express();
 
 app.use(morgan('combined', { stream: accessLogStream }));
-app.use(session({
-  secret: conf.get('DATABASE:SECRET'),
-  store: sessionStore,
-  resave: false,
-  saveUninitialized: false
-}));
+
+app.use(session(sessionConfig(conf)));
+
 app.use('/', login);
 app.use('/api', api);
 
