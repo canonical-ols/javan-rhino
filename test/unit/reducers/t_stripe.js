@@ -24,7 +24,7 @@ describe('stripe reducers', () => {
     beforeEach(() => {
       action = {
         type: ActionTypes.CREATE_STRIPE_TOKEN,
-        cardData: {
+        formCardData: {
           number: '432143214321',
           expiryDate: '12/21',
           securityNumber: '321'
@@ -34,7 +34,7 @@ describe('stripe reducers', () => {
 
     it('should add card data to state', () => {
       expect(stripe(initialState, action)).toInclude({
-        cardData: {
+        formCardData: {
           number: '432143214321',
           expiryDate: '12/21',
           securityNumber: '321'
@@ -53,11 +53,7 @@ describe('stripe reducers', () => {
     beforeEach(() => {
       action = {
         type: ActionTypes.CREATE_STRIPE_TOKEN_SUCCESS,
-        token: 'test_token_0987654321',
-        response: {
-          id: 'test_token_0987654321',
-          card: 'card data'
-        }
+        token: 'test_token_0987654321'
       };
     });
 
@@ -65,22 +61,37 @@ describe('stripe reducers', () => {
       expect(stripe({}, action)).toInclude({ token: 'test_token_0987654321' });
     });
 
-    it('should add stripe response object to store', () => {
-      expect(stripe({}, action)).toInclude({
-        response: {
-          id: 'test_token_0987654321',
-          card: 'card data'
-        }
-      });
-    });
-
-    it('should mark fettching as false in state', () => {
+    it('should mark fetching as false in state', () => {
       expect(stripe({}, action)).toInclude({ isFetching: false });
     });
 
   });
 
-  context('on CREATE_STRIPE_TOKEN_SUCCESS action', () => {
+
+  context('on SAVE_VALIDATED_CARD_DATA action', () => {
+
+    beforeEach(() => {
+      action = {
+        type: ActionTypes.SAVE_VALIDATED_CARD_DATA,
+        validatedCardData: {
+          last4: '4321',
+          country: 'US'
+        }
+      };
+    });
+
+    it('should add validated card data to store', () => {
+      expect(stripe({}, action)).toInclude({
+        validatedCardData: {
+          last4: '4321',
+          country: 'US'
+        }
+      });
+    });
+
+  });
+
+  context('on CREATE_STRIPE_TOKEN_FAILURE action', () => {
 
     beforeEach(() => {
       action = {

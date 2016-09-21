@@ -12,14 +12,18 @@ export function stripe(state = {
       return {
         ...state,
         isFetching: true,
-        cardData: action.cardData
+        formCardData: action.formCardData
+      };
+    case ActionTypes.SAVE_VALIDATED_CARD_DATA:
+      return {
+        ...state,
+        validatedCardData: action.validatedCardData
       };
     case ActionTypes.CREATE_STRIPE_TOKEN_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        token: action.token,
-        response: action.response
+        token: action.token
       };
     case ActionTypes.CREATE_STRIPE_TOKEN_FAILURE:
       return {

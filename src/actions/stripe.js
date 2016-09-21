@@ -1,19 +1,26 @@
 export const CREATE_STRIPE_TOKEN = 'CREATE_STRIPE_TOKEN';
+export const SAVE_VALIDATED_CARD_DATA = 'SAVE_VALIDATED_CARD_DATA';
 export const CREATE_STRIPE_TOKEN_SUCCESS = 'CREATE_STRIPE_TOKEN_SUCCESS';
 export const CREATE_STRIPE_TOKEN_FAILURE = 'CREATE_STRIPE_TOKEN_FAILURE';
 
-export function createStripeToken(cardData) {
+export function createStripeToken(formCardData) {
   return {
     type: CREATE_STRIPE_TOKEN,
-    cardData
+    formCardData
   };
 }
 
-export function createStripeTokenSuccess(token, response) {
+export function saveValidatedCardData(validatedCardData) {
+  return {
+    type: SAVE_VALIDATED_CARD_DATA,
+    validatedCardData
+  };
+}
+
+export function createStripeTokenSuccess(token) {
   return {
     type: CREATE_STRIPE_TOKEN_SUCCESS,
-    token,
-    response
+    token
   };
 }
 
@@ -48,7 +55,8 @@ export function postCardData(cardData) {
       if (response.error) {
         dispatch(createStripeTokenFailure(response.error));
       } else {
-        dispatch(createStripeTokenSuccess(response.id, response));
+        dispatch(saveValidatedCardData(response.card));
+        dispatch(createStripeTokenSuccess(response.id));
       }
     });
   };
