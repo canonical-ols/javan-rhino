@@ -2,6 +2,9 @@ $border-color: $mid-grey;
 $border-color-focus: $warm-grey;
 $background-color: #FFF;
 
+$error-color: $error;
+$success-color: $success;
+
 .inputField {
   margin-bottom: 0.5em;
 }
@@ -19,6 +22,12 @@ $background-color: #FFF;
   margin-right: 0;
 }
 
+.label {
+  cursor: pointer;
+  display: block;
+  margin-bottom: 4px;
+}
+
 .textInput {
   -webkit-appearance: textfield;
   border-radius: 2px;
@@ -27,7 +36,8 @@ $background-color: #FFF;
   font-size: 16px;
   margin: 0;
   outline: none;
-  padding: .5em .7em;
+  padding: 8px 11px;
+  height: 42px; /* hardcoded height to make sure all inputs (including selects) have same height */
   vertical-align: baseline;
   font-weight: 300;
 
@@ -39,4 +49,41 @@ $background-color: #FFF;
 .textInput:focus {
   border-color: $border-color-focus;
   outline: none;
+}
+
+.textInput.error {
+  border-color: $error-color;
+}
+
+.textInput.success {
+  border-color: $success-color;
+}
+
+.label.error {
+  color: $error-color;
+}
+
+.label.success {
+  color: $success-color;
+}
+
+.errorMsg {
+  font-size: 14px;
+  margin: 2px 0;
+  color: $error-color;
+  display: none;
+}
+
+.errorMsg.error {
+  display: block;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+.disabled .label,
+.disabled .textInput {
+  cursor: not-allowed;
 }

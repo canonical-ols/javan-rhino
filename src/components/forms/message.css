@@ -1,0 +1,25 @@
+.message {
+  border: 1px solid $mid-grey;
+  padding: .5em .7em;
+  border-radius: 2px;
+}
+
+.error {
+  composes: message;
+  border-color: $error;
+}
+
+.success {
+  composes: message;
+  border-color: $success;
+}
+
+.info {
+  composes: message;
+  border-color: $information;
+}
+
+.warning {
+  composes: message;
+  border-color: $warning;
+}

@@ -1,28 +1,57 @@
 import React, { PropTypes } from 'react';
 
-import Label from './label';
 import Select from './select';
 
 import styles from './inputField.css';
 
 export default function SelectField(props) {
-  const { name, label, size='full', options } = props;
+  const { disabled, name, label, size='full', required, options } = props;
   const id = `ID_SELECT_FIELD_${name}`;
+  const status = props.touched ? (props.valid ? 'success' : 'error') : null;
 
-  const className = `${styles.inputField} ${styles[size]}`;
-  return <div className={ className }>
-    <Label htmlFor={ id }>{ label }:</Label>
-    <Select id={ id } name={ name }>
+  return <div className={ `${styles.inputField} ${styles[size]} ${disabled ? styles.disabled : ''}` }>
+    <label
+      htmlFor={ id }
+      className={ `${styles.label} ${styles[status]}` }
+    >
+      { label }:
+    </label>
+    <Select
+      id={ id }
+      name={ props.sensitive ? null : name }
+      data-name={ name }
+      required={ required }
+      disabled={ disabled }
+      value={ props.value }
+      status={ status }
+      onChange={ props.onChange }
+      onBlur={ props.onBlur }
+    >
       {options.map(function(option){
         return <option key={ `${id}_${option.value}`} value={ option.value }>{ option.name }</option>;
       })}
     </Select>
+    <label
+      htmlFor={ id }
+      className={ `${styles.errorMsg} ${styles[status]}` }
+    >
+      { props.errorMsg }
+    </label>
   </div>;
 }
 
 SelectField.propTypes = {
-  name: PropTypes.string,
-  label: PropTypes.string,
-  options: PropTypes.array,
-  size: PropTypes.oneOf(['full', 'small'])
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
+  required: PropTypes.bool,
+  disabled: PropTypes.bool,
+  size: PropTypes.oneOf(['full', 'small']),
+  sensitive: PropTypes.bool,
+  valid: PropTypes.bool,
+  touched: PropTypes.bool,
+  value: PropTypes.string,
+  errorMsg: PropTypes.string,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func
 };

@@ -486,6 +486,9 @@
         }
       }
     },
+    "classnames": {
+      "version": "2.2.5"
+    },
     "cli-cursor": {
       "version": "1.0.2"
     },
