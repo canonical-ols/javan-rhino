@@ -2,34 +2,29 @@
 
 Front-end to Ubuntu Store Payments
 
-# node, nvm
+# Installing Dependencies
+
+## node, nvm
 
 If you have nvm istalled (https://github.com/creationix/nvm) simple do
 `nvm use`
 in project root and you'll be switched to the correct version of node
 for this project.
 
-# mongodb
+## Session Secret
+Required by [express-session](https://github.com/expressjs/session#secret).
 
-Ubuntu:
+To set this up temporarily, run the following on your command-line:
 ```
-apt install mongodb
+export SESSION_SECRET="its a secret"
 ```
+To set it up permanently, add the same line to your `.bashrc` file in your home directory.
 
-[OS X](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/):
-```
-brew install mongodb
-mkdir -p ~/.mongodb/data
-mongod --dbpath ~/.mongodb/data
-```
-
-# Running
-
-Install dependencies:
+## npm packages:
 
     $ npm install
 
-and run it:
+# Starting Development Environment:
 
     $ npm start
 

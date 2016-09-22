@@ -4,8 +4,7 @@ var base = require('../settings');
 // allow these overrides from env
 nconf.env([
   'APP_URL',
-  'DATABASE:URL',
-  'DATABASE:SECRET'
+  'SESSION_SECRET'
 ]);
 nconf.defaults(base);
 
