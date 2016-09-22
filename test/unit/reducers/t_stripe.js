@@ -9,8 +9,8 @@ describe('stripe reducers', () => {
     isFetching: false,
     error: null,
     token: null,
-    cardData: null,
-    response: null
+    formCardData: null,
+    validatedCardData: null
   };
 
   let action;

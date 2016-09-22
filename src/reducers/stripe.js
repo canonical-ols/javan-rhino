@@ -4,8 +4,8 @@ export function stripe(state = {
   isFetching: false,
   error: null,
   token: null,
-  cardData: null,
-  response: null
+  formCardData: null,
+  validatedCardData: null
 }, action) {
   switch(action.type) {
     case ActionTypes.CREATE_STRIPE_TOKEN:
