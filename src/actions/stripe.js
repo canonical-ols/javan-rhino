@@ -3,8 +3,7 @@ export const SAVE_VALIDATED_CARD_DATA = 'SAVE_VALIDATED_CARD_DATA';
 export const CREATE_STRIPE_TOKEN_SUCCESS = 'CREATE_STRIPE_TOKEN_SUCCESS';
 export const CREATE_STRIPE_TOKEN_FAILURE = 'CREATE_STRIPE_TOKEN_FAILURE';
 
-// TODO:
-// import { postStripeToken } from './customer';
+import { postStripeToken } from './customer';
 
 export function createStripeToken(formCardData) {
   return {
@@ -60,9 +59,7 @@ export function postCardData(cardData) {
       } else {
         dispatch(saveValidatedCardData(response.card));
         dispatch(createStripeTokenSuccess(response.id));
-        // TODO: send token to api
-        // how to test it? mock postStripeToken? or handle requests with nock?
-        // dispatch(postStripeToken(response.id));
+        dispatch(postStripeToken(response.id));
       }
     });
   };

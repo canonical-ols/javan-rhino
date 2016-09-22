@@ -2,15 +2,28 @@ import expect from 'expect';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { stub } from 'sinon';
+import proxyquire from 'proxyquire';
 
-import {
+// load stripe actions module through proxyquire to stub postStripeToken calls
+let postStripeTokenStub = stub();
+
+const stripe = proxyquire(
+  '../../../src/actions/stripe',
+  {
+    './customer': {
+      postStripeToken: (token) => postStripeTokenStub(token)
+    }
+  }
+);
+
+const {
   createStripeToken,
   saveValidatedCardData,
   createStripeTokenSuccess,
   createStripeTokenFailure,
   postCardData
-} from '../../../src/actions/stripe';
-import * as ActionTypes from '../../../src/actions/stripe';
+} = stripe;
+const ActionTypes = stripe;
 
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
@@ -44,7 +57,6 @@ describe('stripe actions', () => {
     });
 
   });
-
 
   context('createStripeTokenSuccess', () => {
 
@@ -93,6 +105,7 @@ describe('stripe actions', () => {
 
     beforeEach(() => {
       store = mockStore({});
+      postStripeTokenStub = stub().returns({ type: 'POST_STRIPE_TOKEN_TEST' });
     });
 
     context('on successful Stripe response', () => {
@@ -112,9 +125,18 @@ describe('stripe actions', () => {
         const expectedActions = [
           { type: ActionTypes.CREATE_STRIPE_TOKEN, formCardData },
           { type: ActionTypes.SAVE_VALIDATED_CARD_DATA, validatedCardData: response.card },
-          { type: ActionTypes.CREATE_STRIPE_TOKEN_SUCCESS, token: response.id }
+          { type: ActionTypes.CREATE_STRIPE_TOKEN_SUCCESS, token: response.id },
+          { type: 'POST_STRIPE_TOKEN_TEST' }
         ];
         expect(store.getActions()).toEqual(expectedActions);
+      });
+
+      it('calls postStripeToken action once', () => {
+        expect(postStripeTokenStub.callCount).toBe(1);
+      });
+
+      it('calls postStripeToken action with token', () => {
+        expect(postStripeTokenStub.alwaysCalledWithExactly(response.id)).toBe(true);
       });
     });
 
