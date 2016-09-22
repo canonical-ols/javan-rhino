@@ -8,6 +8,7 @@ export default function Button(props) {
 }
 
 Button.propTypes = {
+  disabled: PropTypes.bool,
   children: PropTypes.string,
   onClick: PropTypes.func,
   type: PropTypes.string,

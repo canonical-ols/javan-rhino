@@ -3,14 +3,21 @@ import expect from 'expect';
 import { shallow } from 'enzyme';
 import { stub } from 'sinon';
 
-import PaymentsForm from '../../../src/components/payments-form';
+import { PaymentsForm } from '../../../src/components/payments-form';
 import { Form } from '../../../src/components/forms';
 
 describe('<PaymentsForm /> component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<PaymentsForm  />);
+    // mocking redux props
+    const props = {
+      stripe: {},
+      customer: {},
+      dispatch: () => {}
+    };
+
+    wrapper = shallow(<PaymentsForm {...props} />);
   });
 
   it('should render a <Form> component', () => {
