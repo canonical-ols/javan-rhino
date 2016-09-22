@@ -5,8 +5,7 @@ var base = require('../settings');
 nconf.env([
   'APP:PORT',
   'APP:HOST',
-  'DATABASE:URL',
-  'DATABASE:SECRET'
+  'SESSION_SECRET'
 ]);
 nconf.defaults(base);
 

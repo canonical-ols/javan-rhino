@@ -10,19 +10,19 @@ const SESSION_STORAGE_DEFAULTS = {
 export default function sessionStorageConfig(config) {
   let settings = { ...SESSION_STORAGE_DEFAULTS };
 
-  if(config.get('SESSION:SECRET')) {
+  if(config.get('SESSION_SECRET')) {
     // TODO: Log using configured session secret
-    settings.secret = config.get('SESSION:SECRET');
+    settings.secret = config.get('SESSION_SECRET');
   } else {
-    // TODO: Warn using development site session secret
-    settings.secret = require('crypto').randomBytes(64).toString('hex');
+    // TODO: Error: using development site session secret
+    throw new Error('Refusing to start without SESSION_SECRET environment variable');
   }
 
-  if(config.get('SESSION:MEMCACHED_HOST') && config.get('SESSION:MEMCACHED_SECRET')) {
+  if(config.get('SESSION_MEMCACHED_HOST') && config.get('SESSION_MEMCACHED_SECRET')) {
     // TODO: Log memcached session store
     settings.store = new MemcachedStore({
-      hosts: config.get('SESSION:MEMCACHED_HOST'),
-      secret: config.get('SESSION:MEMCACHED_SECRET')
+      hosts: config.get('SESSION_MEMCACHED_HOST'),
+      secret: config.get('SESSION_MEMCACHED_SECRET')
     });
   } else {
     // TODO: Log memory session store
