@@ -43,6 +43,7 @@ export default class Html extends Component {
 }
 
 Html.propTypes = {
+  config: PropTypes.object,
   component: PropTypes.node,
   store: PropTypes.object,
   assets: React.PropTypes.shape({

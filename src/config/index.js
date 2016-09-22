@@ -5,7 +5,7 @@ export class Config {
     let root = typeof self == 'object' && self.Object == Object && self;
     // root is window, we expect it to have config
     if (root && !root.__CONFIG__) {
-      throw new ReferenceError('Client config: no config defined.')
+      throw new ReferenceError('Client config: no config defined.');
     }
     // root is not window; test for node global and assign to avoid ref error
     // we don't expect config here, this is client side only, but we can set it
