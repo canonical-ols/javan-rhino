@@ -104,6 +104,10 @@ export class PaymentsForm extends Component {
   render() {
     const isFetching = this.props.customer.isFetching || this.props.stripe.isFetching;
 
+    if (this.props.stripe.validatedCardData) {
+      return null;
+    }
+
     return (
       <div className={ styles.paymentsForm }>
         <Form onSubmit={ this.onSubmit.bind(this) }>
