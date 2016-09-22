@@ -25,7 +25,7 @@ export default (cid) => {
   }
   return new openid.RelyingParty(
     conf.get('OPENID:VERIFY_URL'),
-    conf.get('APP_URL'),
+    conf.get('UNIVERSAL:MU_URL'),
     false, // Use stateless verification
     false, // Strict mode
     extensions

@@ -6,15 +6,14 @@ import nock from 'nock';
 import conf from '../../../server/configure.js';
 import {
   postStripeToken,
-  sendStripeToken,
-  sendStripeTokenSuccess,
-  sendStripeTokenFailure
+    sendStripeToken,
+    sendStripeTokenSuccess,
+    sendStripeTokenFailure
 } from '../../../src/actions/customer';
 import * as ActionTypes from '../../../src/actions/customer';
 
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
-
 
 describe('customer actions', () => {
   it('should create an action to send stripe token', () => {
@@ -58,11 +57,7 @@ describe('async actions', () => {
   let scope;
 
   before(() => {
-    /** Webpack sets this global from DefinePlugin, tests don't use webpack so
-     * we're adding it the old fashioned way.
-     */
-    /** global APP_URL **/
-    GLOBAL.APP_URL = conf.get('APP_URL');
+    GLOBAL.MU_URL = conf.get('MU_URL');
   });
 
   beforeEach(() => {
@@ -76,8 +71,8 @@ describe('async actions', () => {
   });
 
   after(() => {
-    delete GLOBAL.APP_URL;
-    expect(GLOBAL.APP_URL).toNotExist();
+    delete GLOBAL.MU_URL;
+    expect(GLOBAL.MU_URL).toNotExist();
   });
 
   it('creates SEND_STRIPE_TOKEN_SUCCESS when posting stripe token is successful', () => {

@@ -14,7 +14,7 @@ describe('RelyingParty', () => {
   });
 
   it('should set realm from config', () => {
-    expect(rp.realm).toBe(conf.get('APP_URL'));
+    expect(rp.realm).toBe(conf.get('UNIVERSAL:MU_URL'));
   });
 
   it('should not use stateless verification', () => {
