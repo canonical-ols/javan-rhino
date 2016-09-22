@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import Button from '../button';
 import countries from './countries';
@@ -17,7 +18,9 @@ import { validateNonEmpty, validateCardNumber, validateExpiry, validateCVC } fro
 
 import styles from './payments-form.css';
 
-export default class PaymentsForm extends Component {
+import { postCardData } from '../../actions/stripe';
+
+export class PaymentsForm extends Component {
 
   /* INITIALISATION */
 
@@ -99,6 +102,8 @@ export default class PaymentsForm extends Component {
   /* RENDER */
 
   render() {
+    const isFetching = this.props.customer.isFetching || this.props.stripe.isFetching;
+
     return (
       <div className={ styles.paymentsForm }>
         <Form onSubmit={ this.onSubmit.bind(this) }>
@@ -282,7 +287,9 @@ export default class PaymentsForm extends Component {
             </FieldRow>
           </Fieldset>
 
-          <Button appearance='secondary'>Add payment details</Button>
+          <Button appearance='secondary' disabled={isFetching}>
+            Add payment details
+          </Button>
         </Form>
       </div>
     );
@@ -346,12 +353,22 @@ export default class PaymentsForm extends Component {
       fields: fields
     });
 
-    // TODO:
-    // if (this.isFormValid(fields)) {
-    //
-    // } else {
-    //
-    // }
+    if (this.isFormValid(fields)) {
+      // post card data to recieve token
+      this.props.dispatch(postCardData({
+        cardNumber: fields.cardNumber.value,
+        securityNumber: fields.securityNumber.value,
+        expiryDate: fields.expiryDate.value,
+
+        name: fields.billingFullname.value,
+        addressLine1: fields.billingAddress1.value,
+        addressLine2: fields.billingAddress2.value,
+        city: fields.billingCity.value,
+        state: fields.billingState.value,
+        postcode: fields.billingPostcode.value,
+        country: fields.billingCountry.value,
+      }));
+    }
 
     event.preventDefault();
   }
@@ -412,3 +429,23 @@ export default class PaymentsForm extends Component {
   }
 
 }
+
+PaymentsForm.propTypes = {
+  stripe: PropTypes.object.isRequired,
+  customer: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  const {
+    stripe,
+    customer
+  } = state;
+
+  return {
+    stripe,
+    customer
+  };
+}
+
+export default connect(mapStateToProps)(PaymentsForm);

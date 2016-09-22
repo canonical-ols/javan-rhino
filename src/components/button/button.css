@@ -48,3 +48,16 @@ $secondary-border-color: $mid-grey;
 .secondary:hover {
   background-color: $secondary-button-color-hover;
 }
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+.primary:disabled:hover {
+  background-color: $primary-button-color;
+}
+
+.secondary:disabled:hover {
+  background-color: $secondary-button-color;
+}
