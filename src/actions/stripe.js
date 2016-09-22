@@ -3,7 +3,8 @@ export const SAVE_VALIDATED_CARD_DATA = 'SAVE_VALIDATED_CARD_DATA';
 export const CREATE_STRIPE_TOKEN_SUCCESS = 'CREATE_STRIPE_TOKEN_SUCCESS';
 export const CREATE_STRIPE_TOKEN_FAILURE = 'CREATE_STRIPE_TOKEN_FAILURE';
 
-import { postStripeToken } from './customer';
+// TODO:
+// import { postStripeToken } from './customer';
 
 export function createStripeToken(formCardData) {
   return {

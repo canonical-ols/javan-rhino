@@ -15,7 +15,7 @@ describe('<PaymentsForm /> component', () => {
       stripe: {},
       customer: {},
       dispatch: () => {}
-    }
+    };
 
     wrapper = shallow(<PaymentsForm {...props} />);
   });
