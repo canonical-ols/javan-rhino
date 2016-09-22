@@ -7,13 +7,13 @@ export const customers = (req, res) => {
   const auth = req.session.authorization;
 
   const options = {
-    uri: `${UBUNTU_SCA_URL}/purchases/customers`,
+    uri: `${UBUNTU_SCA_URL}/purchases/v1/customers`,
     headers: {
       authorization: auth
     },
     json: true,
     body: {
-      stripe_token: req.body.token
+      stripe_token: req.body.stripe_token
     }
   };
 
@@ -24,13 +24,13 @@ export const orders = (req, res) => {
   const auth = req.session.authorization;
 
   const options = {
-    uri: `${UBUNTU_SCA_URL}/purchases/orders`,
+    uri: `${UBUNTU_SCA_URL}/purchases/v1/orders`,
     headers: {
       authorization: auth
     },
     json: true,
     body: {
-      'stripe_token': req.body.token
+      'stripe_token': req.body.stripe_token
     }
   };
 
