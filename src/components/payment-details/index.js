@@ -43,20 +43,30 @@ export function PaymentDetails(props) {
 }
 
 PaymentDetails.propTypes = {
-  stripe: PropTypes.object.isRequired,
-  customer: PropTypes.object.isRequired,
+  stripe: PropTypes.shape({
+    validatedCardData: PropTypes.shape({
+      last4: PropTypes.string.isRequired,
+      brand: PropTypes.string.isRequired,
+      exp_month: PropTypes.number.isRequired,
+      exp_year: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      address_line1: PropTypes.string.isRequired,
+      address_line2: PropTypes.string.isRequired,
+      address_city: PropTypes.string.isRequired,
+      address_zip: PropTypes.string.isRequired,
+      address_country: PropTypes.string.isRequired
+    })
+  }).isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   const {
-    stripe,
-    customer
+    stripe
   } = state;
 
   return {
-    stripe,
-    customer
+    stripe
   };
 }
 
