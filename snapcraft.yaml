@@ -1,0 +1,59 @@
+name: javan-rhino
+version: 1
+summary: Snap purchasing frontend service.
+description: |
+  Snap purchasing frontend service.
+
+  $ snap install javan-rhino
+  ...
+  $ javan-rhino.devel
+  ...
+confinement: strict
+grade: devel
+
+apps:
+  # Debugging ...
+  node:
+    command: node
+    plugs: [network, network-bind]
+  npm:
+    command: npm
+    plugs: [network, network-bind]
+  devel:
+    command: devel
+    plugs: [network, network-bind]
+  production:
+    command: production
+    plugs: [network, network-bind]
+  # Internal MongoDB server.
+  mongo:
+    command: env LC_ALL=C mongod --dbpath=$SNAP_COMMON
+    daemon: simple
+    plugs: [network, network-bind]
+  # Service ... broken still.
+  #javan-rhino:
+  #  command: production >$SNAP_DATA/server.log 2>&1
+  #  daemon: simple
+  #  plugs: [network, network-bind]
+
+parts:
+  javan-rhino:
+    plugin: nodejs
+    node-engine: '6.5.0'
+    source: .
+    organize:
+      lib/node_modules/javan-rhino/scripts/snap-run-devel.sh: bin/devel
+      lib/node_modules/javan-rhino/scripts/snap-run-production.sh: bin/production
+  mongodb:
+    source: https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-3.2.7.tgz
+    plugin: dump
+    stage-packages:
+      - libssl1.0.0
+    stage:
+      - usr
+      - bin
+      - lib
+    snap:
+      - usr
+      - bin
+      - lib

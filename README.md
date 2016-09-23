@@ -39,6 +39,30 @@ To set it up permanently, add the same line to your `.bashrc` file in your home 
     [1] 31 Aug 16:56:25 - 🚂  Express server listening on http://127.0.0.1:3000 🚂
     ...
 
+# (Provisional) Deployment process
+
+Build the confined *snap*:
+
+    $ snapcraft
+
+It embeds a MongoDB server which will launch upon installation:
+
+    $ snap install javan-rhino_1_amd64.snap --force-dangerous
+    ...
+    javan-rhino 1 installed
+
+However still not launching the service automatically, it has to be done manually:
+
+    $ javan-rhino.devel
+    ...
+    [1] 10 Sep 08:29:41 - 🚂  Express server listening on http://127.0.0.1:3000 🚂
+
+Similarly, a *production* service can be launchpad manually:
+
+    $ javan-rhino.production
+    ...
+
+
 # Why javan-rhino?
 
 Win a prize if you figure it out!
