@@ -5,81 +5,86 @@ import { agent } from 'supertest';
 
 describe('purchases api', () => {
 
+  const authorization = 'Macaroon root=foo discharge=bar';
+  let testagent;
+
+  before(() => {
+    // routes to populate req.session, persisted throughout test so we have
+    // an authenticated session
+    app.get('/test/mock-openid', (req, res) => {
+      req.session.authenticated = true;
+      res.send('Test');
+    });
+
+    app.get('/test/mock-macaroon', (req, res) => {
+      req.session.authorization = authorization;
+      res.send('Test');
+    });
+
+    testagent = agent(app);
+  });
+
   afterEach(() => {
     nock.cleanAll();
   });
 
-  const authorization = 'Macaroon root=foo discharge=bar';
+  describe('request.agent(app) setup', () => {
+    it('should mock openid authentication', (done) => {
+      testagent
+        .get('/test/mock-openid')
+        .expect(200, done);
+    });
 
-  // test only routes to populate session
-  app.get('/test/mock-openid', (req, res) => {
-    req.session.authenticated = true;
-    res.send('Test');
-  });
+    it('should mock the macaroon', (done) => {
+      testagent
+        .get('/test/mock-macaroon')
+        .expect(200, done);
+    });
+  })
 
-  app.get('/test/mock-macaroon', (req, res) => {
-    req.session.authorization = authorization;
-    res.send('Test');
-  });
+  describe('responses', () => {
+    it('should stream responses from SCA customers endpoint', (done) => {
 
-  // persist request with superagent.agent()
-  const testagent = agent(app);
+      const body = {
+        'stripe_token': 'foo'
+      };
 
-  it('should mock openid', (done) => {
-    testagent
-      .get('/test/mock-openid')
-      .expect(200, done);
-  });
+      // mock the request to SCA
+      const sca = nock(conf.get('UBUNTU_SCA_URL'))
+        .matchHeader('authorization', authorization)
+        .post('/purchases/v1/customers', body)
+        .reply(200);
 
-  it('should mock the session', (done) => {
-    testagent
-      .get('/test/mock-macaroon')
-      .expect(200, done);
-  });
+      // send the request via our handler
+      testagent
+        .post('/api/purchases/customers')
+        .send(body)
+        .expect(200, () => {
+          sca.done();
+          done();
+        });
+    });
 
-  it('should stream responses from SCA customers endpoint', (done) => {
+    it('should stream responses from SCA orders endpoint', (done) => {
 
-    const body = {
-      'stripe_token': 'foo'
-    };
+      const body = {
+        'stripe_token': 'foo'
+      };
 
-    // mock the request to SCA
-    const sca = nock(conf.get('UBUNTU_SCA_URL'))
-      .matchHeader('authorization', authorization)
-      .post('/purchases/v1/customers', body)
-      .reply(200);
+      // mock the request to SCA
+      const sca = nock(conf.get('UBUNTU_SCA_URL'))
+        .matchHeader('authorization', authorization)
+        .post('/purchases/v1/orders', body)
+        .reply(200);
 
-    // send the request via our handler
-    testagent
-      .post('/api/purchases/customers')
-      .send(body)
-      .expect(200, () => {
-        sca.done();
-        done();
-      });
-  });
-
-  it('should stream responses from SCA orders endpoint', (done) => {
-
-    const body = {
-      'stripe_token': 'foo'
-    };
-
-    // mock the request to SCA
-    const sca = nock(conf.get('UBUNTU_SCA_URL'))
-      .matchHeader('authorization', authorization)
-      .post('/purchases/v1/orders', body)
-      .reply(200);
-
-    // send the request via our handler
-    testagent
-      .post('/api/purchases/orders')
-      .send(body)
-      .expect(200, () => {
-        sca.done();
-        done();
-      });
-  });
-
-
+      // send the request via our handler
+      testagent
+        .post('/api/purchases/orders')
+        .send(body)
+        .expect(200, () => {
+          sca.done();
+          done();
+        });
+    });
+  })
 });
