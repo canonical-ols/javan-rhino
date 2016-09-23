@@ -10,11 +10,11 @@ describe('RelyingParty', () => {
   });
 
   it('should set verify url from config', () => {
-    expect(rp.returnUrl).toEqual(conf.get('OPENID:VERIFY_URL'));
+    expect(rp.returnUrl).toBe(conf.get('OPENID:VERIFY_URL'));
   });
 
   it('should set realm from config', () => {
-    expect(rp.realm).toEqual(conf.get('OPENID:REALM'));
+    expect(rp.realm).toBe(conf.get('UNIVERSAL:MU_URL'));
   });
 
   it('should not use stateless verification', () => {

@@ -1,5 +1,7 @@
 import 'isomorphic-fetch';
 
+import conf from '../config';
+
 export const SEND_STRIPE_TOKEN = 'SEND_STRIPE_TOKEN';
 export const SEND_STRIPE_TOKEN_SUCCESS = 'SEND_STRIPE_TOKEN_SUCCESS';
 export const SEND_STRIPE_TOKEN_FAILURE = 'SEND_STRIPE_TOKEN_FAILURE';
@@ -43,7 +45,9 @@ export function postStripeToken(token) {
   return (dispatch) => {
     dispatch(sendStripeToken(token));
 
-    return fetch('http://localhost:3000/api/purchases/customers', {
+    const url = conf.get('MU_URL');
+
+    return fetch(`${url}/api/purchases/customers`, {
       method: 'POST',
       credentials: 'same-origin',
       headers: {

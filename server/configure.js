@@ -3,8 +3,7 @@ var base = require('../settings');
 
 // allow these overrides from env
 nconf.env([
-  'APP:PORT',
-  'APP:HOST',
+  'APP_URL',
   'SESSION_SECRET'
 ]);
 nconf.defaults(base);

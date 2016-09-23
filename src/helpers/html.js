@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 export default class Html extends Component {
   render() {
-    const { assets, store, component } = this.props;
+    const { assets, store, component, config } = this.props;
     const head = Helmet.rewind();
     const attrs = head.htmlAttributes.toComponent();
     const preloadedState = store.getState();
@@ -21,6 +21,9 @@ export default class Html extends Component {
         </head>
         <body>
           <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
+          <script
+            dangerouslySetInnerHTML={{ __html: `window.__CONFIG__ = ${JSON.stringify(config)}` }}
+          />
           <script
             dangerouslySetInnerHTML={{ __html: `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}` }}
           />
@@ -40,6 +43,7 @@ export default class Html extends Component {
 }
 
 Html.propTypes = {
+  config: PropTypes.object,
   component: PropTypes.node,
   store: PropTypes.object,
   assets: React.PropTypes.shape({

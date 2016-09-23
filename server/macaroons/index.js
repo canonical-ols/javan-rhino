@@ -1,5 +1,8 @@
 import { MacaroonsBuilder } from 'macaroons.js';
 import conf from '../configure';
+import url from 'url';
+
+const UBUNTU_SSO_HOST = url.parse(conf.get('UBUNTU_SSO_URL')).host;
 
 /**
  * @param {String} macaroon serialized macaroon
@@ -12,7 +15,7 @@ export const extractCaveatId = (macaroon) => {
   m.inspect();
 
   m.caveatPackets.some((packet) => {
-    if (packet.valueAsText === conf.get('UBUNTU_SSO_HOST')) {
+    if (packet.valueAsText === UBUNTU_SSO_HOST) {
       return true;
     }
     if (packet.type === 3) {

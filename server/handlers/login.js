@@ -4,13 +4,14 @@ import conf from '../configure.js';
 import RelyingParty from '../openid/relyingparty.js';
 
 let rp;
+const UBUNTU_SCA_URL = conf.get('UBUNTU_SCA_URL');
 
 export const getMacaroon = (req, res, next) => {
   // get macaroon from store
   // store on req
   //
   const options = {
-    url: `${conf.get('UBUNTU_SCA:URL')}/dev/api/acl/`,
+    url: `${UBUNTU_SCA_URL}/dev/api/acl/`,
     method: 'POST',
     json: {
       'permissions': ['package_access', 'package_purchase']
