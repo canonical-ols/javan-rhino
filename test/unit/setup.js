@@ -7,5 +7,5 @@ require.extensions['.jpg', '.jpeg'] = () => 'example.jpg';
 
 const conf = require('../../server/configure.js');
 global.__CONFIG__ = {
-  MU_URL: conf.get('MU_URL')
+  UNIVERSAL: conf.get('UNIVERSAL')
 };

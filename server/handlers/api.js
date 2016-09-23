@@ -1,7 +1,7 @@
 import request from 'request';
 import conf from '../configure.js';
 
-const UBUNTU_SCA_URL = conf.get('UBUNTU_SCA_URL');
+const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
 
 export const customers = (req, res) => {
   const auth = req.session.authorization;

@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import nock from 'nock';
 
-import conf from '../../../server/configure.js';
+import conf from '../../../src/config';
 import {
   postStripeToken,
   sendStripeToken,
@@ -11,6 +11,8 @@ import {
   sendStripeTokenFailure
 } from '../../../src/actions/customer';
 import * as ActionTypes from '../../../src/actions/customer';
+
+const MU_URL = conf.get('UNIVERSAL:MU_URL');
 
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
@@ -56,23 +58,14 @@ describe('async actions', () => {
   let store;
   let scope;
 
-  before(() => {
-    global.MU_URL = conf.get('MU_URL');
-  });
-
   beforeEach(() => {
-    scope = nock('http://localhost:3000/');
+    scope = nock(MU_URL);
     token = 'my stripe token';
     store = mockStore({ tosAccepted: false });
   });
 
   afterEach(() => {
     nock.cleanAll();
-  });
-
-  after(() => {
-    delete GLOBAL.MU_URL;
-    expect(GLOBAL.MU_URL).toNotExist();
   });
 
   it('creates SEND_STRIPE_TOKEN_SUCCESS when posting stripe token is successful', () => {

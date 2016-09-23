@@ -3,6 +3,8 @@ import conf from '../../server/configure';
 import nock from 'nock';
 import { agent } from 'supertest';
 
+const SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
+
 describe('purchases api', () => {
 
   afterEach(() => {
@@ -44,7 +46,7 @@ describe('purchases api', () => {
     };
 
     // mock the request to SCA
-    const sca = nock(conf.get('UBUNTU_SCA_URL'))
+    const sca = nock(SCA_URL)
       .matchHeader('authorization', authorization)
       .post('/purchases/v1/customers', body)
       .reply(200);
@@ -66,7 +68,7 @@ describe('purchases api', () => {
     };
 
     // mock the request to SCA
-    const sca = nock(conf.get('UBUNTU_SCA_URL'))
+    const sca = nock(SCA_URL)
       .matchHeader('authorization', authorization)
       .post('/purchases/v1/orders', body)
       .reply(200);

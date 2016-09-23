@@ -66,7 +66,7 @@ function serve(webpackIsomorphicTools) {
 
         // config we share from server side to client side
         const config = {
-          MU_URL: conf.get('MU_URL')
+          UNIVERSAL: conf.get('UNIVERSAL')
         };
 
         // You can also check renderProps.components or renderProps.routes for
@@ -90,7 +90,7 @@ function serve(webpackIsomorphicTools) {
     });
   });
 
-  const appUrl = url.parse(conf.get('MU_URL'));
+  const appUrl = url.parse(conf.get('UNIVERSAL:MU_URL'));
   const server = app.listen(appUrl.port, appUrl.hostname, () => {
     const host = server.address().address;
     const port = server.address().port;

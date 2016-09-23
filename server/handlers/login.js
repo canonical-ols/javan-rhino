@@ -4,7 +4,8 @@ import conf from '../configure.js';
 import RelyingParty from '../openid/relyingparty.js';
 
 let rp;
-const UBUNTU_SCA_URL = conf.get('UBUNTU_SCA_URL');
+const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
+const OPENID_IDENTIFIER = conf.get('SERVER:UBUNTU_SSO_URL');
 
 export const getMacaroon = (req, res, next) => {
   // get macaroon from store
@@ -31,10 +32,9 @@ export const getMacaroon = (req, res, next) => {
 };
 
 export const authenticate = (req, res) => {
-  const identifier = conf.get('UBUNTU_SSO_URL');
   rp = RelyingParty(req.session.cid);
 
-  rp.authenticate(identifier, false, (error, authUrl) => {
+  rp.authenticate(OPENID_IDENTIFIER, false, (error, authUrl) => {
     if (error) {
       // TODO auth failure view
       res.status(401).send('Authentication failed: ' + error.message);
