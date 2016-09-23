@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
 import { postStripeToken } from '../actions/customer';
+import PaymentDetails from '../components/payment-details';
 import PaymentsForm from '../components/payments-form';
 
 import styles from './container.css';
@@ -17,6 +18,7 @@ export class AddCard extends Component {
     return (
       <div className={ styles.container }>
         <PaymentsForm />
+        <PaymentDetails />
         <button onClick={ boundClick }>Test Send Stripe Token</button>
       </div>
     );

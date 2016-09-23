@@ -104,6 +104,10 @@ export class PaymentsForm extends Component {
   render() {
     const isFetching = this.props.customer.isFetching || this.props.stripe.isFetching;
 
+    if (this.props.stripe.validatedCardData) {
+      return null;
+    }
+
     return (
       <div className={ styles.paymentsForm }>
         <Form onSubmit={ this.onSubmit.bind(this) }>
@@ -431,8 +435,13 @@ export class PaymentsForm extends Component {
 }
 
 PaymentsForm.propTypes = {
-  stripe: PropTypes.object.isRequired,
-  customer: PropTypes.object.isRequired,
+  stripe: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    validatedCardData: PropTypes.object
+  }).isRequired,
+  customer: PropTypes.shape({
+    isFetching: PropTypes.bool
+  }).isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
