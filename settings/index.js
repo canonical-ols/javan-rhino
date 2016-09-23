@@ -1,8 +1,5 @@
 module.exports = {
-  // UNIVERSAL CONFIG IS SHARED WITH THE BROWSER
-  UNIVERSAL: {
-    MU_URL: 'http://localhost:3000',
-  },
+  MU_URL: 'http://localhost:3000',
   UBUNTU_SSO_URL: 'https://login.staging.ubuntu.com',
   UBUNTU_SCA_URL: 'https://myapps.developer.staging.ubuntu.com',
   WEBPACK_DEV_URL: 'http://localhost:3001',

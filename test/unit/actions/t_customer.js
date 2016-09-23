@@ -6,9 +6,9 @@ import nock from 'nock';
 import conf from '../../../server/configure.js';
 import {
   postStripeToken,
-    sendStripeToken,
-    sendStripeTokenSuccess,
-    sendStripeTokenFailure
+  sendStripeToken,
+  sendStripeTokenSuccess,
+  sendStripeTokenFailure
 } from '../../../src/actions/customer';
 import * as ActionTypes from '../../../src/actions/customer';
 
@@ -57,7 +57,7 @@ describe('async actions', () => {
   let scope;
 
   before(() => {
-    GLOBAL.MU_URL = conf.get('MU_URL');
+    global.MU_URL = conf.get('MU_URL');
   });
 
   beforeEach(() => {
