@@ -14,7 +14,7 @@ const app = Express();
 const compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
-  contentBase: webpackDevUrl.host,
+  contentBase: webpackDevUrl.href,
   hot: true,
   noInfo: true,
   headers: { 'Access-Control-Allow-Origin': '*' },
@@ -26,9 +26,9 @@ app.use(webpackHotMiddleware(compiler));
 app.use(Express.static('public'));
 
 const port = webpackDevUrl.port;
-const address = webpackDevUrl.host;
+const address = webpackDevUrl.hostname;
 
-app.listen(port, address, () => {
+const server = app.listen(port, address, () => {
   const host = server.address().address;
   const port = server.address().port;
 
