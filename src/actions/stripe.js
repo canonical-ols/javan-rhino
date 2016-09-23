@@ -1,9 +1,10 @@
+import conf from '../config';
+import { postStripeToken } from './customer';
+
 export const CREATE_STRIPE_TOKEN = 'CREATE_STRIPE_TOKEN';
 export const SAVE_VALIDATED_CARD_DATA = 'SAVE_VALIDATED_CARD_DATA';
 export const CREATE_STRIPE_TOKEN_SUCCESS = 'CREATE_STRIPE_TOKEN_SUCCESS';
 export const CREATE_STRIPE_TOKEN_FAILURE = 'CREATE_STRIPE_TOKEN_FAILURE';
-
-import { postStripeToken } from './customer';
 
 export function createStripeToken(formCardData) {
   return {
@@ -39,7 +40,7 @@ export function postCardData(cardData) {
 
     dispatch(createStripeToken(cardData));
 
-    Stripe.setPublishableKey('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+    Stripe.setPublishableKey(conf.get('STRIPE_PUBLISHABLE_KEY'));
 
     Stripe.card.createToken({
       number: cardData.cardNumber,
