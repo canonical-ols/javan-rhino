@@ -79,7 +79,7 @@ describe('async actions', () => {
     const tosAccepted = '2016-09-12T10:16:20.779Z';
 
     scope.post('/api/purchases/customers')
-      .reply(200, { tos_accepted: tosAccepted });
+      .reply(200, { latest_tos_accepted: tosAccepted });
 
     const expectedActions = [
       { type: ActionTypes.SEND_STRIPE_TOKEN, token },
