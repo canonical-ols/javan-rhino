@@ -40,7 +40,7 @@ describe('purchases api', () => {
         .get('/test/mock-macaroon')
         .expect(200, done);
     });
-  })
+  });
 
   describe('responses', () => {
     it('should stream responses from SCA customers endpoint', (done) => {
@@ -86,5 +86,5 @@ describe('purchases api', () => {
           done();
         });
     });
-  })
+  });
 });
