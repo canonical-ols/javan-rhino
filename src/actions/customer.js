@@ -60,7 +60,7 @@ export function postStripeToken(token) {
     })
       .then(checkStatus)
       .then(response => response.json())
-      .then(json => dispatch(sendStripeTokenSuccess(json.tos_accepted)))
+      .then(json => dispatch(sendStripeTokenSuccess(json.latest_tos_accepted)))
       .catch(errors => dispatch(sendStripeTokenFailure(errors)));
   };
 }
