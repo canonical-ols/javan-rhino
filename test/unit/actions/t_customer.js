@@ -18,6 +18,17 @@ const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 
 describe('customer actions', () => {
+  let store;
+
+  beforeEach(() => {
+    store = mockStore({
+      isFetching: false,
+      tosAccepted: false,
+      errors: false,
+      token: false
+    });
+  });
+
   it('should create an action to send stripe token', () => {
     const token = 'stripe token';
     const expectedAction = {
@@ -25,7 +36,8 @@ describe('customer actions', () => {
       token
     };
 
-    expect(sendStripeToken(token)).toEqual(expectedAction);
+    store.dispatch(sendStripeToken(token));
+    expect(store.getActions()).toInclude(expectedAction);
   });
 
   it('should create an action to receive success response', () => {
@@ -35,7 +47,8 @@ describe('customer actions', () => {
       tosAccepted
     };
 
-    expect(sendStripeTokenSuccess(tosAccepted)).toEqual(expectedAction);
+    store.dispatch(sendStripeTokenSuccess(tosAccepted));
+    expect(store.getActions()).toInclude(expectedAction);
   });
 
   it('should create an action to receive failure response', () => {
@@ -49,7 +62,8 @@ describe('customer actions', () => {
       errors
     };
 
-    expect(sendStripeTokenFailure(errors)).toEqual(expectedAction);
+    store.dispatch(sendStripeTokenFailure(errors));
+    expect(store.getActions()).toInclude(expectedAction);
   });
 });
 
@@ -74,14 +88,11 @@ describe('async actions', () => {
     scope.post('/api/purchases/customers')
       .reply(200, { latest_tos_accepted: tosAccepted });
 
-    const expectedActions = [
-      { type: ActionTypes.SEND_STRIPE_TOKEN, token },
-      { type: ActionTypes.SEND_STRIPE_TOKEN_SUCCESS, tosAccepted }
-    ];
-
     return store.dispatch(postStripeToken(token))
       .then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
+        expect(store.getActions()).toHaveActionOfType(
+          ActionTypes.SEND_STRIPE_TOKEN_SUCCESS
+        );
       });
   });
 
@@ -93,14 +104,11 @@ describe('async actions', () => {
     scope.post('/api/purchases/customers')
       .replyWithError(errors);
 
-    const expectedActions = [
-      { type: ActionTypes.SEND_STRIPE_TOKEN, token },
-      { type: ActionTypes.SEND_STRIPE_TOKEN_FAILURE, errors }
-    ];
-
     return store.dispatch(postStripeToken(token))
       .then(() => {
-        expect(store.getActions()).toMatch(expectedActions);
+        expect(store.getActions()).toHaveActionOfType(
+          ActionTypes.SEND_STRIPE_TOKEN_FAILURE
+        );
       });
   });
 });
