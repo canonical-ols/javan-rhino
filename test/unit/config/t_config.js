@@ -21,17 +21,23 @@ describe('Config', () => {
   describe('instance with supplied values', () => {
     beforeEach(() => {
       c = new Config({
-        'FOO': 'bar'
+        'FOO': true,
+        'BAR': {
+          'BAZ': true
+        }
       });
     });
 
     it('should return existing values', () => {
-      expect(c.get('FOO')).toBe('bar');
+      expect(c.get('FOO')).toBe(true);
+    });
+
+    it('should return nested values', () => {
+      expect(c.get('BAR:BAZ')).toBe(true);
     });
 
     it('should return undefined for non-existant values', () => {
-      expect(c.get('BAR')).toBe(undefined);
+      expect(c.get('FOOBAR')).toBe(undefined);
     });
   });
-
 });

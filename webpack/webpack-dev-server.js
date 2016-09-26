@@ -1,15 +1,20 @@
-var Express = require('express');
-var util = require('util');
-var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware  = require('webpack-hot-middleware');
-var webpackConfig = require('./dev-config');
+const Express = require('express');
+const util = require('util');
+const webpack = require('webpack');
+const url = require('url');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware  = require('webpack-hot-middleware');
 
-var app = Express();
-var compiler = webpack(webpackConfig);
+const webpackConfig = require('./dev-config');
+const conf = require('../server/configure.js');
+
+const webpackDevUrl = url.parse(conf.get('SERVER:WEBPACK_DEV_URL'));
+
+const app = Express();
+const compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
-  contentBase: 'http://localhost:3001',
+  contentBase: webpackDevUrl.href,
   hot: true,
   noInfo: true,
   headers: { 'Access-Control-Allow-Origin': '*' },
@@ -20,12 +25,12 @@ app.use(webpackHotMiddleware(compiler));
 
 app.use(Express.static('public'));
 
-var port = process.env.PORT || 3001;
-var address = process.env.ADDRESS || 'localhost';
+const port = webpackDevUrl.port;
+const address = webpackDevUrl.hostname;
 
-var server = app.listen(port, address, () => {
-  var host = server.address().address;
-  var port = server.address().port;
+const server = app.listen(port, address, () => {
+  const host = server.address().address;
+  const port = server.address().port;
 
   util.log('🚧  WebPack development server listening on http://%s:%s 🚧', host, port);
 });

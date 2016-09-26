@@ -6,4 +6,6 @@ require.extensions['.gif'] = () => 'example.gif';
 require.extensions['.jpg', '.jpeg'] = () => 'example.jpg';
 
 const conf = require('../../server/configure.js');
-global.__CONFIG__ = conf.get('UNIVERSAL');
+global.__CONFIG__ = {
+  UNIVERSAL: conf.get('UNIVERSAL')
+};

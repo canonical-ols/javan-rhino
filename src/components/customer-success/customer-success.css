@@ -1,0 +1,9 @@
+.customerSuccess {
+  padding: 2em;
+  background: #FFF;
+}
+
+.code {
+  font-family: monospace;
+  background: $light-grey;
+}

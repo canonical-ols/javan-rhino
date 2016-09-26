@@ -64,6 +64,11 @@ function serve(webpackIsomorphicTools) {
         };
         const store = configureStore(initialState);
 
+        // config we share from server side to client side
+        const config = {
+          UNIVERSAL: conf.get('UNIVERSAL')
+        };
+
         // You can also check renderProps.components or renderProps.routes for
         // your "not found" component or route respectively, and send a 404 as
         // below, if you're using a catch-all route.
@@ -76,7 +81,7 @@ function serve(webpackIsomorphicTools) {
               assets={ webpackIsomorphicTools.assets() }
               store={ store }
               component={ component }
-              config={ conf.get('UNIVERSAL') }
+              config={ config }
             />
           ));
       } else {

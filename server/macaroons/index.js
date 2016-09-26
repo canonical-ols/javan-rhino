@@ -2,7 +2,7 @@ import { MacaroonsBuilder } from 'macaroons.js';
 import conf from '../configure';
 import url from 'url';
 
-const UBUNTU_SSO_HOST = url.parse(conf.get('UBUNTU_SSO_URL')).host;
+const UBUNTU_SSO_HOST = url.parse(conf.get('SERVER:UBUNTU_SSO_URL')).host;
 
 /**
  * @param {String} macaroon serialized macaroon
