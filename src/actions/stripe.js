@@ -40,7 +40,7 @@ export function postCardData(cardData) {
 
     dispatch(createStripeToken(cardData));
 
-    Stripe.setPublishableKey(conf.get('STRIPE_PUBLISHABLE_KEY'));
+    Stripe.setPublishableKey(conf.get('UNIVERSAL:STRIPE_PUBLISHABLE_KEY'));
 
     Stripe.card.createToken({
       number: cardData.cardNumber,
