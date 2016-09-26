@@ -20,8 +20,12 @@ export class AddCard extends Component {
     return (
       <div className={ styles.container }>
         <PaymentsForm />
-        <PaymentDetails />
-        <CustomerSuccess />
+        { this.props.stripe.validatedCardData &&
+          <PaymentDetails />
+        }
+        { this.props.customer.tosAccepted &&
+          <CustomerSuccess />
+        }
         <button onClick={ boundClick }>Test Send Stripe Token</button>
       </div>
     );
@@ -29,16 +33,26 @@ export class AddCard extends Component {
 }
 
 AddCard.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  customer: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    tosAccepted: PropTypes.bool
+  }).isRequired,
+  stripe: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    validatedCardData: PropTypes.object
+  }).isRequired,
 };
 
 function mapStateToProps(state) {
   const {
-    sendStripeToken
+    customer,
+    stripe
   } = state;
 
   return {
-    sendStripeToken
+    customer,
+    stripe
   };
 }
 

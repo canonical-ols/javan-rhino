@@ -16,10 +16,6 @@ const getCountryName = (iso) => {
 export function PaymentDetails(props) {
   const card = props.stripe.validatedCardData;
 
-  if (!card) {
-    return null;
-  }
-
   return (
     <div className={ styles.paymentDetails }>
       <h3>Payment details</h3>
