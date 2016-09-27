@@ -12,7 +12,9 @@ describe('<PaymentsForm /> component', () => {
   beforeEach(() => {
     // mocking redux props
     const props = {
-      identity: {},
+      identity: {
+        isAuthenticated: false
+      },
       stripe: {},
       customer: {},
       dispatch: () => {}
@@ -23,6 +25,29 @@ describe('<PaymentsForm /> component', () => {
 
   it('should render a <Form> component', () => {
     expect(wrapper.find(Form).length).toBe(1);
+  });
+
+  it('renders with disabled class', () => {
+    expect(wrapper.hasClass('disabled')).toBe(true);
+  });
+
+  describe('<PaymentsForm /> component with authenticated user', () => {
+    beforeEach(() => {
+      // mocking redux props
+      const props = {
+        identity: {
+          isAuthenticated: true
+        },
+        stripe: {},
+        customer: {},
+        dispatch: () => {}
+      };
+
+      wrapper = shallow(<PaymentsForm {...props} />);
+    });
+    it('renders without disabled class', () => {
+      expect(wrapper.hasClass('disabled')).toBe(false);
+    });
   });
 
   context('validation', () => {
