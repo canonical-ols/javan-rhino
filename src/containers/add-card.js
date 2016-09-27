@@ -7,6 +7,7 @@ import CustomerSuccess from '../components/customer-success';
 import SignInBanner from '../components/sign-in-banner';
 import PaymentDetails from '../components/payment-details';
 import PaymentsForm from '../components/payments-form';
+import Welcome from '../components/welcome';
 import conf from '../config/';
 
 import styles from './container.css';
@@ -23,6 +24,7 @@ export class AddCard extends Component {
     const { identity } = this.props;
     return (
       <div className={ styles.container }>
+        <Welcome />
         <SignInBanner identity={ identity } url={ url } />
         <PaymentsForm />
         { this.props.stripe.validatedCardData &&
