@@ -62,10 +62,10 @@ describe('purchases api', () => {
       testagent
       .post('/api/purchases/customers')
       .send(body)
-      .expect(200, () => {
+      .expect(200, (err) => {
         // FIXME: responses are currently mocked in API
         // sca.done();
-        done();
+        done(err);
       });
     });
 
@@ -85,9 +85,9 @@ describe('purchases api', () => {
       testagent
       .post('/api/purchases/orders')
       .send(body)
-      .expect(200, () => {
+      .expect(200, (err) => {
         sca.done();
-        done();
+        done(err);
       });
     });
   });
