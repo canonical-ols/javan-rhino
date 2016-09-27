@@ -1,12 +1,8 @@
-.button {
-  display:block;
-  width:100%;
-  border-radius:2px;
-  background-color: #dd4814;
-  color:#fff;
-  margin:0 0 1em 0;
-  padding: 0.9em;
-  border:0;
-  font-size:15px;
-  text-align: center;
+.banner {
+  margin-bottom: 3em;
+}
+
+.box {
+  padding: 2em;
+  background-color: #fff;
 }
