@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Header from '../components/header';
 import Footer from '../components/footer';
 
-class App extends Component {
+export class App extends Component {
   render() {
     const { identity } = this.props;
     // FIXME sstewart 17-Aug-16 move some of this to config
