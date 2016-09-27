@@ -28,8 +28,9 @@ export default class SignInBanner extends Component {
 
     return (
       <div className={ styles.banner }>
-        { identity.isAuthenticated ? this._renderAuthenticated(identity)
-        : this._renderUnauthenticated() }
+        { identity.isAuthenticated
+          ? this._renderAuthenticated(identity)
+          : this._renderUnauthenticated() }
       </div>
     );
   }
