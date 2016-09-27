@@ -1,7 +1,6 @@
 import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
-import configureStore from 'redux-mock-store';
 
 import { AddCard } from '../../../src/containers/add-card';
 import Welcome from '../../../src/components/welcome';

@@ -442,6 +442,7 @@ export class PaymentsForm extends Component {
 }
 
 PaymentsForm.propTypes = {
+  identity: PropTypes.object.isRequired,
   stripe: PropTypes.shape({
     isFetching: PropTypes.bool,
     validatedCardData: PropTypes.object

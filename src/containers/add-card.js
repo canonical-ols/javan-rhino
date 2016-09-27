@@ -1,8 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
-import { postStripeToken } from '../actions/customer';
-
 import CustomerSuccess from '../components/customer-success';
 import SignInBanner from '../components/sign-in-banner';
 import PaymentDetails from '../components/payment-details';
