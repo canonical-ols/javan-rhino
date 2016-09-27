@@ -1,4 +1,18 @@
 .paymentsForm {
   padding: 2em;
   background: #FFF;
+  position: relative;
+}
+
+.disabled::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.8;
+  background-color: #fff;
+  display: block;
+  z-index: 2147483647;
 }
