@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
 
 import NavLink from '../navlink';
-import User from '../user';
+import SignIn from '../sign-in';
 
 import styles from './header.css';
 
@@ -23,7 +23,7 @@ export default class Header extends Component {
             <NavLink to="/about">About</NavLink>
           </div>
           <div className={ styles.sideNav }>
-            <User identity={ identity } />
+            <SignIn identity={ identity } />
           </div>
         </nav>
       </div>

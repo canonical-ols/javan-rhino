@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
-import style from './user.css';
+import style from './sign-in.css';
 
-export default class User extends Component {
+export default class SignIn extends Component {
   renderAuthenticatedLink(user) {
     let link;
 
@@ -25,6 +25,6 @@ export default class User extends Component {
   }
 }
 
-User.propTypes = {
+SignIn.propTypes = {
   identity: PropTypes.object.isRequired
 };
