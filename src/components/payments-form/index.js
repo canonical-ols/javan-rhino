@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Button from '../button';
 import countries from './countries';
 import {
-  CheckboxField,
   Fieldset,
   FieldRow,
   Form,
