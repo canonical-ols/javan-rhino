@@ -13,14 +13,9 @@ import conf from '../config/';
 import styles from './container.css';
 
 export class AddCard extends Component {
-  handleClick() {
-    const { dispatch } = this.props;
-    dispatch(postStripeToken('hello-ricardo'));
-  }
 
   render() {
     const url = conf.get('UNIVERSAL:UBUNTU_SSO_URL');
-    const boundClick = this.handleClick.bind(this);
     const { identity } = this.props;
     return (
       <div className={ styles.container }>
@@ -33,7 +28,6 @@ export class AddCard extends Component {
         { this.props.customer.tosAccepted &&
           <CustomerSuccess />
         }
-        <button onClick={ boundClick }>Test Send Stripe Token</button>
       </div>
     );
   }
