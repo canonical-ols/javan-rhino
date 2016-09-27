@@ -5,7 +5,9 @@ import { Teams, Macaroons } from './extensions';
 openid['LaunchpadTeams'] = Teams;
 openid['Macaroons'] = Macaroons;
 
-
+const OPENID_TEAMS = conf.get('SERVER:OPENID:TEAMS');
+const OPENID_VERIFY_URL = conf.get('SERVER:OPENID:VERIFY_URL');
+const MU_URL = conf.get('UNIVERSAL:MU_URL');
 
 export default (cid) => {
   const extensions = [
@@ -15,7 +17,7 @@ export default (cid) => {
       'fullname' : true,
       'language' : true
     }),
-    new openid.LaunchpadTeams(conf.get('OPENID:TEAMS'))
+    new openid.LaunchpadTeams(OPENID_TEAMS)
   ];
 
   if (cid) {
@@ -24,8 +26,8 @@ export default (cid) => {
     );
   }
   return new openid.RelyingParty(
-    conf.get('OPENID:VERIFY_URL'),
-    conf.get('UNIVERSAL:MU_URL'),
+    OPENID_VERIFY_URL,
+    MU_URL,
     false, // Use stateless verification
     false, // Strict mode
     extensions
