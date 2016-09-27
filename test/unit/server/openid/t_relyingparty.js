@@ -2,6 +2,9 @@ import expect from 'expect';
 import conf from '../../../../server/configure.js';
 import RelyingParty from '../../../../server/openid/relyingparty.js';
 
+const VERIFY_URL = conf.get('SERVER:OPENID:VERIFY_URL');
+const MU_URL = conf.get('UNIVERSAL:MU_URL');
+
 describe('RelyingParty', () => {
   let rp;
 
@@ -10,11 +13,11 @@ describe('RelyingParty', () => {
   });
 
   it('should set verify url from config', () => {
-    expect(rp.returnUrl).toBe(conf.get('OPENID:VERIFY_URL'));
+    expect(rp.returnUrl).toBe(VERIFY_URL);
   });
 
   it('should set realm from config', () => {
-    expect(rp.realm).toBe(conf.get('UNIVERSAL:MU_URL'));
+    expect(rp.realm).toBe(MU_URL);
   });
 
   it('should not use stateless verification', () => {

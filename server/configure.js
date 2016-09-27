@@ -1,9 +1,9 @@
-var nconf = require('nconf');
-var base = require('../settings');
+const nconf = require('nconf');
+const base = require('../settings');
 
-// allow these overrides from env
+nconf.env('__');
 nconf.env([
-  'APP_URL',
+  'UNIVERSAL:APP_URL', // env variable UNIVERSAL__APP_URL
   'SESSION_SECRET'
 ]);
 nconf.defaults(base);

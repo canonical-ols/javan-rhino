@@ -5,7 +5,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const vars = require('postcss-simple-vars');
 const autoprefixer = require('autoprefixer');
 
-const conf = require('../server/configure.js');
 const webpackIsomorphicToolsPlugin =
   new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools-configuration'))
   .development();
@@ -24,9 +23,6 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.DefinePlugin({
-      APP_URL: JSON.stringify(conf.get('APP_URL'))
-    }),
     new ExtractTextPlugin('style.css', { allChunks: true }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),

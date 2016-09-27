@@ -16,15 +16,24 @@ export class Config {
   }
 
   get(key) {
-    if ('undefined' === typeof(key)) {
-      return this._store;
-    }
+    let target = this._store;
+    const path = this._path(key);
 
-    if (!this._store.hasOwnProperty(key)) {
+    while (path.length > 0) {
+      key = path.shift();
+
+      if (target && target.hasOwnProperty(key)) {
+        target = target[key];
+        continue;
+      }
       return undefined;
     }
 
-    return this._store[key];
+    return target;
+  }
+
+  _path(key) {
+    return (key == null) ? [] : key.split(':');
   }
 }
 
