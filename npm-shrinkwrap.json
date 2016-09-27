@@ -1948,9 +1948,6 @@
     "morgan": {
       "version": "1.7.0"
     },
-    "morgan": {
-      "version": "1.7.0"
-    },
     "ms": {
       "version": "0.7.1"
     },
@@ -3051,9 +3048,6 @@
     },
     "resolve": {
       "version": "1.1.7"
-    },
-    "resolve-from": {
-      "version": "2.0.0"
     },
     "restore-cursor": {
       "version": "1.0.1"
