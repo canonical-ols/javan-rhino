@@ -12,6 +12,7 @@ describe('<PaymentsForm /> component', () => {
   beforeEach(() => {
     // mocking redux props
     const props = {
+      identity: {},
       stripe: {},
       customer: {},
       dispatch: () => {}
