@@ -21,5 +21,6 @@ module.exports = {
   'base-font-family':    'Ubuntu, Arial, "libra sans", sans-serif',
   'base-font-weight':    '300',
   'base-font-size':      '16px',
-  'base-line-height':    '1.5'
+  'base-line-height':    '1.5',
+  'max-z-index': '2147483647'
 };
