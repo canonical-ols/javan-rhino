@@ -27,10 +27,6 @@ describe('<PaymentsForm /> component', () => {
     expect(wrapper.find(Form).length).toBe(1);
   });
 
-  it('renders with disabled class', () => {
-    expect(wrapper.hasClass('disabled')).toBe(true);
-  });
-
   describe('<PaymentsForm /> component with authenticated user', () => {
     beforeEach(() => {
       // mocking redux props
