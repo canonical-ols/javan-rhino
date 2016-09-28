@@ -2,9 +2,9 @@ import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
 
-import User from '../../../src/components/user';
+import SignIn from '../../../src/components/sign-in';
 
-describe('<User /> component', () => {
+describe('<SignIn /> component', () => {
   let wrapper;
 
   context('when logged out', () => {
@@ -19,7 +19,7 @@ describe('<User /> component', () => {
         }
       };
 
-      wrapper = shallow(<User {...props} />);
+      wrapper = shallow(<SignIn {...props} />);
     });
 
     it('should render login link', () => {
@@ -40,7 +40,7 @@ describe('<User /> component', () => {
         }
       };
 
-      wrapper = shallow(<User {...props} />);
+      wrapper = shallow(<SignIn {...props} />);
     });
 
     it('should render login link', () => {

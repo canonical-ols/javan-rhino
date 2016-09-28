@@ -1,0 +1,14 @@
+.welcome {
+  margin-bottom: 3em;
+}
+
+.welcome ul {
+  margin: 1em 0;
+  list-style: disc;
+  list-style-position: inside; 
+}
+
+.box {
+  padding: 2em;
+  background-color: #fff;
+}

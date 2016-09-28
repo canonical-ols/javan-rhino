@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 import Header from '../../../src/components/header';
 import NavLink from '../../../src/components/navlink';
-import User from '../../../src/components/user';
+import SignIn from '../../../src/components/sign-in';
 
 describe('<Header /> component', () => {
   let header;
@@ -18,7 +18,7 @@ describe('<Header /> component', () => {
   });
 
   it('should render user component', () => {
-    expect(header.find(User).length).toBeGreaterThan(0);
+    expect(header.find(SignIn).length).toBeGreaterThan(0);
   });
 
 });

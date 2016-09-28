@@ -39,6 +39,16 @@ To set it up permanently, add the same line to your `.bashrc` file in your home 
     [1] 31 Aug 16:56:25 - 🚂  Express server listening on http://127.0.0.1:3000 🚂
     ...
 
+# Prod/Staging Environment Vars
+
+```
+NODE_ENV='production'
+DEPLOY_ENV=['staging'|'production']
+SESSION_SECRET
+SESSION_MEMCACHED_HOST
+SESSION_MEMCACHED_SECRET
+```
+
 # Why javan-rhino?
 
 Win a prize if you figure it out!
