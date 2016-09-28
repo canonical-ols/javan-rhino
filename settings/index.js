@@ -1,7 +1,7 @@
 module.exports = {
   UNIVERSAL: {
     MU_URL: 'http://localhost:3000',
-    STRIPE_PUBLISHABLE_KEY: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'
+    STRIPE_PUBLISHABLE_KEY: 'pk_test_daBepdMharNP0PTQYoyQJPjH'
   },
   SERVER: {
     UBUNTU_SSO_URL: 'https://login.staging.ubuntu.com',
