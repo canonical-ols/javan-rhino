@@ -1,1 +1,8 @@
-options: {}
+options:
+    deployment:
+        type: string
+        default: devel
+        description: Type of deployment, e.g. devel, staging, production
+    session_secret:
+        type: string
+        description: Secret key for signing session cookie IDs
