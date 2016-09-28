@@ -3,7 +3,7 @@ MAKEFLAGS += --no-builtin-rules
 
 NAME ?= javan-rhino
 TMPDIR ?= $(CURDIR)/tmp
-BUILDDIR ?= $(CURDIR)/dist
+BUILDDIR ?= $(CURDIR)/charm-dist
 
 $(TMPDIR) $(BUILDDIR):
 	mkdir -p $@
@@ -40,14 +40,15 @@ $(CHARM): $(CHARM_SRC) $(CHARM_SRC)/* $(CHARM_PREQS) $(CHARM_DEPS) | $(BUILDDIR)
 version-info:
 	git rev-parse HEAD > $@.txt
 
-.DELETE_ON_ERROR: node_modules
-.INTERMEDIATE: node_modules
-node_modules:
+.DELETE_ON_ERROR: dist
+.INTERMEDIATE: dist
+dist:
 	rm -rf $@
 	mkdir -p $@
 	npm install
+	npm run build
 
-$(PAYLOAD): $(CHARM) node_modules version-info build-tar-exclude.txt $(SRC) $(SRC)/* $(SRC_PREQS)
+$(PAYLOAD): $(CHARM) dist version-info build-tar-exclude.txt $(SRC) $(SRC)/* $(SRC_PREQS)
 	tar cz --exclude-vcs --exclude-from build-tar-exclude.txt -f $(PAYLOAD) .
 
 ## build the charm and payload
@@ -63,5 +64,7 @@ clean:
 	rm -rf $(BUILDDIR)
 	rm -rf $(TMPDIR)
 	rm -f $(PAYLOAD)
+	rm -rf dist
+	rm -rf node_modules
 
 .PHONY: version-info build deploy clean
