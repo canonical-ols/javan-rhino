@@ -55,6 +55,7 @@ export const verify = (req, res) => {
     if (!error && result.authenticated) {
       req.session.authenticated = result.authenticated;
       req.session.name = result.fullname;
+      req.session.email = result.email;
       req.session.teams = result.teams;
       req.session.authorization = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
       res.redirect('/');

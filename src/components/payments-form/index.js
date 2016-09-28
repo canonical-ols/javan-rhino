@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames/bind';
 
 import Button from '../button';
 import countries from './countries';
@@ -13,12 +14,11 @@ import {
   SelectField,
   SensitiveInputField
 } from '../forms';
-
 import { validateNonEmpty, validateCardNumber, validateExpiry, validateCVC } from '../../validation';
-
+import { postCardData } from '../../actions/stripe';
 import styles from './payments-form.css';
 
-import { postCardData } from '../../actions/stripe';
+const cx = classNames.bind(styles);
 
 export class PaymentsForm extends Component {
 
@@ -104,12 +104,19 @@ export class PaymentsForm extends Component {
   render() {
     const isFetching = this.props.customer.isFetching || this.props.stripe.isFetching;
 
+    const { identity } = this.props;
+
     if (this.props.stripe.validatedCardData) {
       return null;
     }
 
+    let className = cx({
+      paymentsForm: true,
+      disabled: !identity.isAuthenticated
+    });
+
     return (
-      <div className={ styles.paymentsForm }>
+      <div className={ className }>
         <Form onSubmit={ this.onSubmit.bind(this) }>
           <h3>Payment details</h3>
 
@@ -435,6 +442,7 @@ export class PaymentsForm extends Component {
 }
 
 PaymentsForm.propTypes = {
+  identity: PropTypes.object.isRequired,
   stripe: PropTypes.shape({
     isFetching: PropTypes.bool,
     validatedCardData: PropTypes.object
@@ -447,11 +455,13 @@ PaymentsForm.propTypes = {
 
 function mapStateToProps(state) {
   const {
+    identity,
     stripe,
     customer
   } = state;
 
   return {
+    identity,
     stripe,
     customer
   };
