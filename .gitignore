@@ -44,3 +44,7 @@ webpack-stats.json
 
 # Distributable files
 dist
+
+# Charm build artefacts
+tmp
+version-info.txt
