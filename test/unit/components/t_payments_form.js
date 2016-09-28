@@ -27,25 +27,6 @@ describe('<PaymentsForm /> component', () => {
     expect(wrapper.find(Form).length).toBe(1);
   });
 
-  describe('<PaymentsForm /> component with authenticated user', () => {
-    beforeEach(() => {
-      // mocking redux props
-      const props = {
-        identity: {
-          isAuthenticated: true
-        },
-        stripe: {},
-        customer: {},
-        dispatch: () => {}
-      };
-
-      wrapper = shallow(<PaymentsForm {...props} />);
-    });
-    it('renders without disabled class', () => {
-      expect(wrapper.hasClass('disabled')).toBe(false);
-    });
-  });
-
   context('validation', () => {
     let validate;
 
