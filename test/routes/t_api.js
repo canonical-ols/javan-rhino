@@ -51,21 +51,19 @@ describe('purchases api', () => {
         'stripe_token': 'foo'
       };
 
-      // FIXME: responses are currently mocked in API
       // mock the request to SCA
-      // const sca = nock(SCA_URL)
-      //   .matchHeader('authorization', authorization)
-      //   .post('/purchases/v1/customers', body)
-      //   .reply(200);
+      const sca = nock(SCA_URL)
+        .matchHeader('authorization', authorization)
+        .post('/purchases/v1/customers', body)
+        .reply(200);
 
       // send the request via our handler
       testagent
       .post('/api/purchases/customers')
       .send(body)
-      .expect(200, () => {
-        // FIXME: responses are currently mocked in API
-        // sca.done();
-        done();
+      .expect(200, (err) => {
+        sca.done();
+        done(err);
       });
     });
 
@@ -85,9 +83,9 @@ describe('purchases api', () => {
       testagent
       .post('/api/purchases/orders')
       .send(body)
-      .expect(200, () => {
+      .expect(200, (err) => {
         sca.done();
-        done();
+        done(err);
       });
     });
   });
