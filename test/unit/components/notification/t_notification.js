@@ -2,7 +2,7 @@ import expect, { createSpy } from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Notification from '../../../../src/components/notification/notification.js';
+import Notification from '../../../../src/components/notification';
 
 describe('The Notification component', () => {
   let element;
