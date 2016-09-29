@@ -17,8 +17,9 @@ import Html from '../src/helpers/html';
 import configureStore from '../src/store/configureStore';
 import sessionConfig from './helpers/session';
 
+const logsPath = conf.get('SERVER:LOGS_PATH') || path.join(__dirname, '../logs/');
 const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, '../logs/', 'access.log'),
+  path.join(logsPath, 'access.log'),
   { flags: 'a' }
 );
 
@@ -92,7 +93,9 @@ function serve(webpackIsomorphicTools) {
   });
 
   const appUrl = url.parse(conf.get('UNIVERSAL:MU_URL'));
-  const server = app.listen(appUrl.port, appUrl.hostname, () => {
+  const appHost = conf.get('SERVER:HOST') || appUrl.hostname;
+  const appPort = conf.get('SERVER:PORT') || appUrl.port;
+  const server = app.listen(appPort, appHost, () => {
     const host = server.address().address;
     const port = server.address().port;
 
