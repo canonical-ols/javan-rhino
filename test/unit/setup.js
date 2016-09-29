@@ -1,4 +1,4 @@
-import expect from 'expect';
+import './helpers';
 
 // Stub out loading of CSS dependencies
 require.extensions['.css'] = () => {};
@@ -11,18 +11,3 @@ const conf = require('../../server/configure.js');
 global.__CONFIG__ = {
   UNIVERSAL: conf.get('UNIVERSAL')
 };
-
-// Custom assertions
-expect.extend({
-  toHaveActionOfType(expected) {
-    expect.assert(
-      this.actual.filter((action) => {
-        return action.type === expected;
-      }).length > 0,
-      'to have action %s',
-      expected
-    );
-
-    return this;
-  }
-});
