@@ -8,9 +8,6 @@ const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
 const OPENID_IDENTIFIER = conf.get('SERVER:UBUNTU_SSO_URL');
 
 export const getMacaroon = (req, res, next) => {
-  // get macaroon from store
-  // store on req
-  //
   const options = {
     url: `${UBUNTU_SCA_URL}/dev/api/acl/`,
     method: 'POST',
@@ -20,9 +17,12 @@ export const getMacaroon = (req, res, next) => {
   };
 
   request(options, (error, response, body) => {
-    // TODO handle macaroon failure
     if (error) {
-      res.send('Get macaroon failed');
+      return next(error);
+    }
+
+    if (!body.macaroon) {
+      return next(new Error('getMacaroon: No macaroon on response body.'))
     }
 
     req.session.macaroon = body.macaroon;
@@ -36,12 +36,10 @@ export const authenticate = (req, res) => {
 
   rp.authenticate(OPENID_IDENTIFIER, false, (error, authUrl) => {
     if (error) {
-      // TODO auth failure view
-      res.status(401).send('Authentication failed: ' + error.message);
+      return next(new Error('Authentication failed: ' + error.message));
     }
     else if (!authUrl) {
-      // TODO auth failure view
-      res.status(401).send('Authentication failed');
+      return next(new Error('Authentication failed'));
     }
     else {
       res.redirect(authUrl);
@@ -60,7 +58,7 @@ export const verify = (req, res) => {
       req.session.authorization = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
       res.redirect('/');
     } else {
-      res.status(401).send('Authentication failed: ' + error.message);
+      return next(new Error('Authentication failed: ' + error.message));
     }
   });
 };
@@ -68,9 +66,15 @@ export const verify = (req, res) => {
 export const logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      // TODO handle logout failure
-      res.send('Logout failed');
+      return next(new Error('Logout failed.'));
     }
     res.redirect('/');
   });
 };
+
+export const errorHandler = (err, req, res, next) => {
+  if (req.session) {
+    req.session.error = err;
+  }
+  res.redirect('/');
+}
