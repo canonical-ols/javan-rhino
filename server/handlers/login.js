@@ -74,7 +74,7 @@ export const logout = (req, res) => {
 
 export const errorHandler = (err, req, res, next) => {
   if (req.session) {
-    req.session.error = err;
+    req.session.error = err.message;
   }
   res.redirect('/');
 }
