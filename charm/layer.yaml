@@ -1,13 +1,16 @@
 repo: git@github.com:canonical-ols/javan-rhino.git
-includes: 
+includes:
     - layer:ols
 options:
     ols:
         service_name: javan-rhino
         user: ubuntu
-#        config: settings.py
+    basic:
+        packages:
+            - nodejs
+            - nodejs-legacy
 
 exclude:
-    - tmp 
+    - tmp
     - Makefile
     - tests

@@ -1,0 +1,17 @@
+# This file is managed by Juju; ANY CHANGES WILL BE OVERWRITTEN
+#--------------------------------------------------------------
+
+[Unit]
+Description=Front-end to Ubuntu Store Payments
+
+[Service]
+Type=simple
+Environment=SESSION_SECRET={{ session_secret }}
+WorkingDirectory={{ working_dir }}
+User={{ user }}
+ExecStart=npm run start-prod
+Restart=on-failure
+RestartSec=15 5
+
+[Install]
+WantedBy=multi-user.target
