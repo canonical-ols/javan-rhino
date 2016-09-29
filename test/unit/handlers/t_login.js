@@ -2,38 +2,41 @@ import expect from 'expect';
 import { spy, stub } from 'sinon';
 import { logout } from '../../../server/handlers/login.js';
 
-describe('login handler', () => {
+describe('login handlers', () => {
+  describe('logout handler', () => {
 
-  // session.destroy stub
-  let req, res;
+    // session.destroy stub
+    let req, res, next;
 
-  beforeEach(() => {
-    req = {
-      session: {
-        destroy: stub().callsArg(0)
-      }
-    };
-    res = {
-      send: spy(),
-      redirect: spy()
-    };
+    beforeEach(() => {
+      req = {
+        session: {
+          destroy: stub().callsArg(0)
+        }
+      };
+      res = {
+        send: spy(),
+        redirect: spy()
+      },
+        next = spy();
+    });
+
+    it('destroys session', () => {
+      logout(req, res, next);
+      expect(req.session.destroy.calledOnce).toBe(true);
+    });
+
+    it('on success redirects to home', () => {
+      req.session.destroy.callsArgWith(0, false);
+      logout(req, res, next);
+      expect(res.redirect.calledWith('/')).toBe(true);
+    });
+
+    it('on error calls next with error', () => {
+      req.session.destroy.callsArgWith(0, true);
+      logout(req, res, next);
+      expect(next.calledWith(new Error())).toBe(true);
+    });
+
   });
-
-  it('logout destroys session', () => {
-    logout(req, res);
-    expect(req.session.destroy.calledOnce).toBe(true);
-  });
-
-  it('happy path redirects to home', () => {
-    req.session.destroy.callsArgWith(0, false);
-    logout(req, res);
-    expect(res.redirect.calledWith('/')).toBe(true);
-  });
-
-  it('sad path sends basic error message', () => {
-    req.session.destroy.callsArgWith(0, true);
-    logout(req, res);
-    expect(res.send.calledWith('Logout failed')).toBe(true);
-  });
-
 });

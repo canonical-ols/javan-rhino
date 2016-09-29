@@ -2,6 +2,7 @@ import request from 'request';
 import { extractCaveatId, formatMacaroonAuthHeader } from '../macaroons';
 import conf from '../configure.js';
 import RelyingParty from '../openid/relyingparty.js';
+import * as constants from '../constants';
 
 let rp;
 const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
@@ -18,11 +19,8 @@ export const getMacaroon = (req, res, next) => {
 
   request(options, (error, response, body) => {
     if (error) {
-      return next(error);
-    }
-
-    if (!body.macaroon) {
-      return next(new Error('getMacaroon: No macaroon on response body.'))
+      // TODO log errors
+      return next(new Error(constants.E_GET_MACAROON_FAILURE));
     }
 
     req.session.macaroon = body.macaroon;
@@ -31,15 +29,16 @@ export const getMacaroon = (req, res, next) => {
   });
 };
 
-export const authenticate = (req, res) => {
+export const authenticate = (req, res, next) => {
   rp = RelyingParty(req.session.cid);
 
+  // TODO log errors
   rp.authenticate(OPENID_IDENTIFIER, false, (error, authUrl) => {
     if (error) {
-      return next(new Error('Authentication failed: ' + error.message));
+      return next(new Error(`${constants.E_AUTHENTICATION_FAILED}: ${error.message}`));
     }
     else if (!authUrl) {
-      return next(new Error('Authentication failed'));
+      return next(new Error(constants.E_AUTHENTICATION_FAILED));
     }
     else {
       res.redirect(authUrl);
@@ -47,27 +46,30 @@ export const authenticate = (req, res) => {
   });
 };
 
-export const verify = (req, res) => {
+export const verify = (req, res, next) => {
   rp.verifyAssertion(req, (error, result) => {
-    // TODO handle error
     if (!error && result.authenticated) {
       req.session.authenticated = result.authenticated;
       req.session.name = result.fullname;
       req.session.email = result.email;
       req.session.teams = result.teams;
       req.session.authorization = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
+      // FIXME redirect to page that initiated the sign in request
       res.redirect('/');
     } else {
-      return next(new Error('Authentication failed: ' + error.message));
+      // TODO log errors
+      return next(new Error(`${constants.E_AUTHENTICATION_FAILED}: ${error.message}`));
     }
   });
 };
 
-export const logout = (req, res) => {
+export const logout = (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {
-      return next(new Error('Logout failed.'));
+      // TODO log errors
+      return next(new Error(constants.E_LOGOUT_FAILED));
     }
+    // FIXME redirect to page that initiated the sign in request
     res.redirect('/');
   });
 };
@@ -76,5 +78,6 @@ export const errorHandler = (err, req, res, next) => {
   if (req.session) {
     req.session.error = err.message;
   }
+  // FIXME redirect to page that initiated the sign in request
   res.redirect('/');
 }
