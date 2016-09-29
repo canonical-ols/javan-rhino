@@ -19,8 +19,13 @@ export const getMacaroon = (req, res, next) => {
 
   request(options, (error, response, body) => {
     if (error) {
-      // TODO log errors
-      return next(new Error(constants.E_GET_MACAROON_FAILURE));
+      // TODO log errors to sentry
+      return next(new Error(constants.E_GET_MACAROON_FAIL));
+    }
+
+    if (!body.macaroon) {
+      // TODO log errors to sentry
+      return next(new Error(constants.E_GET_MACAROON_UNDEF));
     }
 
     req.session.macaroon = body.macaroon;
@@ -32,13 +37,13 @@ export const getMacaroon = (req, res, next) => {
 export const authenticate = (req, res, next) => {
   rp = RelyingParty(req.session.cid);
 
-  // TODO log errors
+  // TODO log errors to sentry
   rp.authenticate(OPENID_IDENTIFIER, false, (error, authUrl) => {
     if (error) {
-      return next(new Error(`${constants.E_AUTHENTICATION_FAILED}: ${error.message}`));
+      return next(new Error(`${constants.E_AUTHENTICATION_FAIL}: ${error.message}`));
     }
     else if (!authUrl) {
-      return next(new Error(constants.E_AUTHENTICATION_FAILED));
+      return next(new Error(constants.E_AUTHENTICATION_FAIL));
     }
     else {
       res.redirect(authUrl);
@@ -57,8 +62,8 @@ export const verify = (req, res, next) => {
       // FIXME redirect to page that initiated the sign in request
       res.redirect('/');
     } else {
-      // TODO log errors
-      return next(new Error(`${constants.E_AUTHENTICATION_FAILED}: ${error.message}`));
+      // TODO log errors to sentry
+      return next(new Error(`${constants.E_AUTHENTICATION_FAIL}: ${error.message}`));
     }
   });
 };
@@ -66,8 +71,8 @@ export const verify = (req, res, next) => {
 export const logout = (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {
-      // TODO log errors
-      return next(new Error(constants.E_LOGOUT_FAILED));
+      // TODO log errors to sentry
+      return next(new Error(constants.E_LOGOUT_FAIL));
     }
     // FIXME redirect to page that initiated the sign in request
     res.redirect('/');
