@@ -98,7 +98,7 @@ export class PaymentsForm extends Component {
             <Message status="info" text="You won't be charged until your next purchase" />
             <SensitiveInputField
               label="Card number"
-              placeholder="1234 5678 9012"
+              placeholder="4321 1234 5678 9012"
               {...this.state.fields.cardNumber}
               onChange={ this.onChange.bind(this) }
               onBlur={ this.onBlur.bind(this) }
