@@ -1,25 +1,27 @@
 import expect from 'expect';
 import { spy, stub } from 'sinon';
-import { logout } from '../../../server/handlers/login.js';
+import {
+  logout,
+  errorHandler
+} from '../../../server/handlers/login.js';
 
-describe('login handlers', () => {
+describe('login', () => {
+  let req, res, next;
+
+  beforeEach(() => {
+    req = {
+      session: {
+        destroy: stub().callsArg(0)
+      }
+    };
+    res = {
+      send: spy(),
+      redirect: spy()
+    },
+      next = spy();
+  });
+
   describe('logout handler', () => {
-
-    // session.destroy stub
-    let req, res, next;
-
-    beforeEach(() => {
-      req = {
-        session: {
-          destroy: stub().callsArg(0)
-        }
-      };
-      res = {
-        send: spy(),
-        redirect: spy()
-      },
-        next = spy();
-    });
 
     it('destroys session', () => {
       logout(req, res, next);
@@ -36,6 +38,16 @@ describe('login handlers', () => {
       req.session.destroy.callsArgWith(0, true);
       logout(req, res, next);
       expect(next.calledWith(new Error())).toBe(true);
+    });
+
+  });
+
+  describe('error handler', () => {
+
+    it('should put error message on session error prop', () => {
+      const message = 'abcdef';
+      errorHandler(new Error(message), req, res, next);
+      expect(req.session.error).toBe(message);
     });
 
   });

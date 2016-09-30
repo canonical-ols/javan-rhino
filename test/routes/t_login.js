@@ -24,20 +24,4 @@ describe('login routes', () => {
         );
     });
   });
-
-  // FIXME verify handlers need work and more tests
-  describe('verify', () => {
-    it('is an http POST', (done) => {
-      supertest(app)
-        .get('/login/verify')
-        .expect(404, done);
-    });
-
-    it('should return http 401 on failure', (done) => {
-      supertest(app)
-        .post('/login/verify')
-        .expect(401, done);
-    });
-  });
-
 });

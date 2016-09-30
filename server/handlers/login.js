@@ -2,7 +2,7 @@ import request from 'request';
 import { extractCaveatId, formatMacaroonAuthHeader } from '../macaroons';
 import conf from '../configure.js';
 import RelyingParty from '../openid/relyingparty.js';
-import * as constants from '../constants';
+import constants from '../constants';
 
 let rp;
 const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
@@ -53,18 +53,26 @@ export const authenticate = (req, res, next) => {
 
 export const verify = (req, res, next) => {
   rp.verifyAssertion(req, (error, result) => {
-    if (!error && result.authenticated) {
-      req.session.authenticated = result.authenticated;
-      req.session.name = result.fullname;
-      req.session.email = result.email;
-      req.session.teams = result.teams;
-      req.session.authorization = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
-      // FIXME redirect to page that initiated the sign in request
-      res.redirect('/');
-    } else {
+    if (error) {
       // TODO log errors to sentry
-      return next(new Error(`${constants.E_AUTHENTICATION_FAIL}: ${error.message}`));
+      return next(error);
     }
+
+    if (!result.authenticated) {
+      return next(new Error(`${constants.E_SSO_FAIL}`));
+    }
+
+    if (!result.discharge) {
+      return next(new Error(`${constants.E_SSO_DISCHARGE_FAIL}`));
+    }
+
+    req.session.authenticated = result.authenticated;
+    req.session.name = result.fullname;
+    req.session.email = result.email;
+    req.session.teams = result.teams;
+    req.session.authorization = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
+    // FIXME redirect to page that initiated the sign in request
+    res.redirect('/');
   });
 };
 
