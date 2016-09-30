@@ -9,6 +9,7 @@ options:
         packages:
             - nodejs
             - nodejs-legacy
+            - npm
 
 exclude:
     - tmp

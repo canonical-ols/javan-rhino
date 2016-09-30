@@ -22,6 +22,7 @@ LAYER_PATH = $(TMPDIR)/layer
 INTERFACE_PATH = $(TMPDIR)/interface
 CHARM_WHEELDIR = $(TMPDIR)/wheels
 CHARM_DEPS = $(LAYER_PATH)/.done $(INTERFACE_PATH)/.done
+DEPLOY_ENV ?= development
 
 export INTERFACE_PATH
 export LAYER_PATH
@@ -58,7 +59,7 @@ deploy: build
 	juju deploy local:$(CHARM_SERIES)/$(NAME)
 	juju deploy memcached
 	juju add-relation $(NAME) memcached
-	juju set $(NAME) session_secret='its a secret'
+	juju set $(NAME) session_secret='its a secret' deployment=$(DEPLOY_ENV)
 
 clean:
 	rm -rf $(BUILDDIR)

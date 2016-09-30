@@ -6,10 +6,16 @@ Description=Front-end to Ubuntu Store Payments
 
 [Service]
 Type=simple
-Environment=SESSION_SECRET={{ session_secret }}
+Environment='SESSION_SECRET={{ session_secret }}'
+Environment='SERVER__LOGS_PATH={{ logs_path }}'
+Environment=DEPLOY_ENV={{ deployment }}
 WorkingDirectory={{ working_dir }}
 User={{ user }}
-ExecStart=npm run start-prod
+{% if deployment == 'development' %}
+ExecStart=/usr/bin/npm start
+{% else %}
+ExecStart=/usr/bin/npm run start-prod
+{% endif %}
 Restart=on-failure
 RestartSec=15 5
 
