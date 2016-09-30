@@ -1,3 +1,15 @@
+.checkboxField {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
 .tickInput {
-  margin-right: 0.5em;
+  margin-right: 10px;
+  margin-top: 3px;
+  float: left;
+}
+
+.label {
+  display: block;
+  overflow: hidden;
 }

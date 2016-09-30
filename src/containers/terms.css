@@ -1,0 +1,13 @@
+.terms {
+  composes: container from "./container.css";
+}
+
+.terms p {
+  margin-bottom: 1em;
+}
+
+.terms ul {
+  margin-bottom: 1em;
+  list-style: disc;
+  list-style-position: inside;
+}

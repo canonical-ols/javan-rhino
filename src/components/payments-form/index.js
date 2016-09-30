@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import Button from '../button';
 import countries from './countries';
 import {
+  CheckboxField,
   Fieldset,
   FieldRow,
   Form,
@@ -27,6 +28,7 @@ export class PaymentsForm extends Component {
     super(props);
 
     this.state = {
+      isTosAccepted: false,
       fields: this.getInitialValues()
     };
   }
@@ -77,6 +79,7 @@ export class PaymentsForm extends Component {
 
   render() {
     const isFetching = this.props.customer.isFetching || this.props.stripe.isFetching;
+    const isFormReady = this.state.isTosAccepted && !isFetching;
 
     const { identity } = this.props;
 
@@ -188,9 +191,18 @@ export class PaymentsForm extends Component {
             </FieldRow>
           </Fieldset>
 
-          <Button appearance='secondary' disabled={isFetching}>
-            Add payment details
-          </Button>
+          <Fieldset>
+            <CheckboxField
+              name="tosAccepted"
+              checked={ this.state.isTosAccepted }
+              onChange={ this.onTosAcceptClick.bind(this) }
+            >
+              I agree that my use of any services or related APIs is subject to my compliance with the applicable <a href="/terms" target="_blank">Terms of service</a>
+            </CheckboxField>
+            <Button appearance='secondary' disabled={!isFormReady}>
+              Add payment details
+            </Button>
+          </Fieldset>
         </Form>
       </div>
     );
@@ -246,6 +258,12 @@ export class PaymentsForm extends Component {
   }
 
   /* EVENT HANDLERS */
+
+  onTosAcceptClick(event) {
+    this.setState({
+      isTosAccepted: event.target.checked
+    });
+  }
 
   onSubmit(event) {
     const fields = this.validate(this.state.fields, { forceTouched: true });
