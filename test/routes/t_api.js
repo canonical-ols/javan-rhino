@@ -45,6 +45,7 @@ describe('purchases api', () => {
   });
 
   describe('responses', () => {
+
     it('should stream responses from SCA customers endpoint', (done) => {
 
       const body = {
@@ -67,7 +68,7 @@ describe('purchases api', () => {
       });
     });
 
-    it('should stream responses from SCA orders endpoint', (done) => {
+    it('should stream errors from SCA customers endpoint', (done) => {
 
       const body = {
         'stripe_token': 'foo'
@@ -75,18 +76,19 @@ describe('purchases api', () => {
 
       // mock the request to SCA
       const sca = nock(SCA_URL)
-      .matchHeader('authorization', authorization)
-      .post('/purchases/v1/orders', body)
-      .reply(200);
+        .matchHeader('authorization', authorization)
+        .post('/purchases/v1/customers', body)
+        .reply(500);
 
       // send the request via our handler
       testagent
-      .post('/api/purchases/orders')
+      .post('/api/purchases/customers')
       .send(body)
-      .expect(200, (err) => {
+      .expect(500, (err) => {
         sca.done();
         done(err);
       });
     });
+
   });
 });
