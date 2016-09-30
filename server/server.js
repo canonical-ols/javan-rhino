@@ -49,7 +49,6 @@ function serve(webpackIsomorphicTools) {
         res.redirect(302, redirectLocation.pathname + redirectLocation.search);
       } else if (renderProps) {
 
-        // FIXME sstewart 2016/09/09 defend against no session
         const isDev = (
           req.session &&
             req.session.teams &&
@@ -57,6 +56,7 @@ function serve(webpackIsomorphicTools) {
         );
 
         const initialState = {
+          notification: req.session.error,
           identity: {
             isAuthenticated: req.session.authenticated,
             isDev: isDev,
