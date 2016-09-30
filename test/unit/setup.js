@@ -1,3 +1,5 @@
+import './helpers';
+
 // Stub out loading of CSS dependencies
 require.extensions['.css'] = () => {};
 require.extensions['.svg'] = () => 'example.svg';
