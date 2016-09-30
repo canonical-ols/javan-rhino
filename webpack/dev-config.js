@@ -37,7 +37,7 @@ module.exports = {
   module: {
     loaders: require('./loaders-config.js')
   },
-  devtool: '#cheap-module-eval-source-map',
+  devtool: 'source-map',
   postcss: function () {
     return [ vars({ variables: () => sharedVars }), autoprefixer ];
   }
