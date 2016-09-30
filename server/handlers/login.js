@@ -87,10 +87,10 @@ export const logout = (req, res, next) => {
   });
 };
 
-export const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res) => {
   if (req.session) {
     req.session.error = err.message;
   }
   // FIXME redirect to page that initiated the sign in request
   res.redirect('/');
-}
+};
