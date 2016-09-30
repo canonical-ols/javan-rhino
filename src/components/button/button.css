@@ -22,6 +22,8 @@ $secondary-border-color: $mid-grey;
   cursor: pointer;
 }
 
+.button:active,
+.button:focus,
 .button:hover {
   text-decoration: none;
 }
@@ -33,6 +35,8 @@ $secondary-border-color: $mid-grey;
   background-color: $primary-button-color;
 }
 
+.primary:active,
+.primary:focus,
 .primary:hover {
   background-color: $primary-button-color-hover;
 }
@@ -45,6 +49,8 @@ $secondary-border-color: $mid-grey;
   border: 1px solid $secondary-border-color;
 }
 
+.secondary:active,
+.secondary:focus,
 .secondary:hover {
   background-color: $secondary-button-color-hover;
 }
