@@ -63,7 +63,9 @@ deploy: build
 	juju deploy local:$(CHARM_SERIES)/$(NAME)
 	juju deploy memcached
 	juju add-relation $(NAME) memcached
-	juju set $(NAME) session_secret='its a secret' environment=$(DEPLOY_ENV)
+	juju set $(NAME) session_secret='its a secret' \
+		environment=$(DEPLOY_ENV) \
+		memcache_session_secret='its another secret'
 
 clean:
 	rm -rf $(BUILDDIR)
