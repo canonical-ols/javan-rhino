@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import styles from './container.css';
 
-export default class Home extends Component {
+export default class Terms extends Component {
   render() {
     return (
       <div className={ styles.container }>
-        <div>1Hello again, World!</div>
+        <h2>Terms of Service</h2>
       </div>
     );
   }
