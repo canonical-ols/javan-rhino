@@ -87,7 +87,11 @@ export const logout = (req, res, next) => {
   });
 };
 
-export const errorHandler = (err, req, res) => {
+export const errorHandler = (err, req, res, next) => {
+  // https://expressjs.com/en/guide/error-handling.html#the-default-error-handler
+  if (res.headersSent) {
+    return next(err);
+  }
   if (req.session) {
     req.session.error = err.message;
   }
