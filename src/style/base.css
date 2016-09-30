@@ -2,6 +2,11 @@
   box-sizing: inherit;
 }
 
+html, body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 html, button, input, select, textarea {
   font-family: $base-font-family;
   font-weight: $base-font-weight;

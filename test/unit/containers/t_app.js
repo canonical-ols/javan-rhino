@@ -15,7 +15,7 @@ describe('<App /> container', () => {
   });
 
   it('should have a Header', () => {
-    const el = shallow(<App store={ store } />);
+    const el = shallow(<App store={ store } notifications={ { notification: null } } />);
     expect(el.find(Header).length).toBe(1);
   });
 

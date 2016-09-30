@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import { showNotification, dismissNotification } from './notifications';
 
 import conf from '../config';
 
@@ -16,16 +17,37 @@ export function sendStripeToken(token) {
 }
 
 export function sendStripeTokenSuccess(tosAccepted) {
-  return {
-    type: SEND_STRIPE_TOKEN_SUCCESS,
-    tosAccepted
+  return (dispatch) => {
+    dispatch(showNotification({
+      message: 'Your card has been added successfully',
+      status: 'success'
+    }));
+
+    dispatch({
+      type: SEND_STRIPE_TOKEN_SUCCESS,
+      tosAccepted
+    });
   };
 }
 
 export function sendStripeTokenFailure(errors) {
-  return {
-    type: SEND_STRIPE_TOKEN_FAILURE,
-    errors
+  return (dispatch) => {
+    dispatch(showNotification({
+      message: [
+        'There\'s been a problem adding your card.',
+        'Please wait a bit and try again soon.'
+      ].join(' '),
+      status: 'error',
+      action: () => {
+        dispatch(dismissNotification());
+      },
+      actionText: 'Dismiss'
+    }));
+
+    dispatch({
+      type: SEND_STRIPE_TOKEN_FAILURE,
+      errors
+    });
   };
 }
 
