@@ -1,6 +1,7 @@
 repo: git@github.com:canonical-ols/javan-rhino.git
 includes:
     - layer:ols
+    - interface:memcache
 options:
     ols:
         service_name: javan-rhino

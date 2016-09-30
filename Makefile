@@ -23,6 +23,8 @@ INTERFACE_PATH = $(TMPDIR)/interface
 CHARM_WHEELDIR = $(TMPDIR)/wheels
 CHARM_DEPS = $(LAYER_PATH)/.done $(INTERFACE_PATH)/.done
 DEPLOY_ENV ?= development
+DISTDIR = dist
+DIST = $(DISTDIR)/.done
 
 export INTERFACE_PATH
 export LAYER_PATH
@@ -41,15 +43,17 @@ $(CHARM): $(CHARM_SRC) $(CHARM_SRC)/* $(CHARM_PREQS) $(CHARM_DEPS) | $(BUILDDIR)
 version-info:
 	git rev-parse HEAD > $@.txt
 
-.DELETE_ON_ERROR: dist
-.INTERMEDIATE: dist
-dist:
-	rm -rf $@
-	mkdir -p $@
+.DELETE_ON_ERROR: $(DISTDIR)
+.INTERMEDIATE: $(DISTDIR)
+$(DIST):
+	rm -rf $(DISTDIR)
+	mkdir -p $(DISTDIR)
 	npm install
 	npm run build
+	touch $@
 
-$(PAYLOAD): $(CHARM) dist version-info build-tar-exclude.txt $(SRC) $(SRC)/* $(SRC_PREQS)
+$(PAYLOAD): $(CHARM) $(DIST) version-info build-tar-exclude.txt $(SRC) $(SRC)/* $(SRC_PREQS)
+	rm -f $(PAYLOAD)
 	tar cz --exclude-vcs --exclude-from build-tar-exclude.txt -f $(PAYLOAD) .
 
 ## build the charm and payload

@@ -8,7 +8,9 @@ Description=Front-end to Ubuntu Store Payments
 Type=simple
 Environment='SESSION_SECRET={{ session_secret }}'
 Environment='SERVER__LOGS_PATH={{ logs_path }}'
-Environment=DEPLOY_ENV={{ deployment }}
+Environment='DEPLOY_ENV={{ deployment }}'
+Environment='SESSION_MEMCACHED_HOST={{ cache_hosts | join(",") }}'
+Environment='SESSION_MEMCACHED_SECRET={{ memcache_session_secret }}'
 WorkingDirectory={{ working_dir }}
 User={{ user }}
 {% if deployment == 'development' %}

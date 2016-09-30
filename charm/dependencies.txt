@@ -3,6 +3,7 @@ interface/nrpe-external-master      lp:~ubuntuone-hackers/ols-charm-deps/interfa
 interface/interface-conn-check      git+ssh://git.launchpad.net/~ubuntuone-hackers/conn-check/+git/interface-conn-check
 interface/interface-http            lp:~ubuntuone-hackers/ols-charm-deps/interface-http
 interface/interface-juju-info       lp:~ubuntuone-hackers/ols-charm-deps/interface-juju-info
+interface/interface-memcache        git+ssh://git.launchpad.net/~ubuntuone-hackers/ols-charm-deps/+git/interface-memcache
 
 layer                               @
 layer/layer-apt                     git+ssh://git.launchpad.net/layer-apt
