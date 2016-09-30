@@ -78,7 +78,8 @@ export class PaymentsForm extends Component {
   /* RENDER */
 
   render() {
-    const isFormReady = this.state.isTosAccepted && !this.props.customer.isFetching && !this.props.stripe.isFetching;
+    const isFetching = this.props.customer.isFetching || this.props.stripe.isFetching;
+    const isFormReady = this.state.isTosAccepted && !isFetching;
 
     const { identity } = this.props;
 
