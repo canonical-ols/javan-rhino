@@ -7,7 +7,8 @@ describe('identity reducers', () => {
     expect(identity(undefined, {})).toEqual({
       isAuthenticated: false,
       isDev: false,
-      name: undefined
+      name: undefined,
+      errors: null
     });
   });
 });

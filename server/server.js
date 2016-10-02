@@ -58,6 +58,7 @@ function serve(webpackIsomorphicTools) {
 
         const initialState = {
           identity: {
+            errors: req.session.errors,
             isAuthenticated: req.session.authenticated,
             isDev: isDev,
             name: req.session.name,
