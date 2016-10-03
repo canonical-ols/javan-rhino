@@ -178,4 +178,16 @@ describe('<PaymentsForm /> component', () => {
 
 
   });
+
+  context('on pending payment transactions', () => {
+    beforeEach(() => {
+      wrapper.setState({
+        pending: true
+      });
+    });
+
+    it('should show a spinner', () => {
+      expect(wrapper.find('Spinner').length).toBe(1);
+    });
+  });
 });
