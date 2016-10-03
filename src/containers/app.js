@@ -30,8 +30,6 @@ export class App extends Component {
           return <Oyez key={i} { ...oy}/>;
         })}
         { this.props.children }
-        <Header identity={ identity }/>
-        { this.props.children }
         {notifications.notification &&
           <div className={ styles.staticNotification }>
             <Notification { ...notifications.notification } />
