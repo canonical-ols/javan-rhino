@@ -49,20 +49,31 @@ function serve(webpackIsomorphicTools) {
         res.redirect(302, redirectLocation.pathname + redirectLocation.search);
       } else if (renderProps) {
 
-        const isDev = (
-          req.session &&
-            req.session.teams &&
-            req.session.teams.length
-        );
+        const initialState = {};
 
-        const initialState = {
-          identity: {
-            isAuthenticated: req.session.authenticated,
-            isDev: isDev,
-            name: req.session.name,
-            email: req.session.email
+        if (req.session) {
+
+          if (req.session.authenticated) {
+            initialState['identity'] = {
+              isAuthenticated: req.session.authenticated,
+              name: req.session.name,
+              email: req.session.email
+            };
           }
-        };
+
+
+          if (req.session.error) {
+            initialState['oyez'] = [{
+              'message': req.session.error,
+              'status': 'error'
+            }];
+
+            delete req.session.error;
+          }
+
+        }
+
+
         const store = configureStore(initialState);
 
         // config we share from server side to client side
