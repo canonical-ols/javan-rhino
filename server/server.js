@@ -56,7 +56,6 @@ function serve(webpackIsomorphicTools) {
         );
 
         const initialState = {
-          notification: req.session.error,
           identity: {
             isAuthenticated: req.session.authenticated,
             isDev: isDev,
