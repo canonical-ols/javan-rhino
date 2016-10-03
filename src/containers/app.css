@@ -1,5 +1,9 @@
-.notification {
+.fixedNotification {
   position: fixed;
   width: 100%;
   z-index: 1000;
+}
+
+.staticNotification {
+  composes: container from './container.css';
 }
