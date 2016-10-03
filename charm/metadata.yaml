@@ -1,0 +1,11 @@
+name: javan-rhino
+summary: Front-end to Ubuntu Store Payments
+maintainer: Wes Mason <wesley.mason@canonical.com>
+description: |
+  <Multi-line description here>
+subordinate: false
+series:
+  - xenial
+requires:
+  cache: 
+    interface: memcache

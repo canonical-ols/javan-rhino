@@ -1,0 +1,18 @@
+repo: git@github.com:canonical-ols/javan-rhino.git
+includes:
+    - layer:ols
+    - interface:memcache
+options:
+    ols:
+        service_name: javan-rhino
+        user: ubuntu
+    basic:
+        packages:
+            - nodejs
+            - nodejs-legacy
+            - npm
+
+exclude:
+    - tmp
+    - Makefile
+    - tests
