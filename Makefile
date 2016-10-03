@@ -31,8 +31,8 @@ export LAYER_PATH
 export JUJU_REPOSITORY
 
 
-$(CHARM_DEPS): $(TMPDIR) $(CHARM_SRC)/dependencies.txt
-	cd $(TMPDIR) && codetree $(CHARM_SRC)/dependencies.txt
+$(CHARM_DEPS): $(TMPDIR) $(CHARM_SRC)/charm-deps
+	cd $(TMPDIR) && codetree $(CHARM_SRC)/charm-deps
 	touch $(CHARM_DEPS)
 
 $(CHARM): $(CHARM_SRC) $(CHARM_SRC)/* $(CHARM_PREQS) $(CHARM_DEPS) | $(BUILDDIR)
@@ -66,6 +66,24 @@ deploy: build
 	juju set $(NAME) session_secret='its a secret' \
 		environment=$(DEPLOY_ENV) \
 		memcache_session_secret='its another secret'
+
+check-build-repo:
+ifndef BUILDREPO
+	$(error BUILDREPO is required)
+endif
+ifndef BUILDBRANCH
+	$(error BUILDBRANCH is required)
+endif
+
+$(CHARMDIR)/.git: check-build-repo
+	rm -rf $(BUILDDIR)
+	mkdir -p $(BUILDIR)/$(CHARM_SERIES)
+	git clone --branch $(BUILDBRANCH) $(BUILDREPO) $(CHARMDIR)
+
+git-build: clean $(CHARMDIR)/.git build
+	cd $(CHARMDIR) && git add .
+	cd $(CHARMDIR) && git commit -am 'Build of $(NAME) from ' $$(cat $(CUDIR)/version-info.txt)
+	cd $(CHARMDIR) && git push origin $(BUILDBRANCH)
 
 clean:
 	rm -rf $(BUILDDIR)
