@@ -67,7 +67,7 @@ deploy: build
 		environment=$(DEPLOY_ENV) \
 		memcache_session_secret='its another secret'
 
-check-build-repo:
+check-git-builds-vars:
 ifndef BUILDREPO
 	$(error BUILDREPO is required)
 endif
@@ -75,7 +75,7 @@ ifndef BUILDBRANCH
 	$(error BUILDBRANCH is required)
 endif
 
-$(GIT_CHARMDIR): check-build-repo
+$(GIT_CHARMDIR): check-git-build-vars
 	rm -rf $(BUILDDIR)
 	mkdir -p $(BUILDDIR)/$(CHARM_SERIES)
 	git clone --branch $(BUILDBRANCH) $(BUILDREPO) $(CHARMDIR)
