@@ -1,20 +1,21 @@
 import Express from 'express';
 import React from 'react';
+import fs from 'fs';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import path from 'path';
 import session from 'express-session';
+import url from 'url';
 import util from 'util';
 import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
-import morgan from 'morgan';
-import fs from 'fs';
-import path from 'path';
-import url from 'url';
 
-import conf from './configure.js';
-import login from './routes/login';
-import api from './routes/api';
-import routes from '../src/routes';
 import Html from '../src/helpers/html';
+import api from './routes/api';
+import conf from './configure.js';
 import configureStore from '../src/store/configureStore';
+import login from './routes/login';
+import routes from '../src/routes';
 import sessionConfig from './helpers/session';
 
 const logsPath = conf.get('SERVER:LOGS_PATH') || path.join(__dirname, '../logs/');
@@ -25,6 +26,7 @@ const accessLogStream = fs.createWriteStream(
 
 const app = Express();
 
+app.use(helmet());
 app.use(morgan('combined', { stream: accessLogStream }));
 
 app.use(session(sessionConfig(conf)));
