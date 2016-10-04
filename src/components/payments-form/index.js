@@ -85,10 +85,6 @@ export class PaymentsForm extends Component {
 
     const { identity } = this.props;
 
-    if (this.props.stripe.validatedCardData) {
-      return null;
-    }
-
     let className = cx({
       paymentsForm: true,
       disabled: !identity.isAuthenticated
@@ -205,7 +201,7 @@ export class PaymentsForm extends Component {
               <Button appearance='secondary' disabled={!isFormReady}>
                 Add payment details
               </Button>
-              { this.state.pending &&
+              { isFetching &&
                 <div className={ styles.spinner }>
                   <Spinner size="20px" />
                 </div>
