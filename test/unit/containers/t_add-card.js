@@ -46,29 +46,6 @@ describe('<AddCard /> container', () => {
     expect(wrapper.find(CustomerSuccess).length).toBe(0);
   });
 
-  describe('with no validatedCardData', () => {
-    let wrapper;
-
-    beforeEach(() => {
-      const props = {
-        identity: {
-        },
-        stripe: {
-          validatedCardData: false
-        },
-        customer: {
-          tosAccepted: true
-        }
-      };
-      wrapper = shallow(<AddCard { ...props }/>);
-    });
-
-    it('should not have a payment details component', () => {
-      expect(wrapper.find(PaymentDetails).length).toBe(0);
-    });
-
-  });
-
   describe('with no tosAccepted', () => {
     let wrapper;
 
@@ -84,6 +61,10 @@ describe('<AddCard /> container', () => {
         }
       };
       wrapper = shallow(<AddCard { ...props }/>);
+    });
+
+    it('should not have a payment details component', () => {
+      expect(wrapper.find(PaymentDetails).length).toBe(0);
     });
 
     it('should not have a CustomerSuccess component', () => {

@@ -2,15 +2,15 @@ import * as ActionTypes from '../actions/identity';
 
 export function identity(state = {
   isAuthenticated: false,
-  isDev: false,
-  name: undefined
+  name: null,
+  email: null
 }, action) {
   switch(action.type) {
     case ActionTypes.COMPLETE_LOGIN:
       return {
         isAuthenticated: action.isAuthenticated,
-        isDev: action.isDev,
-        name
+        name: action.name,
+        email: action.email
       };
     default:
       return state;

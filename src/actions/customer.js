@@ -18,11 +18,6 @@ export function sendStripeToken(token) {
 
 export function sendStripeTokenSuccess(tosAccepted) {
   return (dispatch) => {
-    dispatch(showNotification({
-      message: 'Your card has been added successfully',
-      status: 'success'
-    }));
-
     dispatch({
       type: SEND_STRIPE_TOKEN_SUCCESS,
       tosAccepted
@@ -35,7 +30,7 @@ export function sendStripeTokenFailure(errors) {
     dispatch(showNotification({
       message: [
         'There\'s been a problem adding your card.',
-        'Please wait a bit and try again soon.'
+        'Please verify that card details you provided are correct or use a different card and try again.'
       ].join(' '),
       status: 'error',
       action: () => {

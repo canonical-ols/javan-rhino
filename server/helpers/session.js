@@ -2,13 +2,20 @@ import session from 'express-session';
 import ConnectMemcached from 'connect-memcached';
 
 const MemcachedStore = ConnectMemcached(session);
-const SESSION_STORAGE_DEFAULTS = {
+const SESSION_DEFAULTS = {
+  cookie: {
+    maxAge: 4.32e+7, // 12 hours
+  },
   resave: false,
   saveUninitialized: false
 };
 
 export default function sessionStorageConfig(config) {
-  let settings = { ...SESSION_STORAGE_DEFAULTS };
+  let settings = { ...SESSION_DEFAULTS };
+
+  if (config.get('SERVER:COOKIE:SECURE')) {
+    settings.cookie.secure = true;
+  }
 
   if(config.get('SESSION_SECRET')) {
     // TODO: Log using configured session secret
