@@ -31,7 +31,7 @@ export class App extends Component {
         })}
         { this.props.children }
         {notifications.notification &&
-          <div className={ styles.notification }>
+          <div className={ styles.staticNotification }>
             <Notification { ...notifications.notification } />
           </div>
         }

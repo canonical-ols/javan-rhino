@@ -19,12 +19,14 @@ export class AddCard extends Component {
       <div className={ styles.container }>
         <Welcome />
         <SignInBanner identity={ identity } url={ url } />
-        <PaymentsForm />
-        { this.props.stripe.validatedCardData &&
-          <PaymentDetails />
+        { !this.props.customer.tosAccepted &&
+          <PaymentsForm />
         }
         { this.props.customer.tosAccepted &&
-          <CustomerSuccess />
+          <div>
+            <PaymentDetails />
+            <CustomerSuccess />
+          </div>
         }
       </div>
     );
