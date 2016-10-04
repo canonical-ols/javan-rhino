@@ -3,6 +3,7 @@ import ConnectMemcached from 'connect-memcached';
 
 const MemcachedStore = ConnectMemcached(session);
 const SESSION_DEFAULTS = {
+  name : 'sessionId',
   cookie: {
     maxAge: 4.32e+7, // 12 hours
   },
