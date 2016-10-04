@@ -30,8 +30,7 @@ export class PaymentsForm extends Component {
 
     this.state = {
       isTosAccepted: false,
-      fields: this.getInitialValues(),
-      pending: false
+      fields: this.getInitialValues()
     };
   }
 
@@ -293,10 +292,6 @@ export class PaymentsForm extends Component {
         country: fields.billingCountry.value,
       }));
     }
-
-    this.setState({
-      pending: true
-    });
 
     event.preventDefault();
   }
