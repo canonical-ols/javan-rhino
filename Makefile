@@ -16,6 +16,7 @@ CHARM_SERIES ?= xenial
 CHARM_SRC ?= $(CURDIR)/charm
 JUJU_REPOSITORY = $(BUILDDIR)
 CHARMDIR = $(BUILDDIR)/$(CHARM_SERIES)/$(NAME)
+GIT_CHARMDIR = $(CHARMDIR)/.git
 PAYLOAD = $(CHARMDIR)/files/$(NAME).tgz
 CHARM = $(CHARMDIR)/.done
 LAYER_PATH = $(TMPDIR)/layer
@@ -36,7 +37,6 @@ $(CHARM_DEPS): $(TMPDIR) $(CHARM_SRC)/charm-deps
 	touch $(CHARM_DEPS)
 
 $(CHARM): $(CHARM_SRC) $(CHARM_SRC)/* $(CHARM_PREQS) $(CHARM_DEPS) | $(BUILDDIR)
-	rm -rf $(CHARMDIR)
 	PIP_NO_INDEX=true PIP_FIND_LINKS=$(CHARM_WHEELDIR) charm build -o $(BUILDDIR) -s $(CHARM_SERIES) -n $(NAME) ./charm
 	touch $@
 
@@ -75,15 +75,15 @@ ifndef BUILDBRANCH
 	$(error BUILDBRANCH is required)
 endif
 
-$(CHARMDIR)/.git: check-build-repo
+$(GIT_CHARMDIR): check-build-repo
 	rm -rf $(BUILDDIR)
-	mkdir -p $(BUILDIR)/$(CHARM_SERIES)
+	mkdir -p $(BUILDDIR)/$(CHARM_SERIES)
 	git clone --branch $(BUILDBRANCH) $(BUILDREPO) $(CHARMDIR)
 
-git-build: clean $(CHARMDIR)/.git build
-	cd $(CHARMDIR) && git add .
-	cd $(CHARMDIR) && git commit -am 'Build of $(NAME) from ' $$(cat $(CUDIR)/version-info.txt)
-	cd $(CHARMDIR) && git push origin $(BUILDBRANCH)
+git-build: $(GIT_CHARMDIR) build
+	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git add .
+	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git commit -am "Build of $(NAME) from $$(cat $(CURDIR)/version-info.txt)"
+	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git push origin $(BUILDBRANCH)
 
 clean:
 	rm -rf $(BUILDDIR)
