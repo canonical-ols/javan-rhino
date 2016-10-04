@@ -6,11 +6,6 @@ options:
     ols:
         service_name: javan-rhino
         user: ubuntu
-    basic:
-        packages:
-            - nodejs
-            - nodejs-legacy
-            - npm
 
 exclude:
     - tmp
