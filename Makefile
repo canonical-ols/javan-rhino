@@ -23,6 +23,7 @@ LAYER_PATH = $(TMPDIR)/layer
 INTERFACE_PATH = $(TMPDIR)/interface
 CHARM_WHEELDIR = $(TMPDIR)/wheels
 CHARM_DEPS = $(LAYER_PATH)/.done $(INTERFACE_PATH)/.done
+EXTRA_CHARM_BUILD_ARGS ?=
 DEPLOY_ENV ?= devel
 DISTDIR = dist
 DIST = $(DISTDIR)/.done
@@ -37,7 +38,7 @@ $(CHARM_DEPS): $(TMPDIR) $(CHARM_SRC)/charm-deps
 	touch $(CHARM_DEPS)
 
 $(CHARM): $(CHARM_SRC) $(CHARM_SRC)/* $(CHARM_PREQS) $(CHARM_DEPS) | $(BUILDDIR)
-	PIP_NO_INDEX=true PIP_FIND_LINKS=$(CHARM_WHEELDIR) charm build -o $(BUILDDIR) -s $(CHARM_SERIES) -n $(NAME) ./charm
+	PIP_NO_INDEX=true PIP_FIND_LINKS=$(CHARM_WHEELDIR) charm build -o $(BUILDDIR) -s $(CHARM_SERIES) -n $(NAME) $(EXTRA_CHARM_BUILD_ARGS) ./charm
 	touch $@
 
 version-info:
@@ -80,6 +81,7 @@ $(GIT_CHARMDIR): check-git-build-vars
 	git clone --branch $(BUILDBRANCH) $(BUILDREPO) $(CHARMDIR)
 
 git-build: BUILDBRANCH ?= staging
+git-build: EXTRA_CHARM_BUILD_ARGS = --force
 git-build: $(GIT_CHARMDIR) $(PAYLOAD)
 	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git add .
 	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git commit -am "Build of $(NAME) from $$(cat $(CURDIR)/version-info.txt)"
