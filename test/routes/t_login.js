@@ -30,7 +30,7 @@ describe('login routes', () => {
         );
     });
 
-    context('when SCA responds with error', () => {
+    context('when macaroon service responds with error', () => {
 
       it('should redirect home on error', (done) => {
         const sca = nock(UBUNTU_SCA_URL)
@@ -41,9 +41,6 @@ describe('login routes', () => {
 
         supertest(app)
           .get('/login/authenticate')
-          .expect(function(res) {
-            res.body.name = res.body.name.toUpperCase();
-          })
           .expect('location', '/')
           .expect(302, (err) => {
             sca.done();
