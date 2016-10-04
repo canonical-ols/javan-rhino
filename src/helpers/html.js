@@ -17,6 +17,7 @@ export default class Html extends Component {
           {head.title.toComponent()}
           {head.meta.toComponent()}
           {head.link.toComponent()}
+          {head.script.toComponent()}
           <link rel="stylesheet" href={ assets.styles.main } />
         </head>
         <body>
