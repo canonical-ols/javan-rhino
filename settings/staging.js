@@ -11,6 +11,9 @@ module.exports = {
       TEAMS: [
         'ubuntuone-hackers'
       ]
+    },
+    COOKIE: {
+      SECURE: true
     }
   }
 };

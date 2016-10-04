@@ -3,11 +3,11 @@ import expect from 'expect';
 import { identity } from '../../../src/reducers/identity';
 
 describe('identity reducers', () => {
-  it('should return the initial state', () => {
+  it('should default to default state', () => {
     expect(identity(undefined, {})).toEqual({
       isAuthenticated: false,
-      isDev: false,
-      name: undefined
+      name: null,
+      email: null
     });
   });
 });

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 
 import Button from '../button';
+import Spinner from '../spinner';
 import countries from './countries';
 import {
   CheckboxField,
@@ -82,10 +83,6 @@ export class PaymentsForm extends Component {
     const isFormReady = this.state.isTosAccepted && !isFetching;
 
     const { identity } = this.props;
-
-    if (this.props.stripe.validatedCardData) {
-      return null;
-    }
 
     let className = cx({
       paymentsForm: true,
@@ -199,9 +196,16 @@ export class PaymentsForm extends Component {
             >
               I agree that my use of any services or related APIs is subject to my compliance with the applicable <a href="/terms" target="_blank">Terms of service</a>
             </CheckboxField>
-            <Button appearance='secondary' disabled={!isFormReady}>
-              Add payment details
-            </Button>
+            <div className={ styles['button-container'] }>
+              <Button appearance='secondary' disabled={!isFormReady}>
+                Add payment details
+              </Button>
+              { isFetching &&
+                <div className={ styles.spinner }>
+                  <Spinner size="20px" />
+                </div>
+              }
+            </div>
           </Fieldset>
         </Form>
       </div>
