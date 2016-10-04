@@ -1,0 +1,6 @@
+bzr
+charm-tools
+python-codetree
+git
+make
+virtualenv

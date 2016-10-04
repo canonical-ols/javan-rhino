@@ -16,6 +16,7 @@ CHARM_SERIES ?= xenial
 CHARM_SRC ?= $(CURDIR)/charm
 JUJU_REPOSITORY = $(BUILDDIR)
 CHARMDIR = $(BUILDDIR)/$(CHARM_SERIES)/$(NAME)
+GIT_CHARMDIR = $(CHARMDIR)/.git
 PAYLOAD = $(CHARMDIR)/files/$(NAME).tgz
 CHARM = $(CHARMDIR)/.done
 LAYER_PATH = $(TMPDIR)/layer
@@ -31,12 +32,11 @@ export LAYER_PATH
 export JUJU_REPOSITORY
 
 
-$(CHARM_DEPS): $(TMPDIR) $(CHARM_SRC)/dependencies.txt
-	cd $(TMPDIR) && codetree $(CHARM_SRC)/dependencies.txt
+$(CHARM_DEPS): $(TMPDIR) $(CHARM_SRC)/charm-deps
+	cd $(TMPDIR) && codetree $(CHARM_SRC)/charm-deps
 	touch $(CHARM_DEPS)
 
 $(CHARM): $(CHARM_SRC) $(CHARM_SRC)/* $(CHARM_PREQS) $(CHARM_DEPS) | $(BUILDDIR)
-	rm -rf $(CHARMDIR)
 	PIP_NO_INDEX=true PIP_FIND_LINKS=$(CHARM_WHEELDIR) charm build -o $(BUILDDIR) -s $(CHARM_SERIES) -n $(NAME) ./charm
 	touch $@
 
@@ -57,7 +57,9 @@ $(PAYLOAD): $(CHARM) $(DIST) version-info build-tar-exclude.txt $(SRC) $(SRC)/* 
 	tar cz --exclude-vcs --exclude-from build-tar-exclude.txt -f $(PAYLOAD) .
 
 ## build the charm and payload
-build: $(PAYLOAD)
+build:
+	rm -rf $(CHARMDIR)
+	$(MAKE) $(PAYLOAD)
 
 deploy: build
 	juju deploy local:$(CHARM_SERIES)/$(NAME)
@@ -66,6 +68,22 @@ deploy: build
 	juju set $(NAME) session_secret='its a secret' \
 		environment=$(DEPLOY_ENV) \
 		memcache_session_secret='its another secret'
+
+check-git-build-vars:
+ifndef BUILDREPO
+	$(error BUILDREPO is required)
+endif
+
+$(GIT_CHARMDIR): check-git-build-vars
+	rm -rf $(BUILDDIR)
+	mkdir -p $(BUILDDIR)/$(CHARM_SERIES)
+	git clone --branch $(BUILDBRANCH) $(BUILDREPO) $(CHARMDIR)
+
+git-build: BUILDBRANCH ?= staging
+git-build: $(GIT_CHARMDIR) $(PAYLOAD)
+	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git add .
+	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git commit -am "Build of $(NAME) from $$(cat $(CURDIR)/version-info.txt)"
+	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git push origin $(BUILDBRANCH)
 
 clean:
 	rm -rf $(BUILDDIR)
