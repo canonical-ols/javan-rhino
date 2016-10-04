@@ -10,11 +10,15 @@ export default class SignInBanner extends Component {
 
     function renderAuthenticated(identity) {
       const { name, email } = identity;
+
+      const welcome = name ? `Welcome, ${name}` : 'Welcome';
+      const signedIn = email ? `You are signed in with the email address ${email}.` : 'You are signed in.';
+
       return (
         <div className={ styles.box }>
-          <h3>Welcome, { name }</h3>
+          <h3>{ welcome }</h3>
           <div>
-            You are signed in with the email address { email }. <a href="https://login.ubuntu.com/">Manage your SSO account</a>
+            { signedIn } <a href="https://login.ubuntu.com/">Manage your SSO account</a>
           </div>
         </div>
       );

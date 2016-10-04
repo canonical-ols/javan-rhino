@@ -57,7 +57,9 @@ $(PAYLOAD): $(CHARM) $(DIST) version-info build-tar-exclude.txt $(SRC) $(SRC)/* 
 	tar cz --exclude-vcs --exclude-from build-tar-exclude.txt -f $(PAYLOAD) .
 
 ## build the charm and payload
-build: $(PAYLOAD)
+build:
+	rm -rf $(CHARMDIR)
+	$(MAKE) $(PAYLOAD)
 
 deploy: build
 	juju deploy local:$(CHARM_SERIES)/$(NAME)
@@ -67,12 +69,9 @@ deploy: build
 		environment=$(DEPLOY_ENV) \
 		memcache_session_secret='its another secret'
 
-check-git-builds-vars:
+check-git-build-vars:
 ifndef BUILDREPO
 	$(error BUILDREPO is required)
-endif
-ifndef BUILDBRANCH
-	$(error BUILDBRANCH is required)
 endif
 
 $(GIT_CHARMDIR): check-git-build-vars
@@ -80,7 +79,8 @@ $(GIT_CHARMDIR): check-git-build-vars
 	mkdir -p $(BUILDDIR)/$(CHARM_SERIES)
 	git clone --branch $(BUILDBRANCH) $(BUILDREPO) $(CHARMDIR)
 
-git-build: $(GIT_CHARMDIR) build
+git-build: BUILDBRANCH ?= staging
+git-build: $(GIT_CHARMDIR) $(PAYLOAD)
 	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git add .
 	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git commit -am "Build of $(NAME) from $$(cat $(CURDIR)/version-info.txt)"
 	cd $(CHARMDIR) && GIT_DIR=$(GIT_CHARMDIR) git push origin $(BUILDBRANCH)
