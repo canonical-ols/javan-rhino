@@ -66,6 +66,14 @@ export const verify = (req, res, next) => {
       return next(new Error(`${constants.E_SSO_DISCHARGE_FAIL}`));
     }
 
+    if (!req.session) {
+      return next(new Error(`${constants.E_NO_SESSION}`));
+    }
+
+    if (!req.session.macaroon) {
+      return next(new Error(`${constants.E_NO_SESSION_MACAROON}`));
+    }
+
     req.session.authenticated = result.authenticated;
     req.session.name = result.fullname;
     req.session.email = result.email;
