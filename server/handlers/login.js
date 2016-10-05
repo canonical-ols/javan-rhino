@@ -77,7 +77,6 @@ export const verify = (req, res, next) => {
     req.session.authenticated = result.authenticated;
     req.session.name = result.fullname;
     req.session.email = result.email;
-    req.session.teams = result.teams;
     req.session.authorization = formatMacaroonAuthHeader(req.session.macaroon, result.discharge);
     // FIXME redirect to page that initiated the sign in request
     res.redirect('/');
