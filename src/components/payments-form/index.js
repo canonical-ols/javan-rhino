@@ -18,6 +18,7 @@ import {
 import { validateNonEmpty, validateCardNumber, validateExpiry, validateCVC } from '../../validation';
 import { postCardData } from '../../actions/stripe';
 import styles from './payments-form.css';
+import tick from '../../style/tick.css';
 
 const cx = classNames.bind(styles);
 
@@ -92,7 +93,7 @@ export class PaymentsForm extends Component {
     return (
       <div className={ className }>
         <Form onSubmit={ this.onSubmit.bind(this) }>
-          <h3>Payment details</h3>
+          <h3 className={ tick.grey }>Payment details</h3>
 
           <Fieldset>
             <Message status="info" text="You won't be charged until your next purchase" />
