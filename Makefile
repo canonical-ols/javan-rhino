@@ -59,7 +59,7 @@ clean:
 $(DIST):
 	rm -rf $(DISTDIR)
 	mkdir -p $(DISTDIR)
-	npm install
+	npm install || (cat npm-debug.log && exit 1)
 	npm run build
 	touch $@
 
@@ -80,22 +80,23 @@ deploy: build
 
 # Targets for building, committing and pushing charm builds to a git repo
 
+$(GIT_CHARMREPODIR) git-build: BUILDBRANCH ?= staging
+
 check-git-build-vars:
 ifndef BUILDREPO
 	$(error BUILDREPO is required)
 endif
 
-$(GIT_CHARMREPODIR): check-git-build-vars
-	rm -rf $(BUILDDIR)
-	git clone --branch $(BUILDBRANCH) $(BUILDREPO) $(CHARMREPODIR)
+$(GIT_CHARMREPODIR): check-git-build-vars $(BUILDDIR)
+	[ ! -d $(GIT_CHARMREPODIR) ] && git clone --branch $(BUILDBRANCH) $(BUILDREPO) $(CHARMREPODIR) \
+		|| (cd $(CHARMREPODIR) && GIT_DIR=$(GIT_CHARMREPODIR) && git pull)
 
-git-build: BUILDBRANCH ?= staging
 git-build: EXTRA_CHARM_BUILD_ARGS = --force
 git-build: RSYNC_EXCLUDES = --exclude=.git --exclude=.gitignore --exclude=.done --exclude=.build.manifest
-git-build: $(GIT_CHARMREPODIR) build
-	rsync -a -m --ignore-times --delete $(RSYNC_EXCLUDES) $(CHARMDIR) $(CHARMREPODIR)
+git-build: build $(GIT_CHARMREPODIR)
+	rsync -a -m --ignore-times --delete $(RSYNC_EXCLUDES) $(CHARMDIR)/ $(CHARMREPODIR)/
 	cd $(CHARMREPODIR) && GIT_DIR=$(GIT_CHARMREPODIR) git add .
 	cd $(CHARMREPODIR) && GIT_DIR=$(GIT_CHARMREPODIR) git commit -am "Build of $(NAME) from $(GIT_HEAD_HASH)"
 	cd $(CHARMREPODIR) && GIT_DIR=$(GIT_CHARMREPODIR) git push origin $(BUILDBRANCH)
 
-.PHONY: version-info build deploy clean
+.PHONY: version-info build deploy clean check-git-build-vars git-build
