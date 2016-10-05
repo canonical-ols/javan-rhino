@@ -36,10 +36,6 @@ describe('RelyingParty default extensions', () => {
     rp = RelyingParty();
   });
 
-  it('should have 2 extensions', () => {
-    expect(rp.extensions.length).toBe(2);
-  });
-
   it('should not include macaroon extension if no cid passed as arg', () => {
     expect(rp.extensions.find((x) => {
       return x.requestParams['openid.ns.macaroon'] === 'http://ns.login.ubuntu.com/2016/openid-macaroon';
@@ -52,10 +48,6 @@ describe('RelyingParty with macaroon extension', () => {
 
   before(() => {
     rp = RelyingParty('foo');
-  });
-
-  it('should have 3 extensions', () => {
-    expect(rp.extensions.length).toBe(3);
   });
 
   it('should add macaroon extension if cid passed as arg', () => {
