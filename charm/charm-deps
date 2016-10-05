@@ -4,6 +4,8 @@ interface/interface-conn-check      git+ssh://git.launchpad.net/~ubuntuone-hacke
 interface/interface-http            lp:~ubuntuone-hackers/ols-charm-deps/interface-http
 interface/interface-juju-info       lp:~ubuntuone-hackers/ols-charm-deps/interface-juju-info
 interface/interface-memcache        git+ssh://git.launchpad.net/~ubuntuone-hackers/ols-charm-deps/+git/interface-memcache
+interface/interface-pgsql           git+ssh://git.launchpad.net/interface-pgsql
+interface/interface-wsgi            git+ssh://git.launchpad.net/~ubuntuone-hackers/charms/+source/interface-wsgi
 
 layer                               @
 layer/layer-apt                     git+ssh://git.launchpad.net/layer-apt
