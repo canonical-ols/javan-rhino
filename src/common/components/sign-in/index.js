@@ -12,10 +12,10 @@ export default class SignIn extends Component {
           <span className={ style.username }>{ user.name }</span>
         }
         { ' ' }
-        <a href="/logout">Logout</a>
+        <a data-qa="sign-in:logout" href="/logout">Logout</a>
       </div>;
     } else {
-      link = <a className={ style.link } href="/login/authenticate">Login</a>;
+      link = <a data-qa="sign-in:login" className={ style.link } href="/login/authenticate">Login</a>;
     }
 
     return link;
