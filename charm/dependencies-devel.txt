@@ -3,4 +3,5 @@ charm-tools
 python-codetree
 git
 make
+rsync
 virtualenv

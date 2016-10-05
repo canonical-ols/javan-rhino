@@ -31,7 +31,12 @@ module.exports = {
         warnings: false
       }
     }),
-    webpackIsomorphicToolsPlugin
+    webpackIsomorphicToolsPlugin,
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
   ],
   module: {
     loaders: require('./loaders-config.js')

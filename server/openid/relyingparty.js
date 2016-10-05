@@ -1,23 +1,18 @@
 import openid from 'openid';
 import conf from '../configure.js';
-import { Teams, Macaroons } from './extensions';
+import { Macaroons } from './extensions';
 
-openid['LaunchpadTeams'] = Teams;
 openid['Macaroons'] = Macaroons;
 
-const OPENID_TEAMS = conf.get('SERVER:OPENID:TEAMS');
 const OPENID_VERIFY_URL = conf.get('SERVER:OPENID:VERIFY_URL');
 const MU_URL = conf.get('UNIVERSAL:MU_URL');
 
 export default (cid) => {
   const extensions = [
     new openid.SimpleRegistration({
-      'nickname' : true,
-      'email' : true,
-      'fullname' : true,
-      'language' : true
-    }),
-    new openid.LaunchpadTeams(OPENID_TEAMS)
+      'email' : 'required',
+      'fullname' : 'required'
+    })
   ];
 
   if (cid) {
