@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import countries from '../payments-form/countries';
 
 import styles from './payment-details.css';
+import tick from '../../style/tick.css';
 
 const getCountryName = (iso) => {
   const country = countries.filter(country => country.iso === iso);
@@ -18,7 +19,7 @@ export function PaymentDetails(props) {
 
   return (
     <div className={ styles.paymentDetails }>
-      <h3>Payment details</h3>
+      <h3 className={ tick.green }>Payment details</h3>
       <div className={ styles.detailsWrapper }>
         <div className={ styles.card }>
           <pre>**** **** **** {card.last4}</pre>
