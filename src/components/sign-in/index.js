@@ -8,7 +8,10 @@ export default class SignIn extends Component {
 
     if (user.isAuthenticated) {
       link = <div className={ style.link }>
-        <span className={ style.username }>{ user.name }</span>{ ' ' }
+        { user.name &&
+          <span className={ style.username }>{ user.name }</span>
+        }
+        { ' ' }
         <a href="/logout">Logout</a>
       </div>;
     } else {
