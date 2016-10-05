@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import { Anchor } from '../button/';
 import styles from './sign-in-banner.css';
+import tick from '../../style/tick.css';
 
 export default class SignInBanner extends Component {
 
@@ -16,7 +17,7 @@ export default class SignInBanner extends Component {
 
       return (
         <div className={ styles.box }>
-          <h3>{ welcome }</h3>
+          <h3 className={ tick.green }>{ welcome }</h3>
           <div>
             { signedIn } <a href="https://login.ubuntu.com/">Manage your SSO account</a>
           </div>
