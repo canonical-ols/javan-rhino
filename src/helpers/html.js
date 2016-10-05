@@ -21,7 +21,7 @@ export default class Html extends Component {
           <link rel="stylesheet" href={ assets.styles.main } />
         </head>
         <body>
-          //  https://github.com/nfl/react-helmet/issues/149
+          {/* https://github.com/nfl/react-helmet/issues/149 */}
           <Helmet
             script={[
               { src: 'https://js.stripe.com/v2/' }

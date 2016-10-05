@@ -11,6 +11,13 @@ import styles from './app.css';
 export class App extends Component {
   render() {
     const { identity, oyez, notifications } = this.props;
+
+    if (notifications.notification) {
+      setTimeout(() => {
+        window.scrollTo(0,0);
+      }, 0);
+    }
+
     // FIXME sstewart 17-Aug-16 move some of this to config
     return (
       <div>
@@ -26,12 +33,12 @@ export class App extends Component {
         { oyez && oyez.map((oy, i) => {
           return <Oyez key={i} { ...oy}/>;
         })}
-        { this.props.children }
         {notifications.notification &&
           <div className={ styles.staticNotification }>
             <Notification { ...notifications.notification } />
           </div>
         }
+        { this.props.children }
         <Footer />
       </div>
     );

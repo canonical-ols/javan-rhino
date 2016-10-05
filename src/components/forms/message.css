@@ -2,6 +2,7 @@
   border: 1px solid $mid-grey;
   padding: .5em .7em;
   border-radius: 2px;
+  margin-bottom: 0.5em;
 }
 
 .error {

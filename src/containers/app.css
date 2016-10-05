@@ -1,9 +1,17 @@
 .fixedNotification {
+  composes: container from './container.css';
+  padding: 0;
+
   position: fixed;
-  width: 100%;
+
+  /* position in the center, regardless of width */
+  left: 50%;
+  translate: transformX(-50%);
+
   z-index: 1000;
 }
 
 .staticNotification {
   composes: container from './container.css';
+  padding-bottom: 0;
 }
