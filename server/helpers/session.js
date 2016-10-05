@@ -3,6 +3,7 @@ import ConnectMemcached from 'connect-memcached';
 
 const MemcachedStore = ConnectMemcached(session);
 const SESSION_DEFAULTS = {
+  name : 'sessionId',
   cookie: {
     maxAge: 2 * 60 * 60 * 1000, // 2 hours, macaroon life span
   },
