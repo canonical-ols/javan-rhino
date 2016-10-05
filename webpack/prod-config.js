@@ -33,10 +33,10 @@ module.exports = {
     }),
     webpackIsomorphicToolsPlugin,
     new webpack.DefinePlugin({
-        'process.env': {
-          'NODE_ENV': JSON.stringify('production')
-        }
-      })
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
   ],
   module: {
     loaders: require('./loaders-config.js')
