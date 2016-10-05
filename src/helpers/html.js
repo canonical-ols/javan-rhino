@@ -17,9 +17,16 @@ export default class Html extends Component {
           {head.title.toComponent()}
           {head.meta.toComponent()}
           {head.link.toComponent()}
+          {head.script.toComponent()}
           <link rel="stylesheet" href={ assets.styles.main } />
         </head>
         <body>
+          //  https://github.com/nfl/react-helmet/issues/149
+          <Helmet
+            script={[
+              { src: 'https://js.stripe.com/v2/' }
+            ]}
+          />
           <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
           <script
             dangerouslySetInnerHTML={{ __html: `window.__CONFIG__ = ${JSON.stringify(config)}` }}
