@@ -21,9 +21,6 @@ export class App extends Component {
           meta={[
             { 'name': 'description', 'content': 'my.ubuntu.com payments ui' },
           ]}
-          script={[
-            { src: 'https://js.stripe.com/v2/' }
-          ]}
         />
         <Header identity={ identity }/>
         { oyez && oyez.map((oy, i) => {
