@@ -2,3 +2,7 @@
   width: 500px;
   margin-bottom: 2em;
 }
+
+.fieldset:last-child {
+  margin-bottom: 0;
+}
