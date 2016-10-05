@@ -59,7 +59,7 @@ clean:
 $(DIST):
 	rm -rf $(DISTDIR)
 	mkdir -p $(DISTDIR)
-	npm install
+	npm install || (cat npm-debug.log && exit 1)
 	npm run build
 	touch $@
 
