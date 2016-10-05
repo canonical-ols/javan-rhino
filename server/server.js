@@ -31,6 +31,10 @@ app.use(morgan('combined', { stream: accessLogStream }));
 
 app.use(session(sessionConfig(conf)));
 
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1);
+}
+
 app.use('/', login);
 app.use('/api', api);
 
