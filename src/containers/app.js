@@ -14,7 +14,6 @@ export class App extends Component {
 
     if (notifications.notification) {
       setTimeout(() => {
-        console.log("scrollTo")
         window.scrollTo(0,0);
       }, 0);
     }
