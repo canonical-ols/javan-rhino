@@ -11,3 +11,7 @@
   list-style: disc;
   list-style-position: inside;
 }
+
+.terms strong {
+  font-weight: bold;
+}
