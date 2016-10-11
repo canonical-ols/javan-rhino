@@ -24,7 +24,7 @@ export class App extends Component {
         <Helmet
           htmlAttributes={{ 'lang': 'en' }}
           title='buy [snap-name]'
-          titleTemplate='my.ubuntu.com - %s'
+          titleTemplate='μ | my.ubuntu.com | %s'
           meta={[
             { 'name': 'description', 'content': 'my.ubuntu.com payments ui' },
           ]}
