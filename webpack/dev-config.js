@@ -1,16 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
-const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const vars = require('postcss-simple-vars');
 const autoprefixer = require('autoprefixer');
 
 const conf = require('../server/configure.js');
 const WEBPACK_DEV_URL = conf.get('SERVER:WEBPACK_DEV_URL');
-
-const webpackIsomorphicToolsPlugin =
-  new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools-configuration'))
-  .development();
 
 const sharedVars = require('../src/style/variables');
 
@@ -32,7 +28,7 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('style.css', { allChunks: true }),
-    webpackIsomorphicToolsPlugin
+    new ManifestPlugin()
   ],
   module: {
     loaders: require('./loaders-config.js')
@@ -40,5 +36,6 @@ module.exports = {
   devtool: 'source-map',
   postcss: function () {
     return [ vars({ variables: () => sharedVars }), autoprefixer ];
-  }
+  },
+  debug: true
 };

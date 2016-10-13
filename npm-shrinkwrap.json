@@ -653,6 +653,9 @@
     "css-loader": {
       "version": "0.23.1"
     },
+    "css-modules-require-hook": {
+      "version": "4.0.5"
+    },
     "css-select": {
       "version": "1.2.0"
     },
@@ -1438,6 +1441,9 @@
     "generate-object-property": {
       "version": "1.2.0"
     },
+    "generic-names": {
+      "version": "1.0.1"
+    },
     "get-stdin": {
       "version": "4.0.1"
     },
@@ -1457,6 +1463,9 @@
     },
     "glob-parent": {
       "version": "2.0.0"
+    },
+    "glob-to-regexp": {
+      "version": "0.1.0"
     },
     "globals": {
       "version": "8.18.0"
@@ -1594,6 +1603,9 @@
     },
     "imurmurhash": {
       "version": "0.1.4"
+    },
+    "in-publish": {
+      "version": "2.0.0"
     },
     "indent-string": {
       "version": "2.1.0",
@@ -1848,6 +1860,9 @@
     "lodash-es": {
       "version": "4.15.0"
     },
+    "lodash._arrayeach": {
+      "version": "3.0.0"
+    },
     "lodash._baseassign": {
       "version": "3.2.0"
     },
@@ -1856,6 +1871,12 @@
     },
     "lodash._basecreate": {
       "version": "3.0.3"
+    },
+    "lodash._baseeach": {
+      "version": "3.0.4"
+    },
+    "lodash._bindcallback": {
+      "version": "3.0.1"
     },
     "lodash._createcompounder": {
       "version": "3.0.0"
@@ -1877,6 +1898,9 @@
     },
     "lodash.deburr": {
       "version": "3.2.0"
+    },
+    "lodash.foreach": {
+      "version": "3.0.3"
     },
     "lodash.indexof": {
       "version": "4.0.5"
@@ -2850,6 +2874,9 @@
         }
       }
     },
+    "postcss-modules-parser": {
+      "version": "1.1.0"
+    },
     "postcss-modules-scope": {
       "version": "1.0.2",
       "dependencies": {
@@ -3142,6 +3169,9 @@
     },
     "secure-keys": {
       "version": "1.0.0"
+    },
+    "seekout": {
+      "version": "1.0.2"
     },
     "semver": {
       "version": "4.3.6"
@@ -3548,6 +3578,14 @@
         },
         "yargs": {
           "version": "3.10.0"
+        }
+      }
+    },
+    "webpack-manifest-plugin": {
+      "version": "1.0.1",
+      "dependencies": {
+        "lodash": {
+          "version": "3.10.1"
         }
       }
     },

@@ -48,6 +48,7 @@
     "connect-memcached": "^0.2.0",
     "coveralls": "^2.11.12",
     "css-loader": "^0.23.1",
+    "css-modules-require-hook": "^4.0.5",
     "enzyme": "^2.4.1",
     "eslint": "^3.3.0",
     "eslint-plugin-react": "^6.1.0",
@@ -88,9 +89,15 @@
     "style-loader": "^0.13.1",
     "supertest": "^2.0.0",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.1",
+    "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2",
-    "webpack-isomorphic-tools": "^2.5.7"
+    "webpack-manifest-plugin": "^1.0.1"
+  },
+  "devDependencies": {
+    "chokidar": "^1.6.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "^1.0.14"
   }
 }
