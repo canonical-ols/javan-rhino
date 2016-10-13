@@ -48,6 +48,7 @@
     "connect-memcached": "^0.2.0",
     "coveralls": "^2.11.14",
     "css-loader": "^0.25.0",
+    "css-modules-require-hook": "^4.0.5",
     "enzyme": "^2.5.1",
     "eslint": "^3.8.1",
     "eslint-plugin-react": "^6.4.1",
@@ -90,7 +91,6 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.0",
-    "webpack-isomorphic-tools": "^2.6.3"
+    "webpack-hot-middleware": "^2.13.0"
   }
 }
