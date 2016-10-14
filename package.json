@@ -92,13 +92,6 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.12.2",
-    "webpack-manifest-plugin": "^1.0.1"
-  },
-  "devDependencies": {
-    "chokidar": "^1.6.0"
-  },
-  "optionalDependencies": {
-    "fsevents": "^1.0.14"
+    "webpack-hot-middleware": "^2.12.2"
   }
 }
