@@ -5,7 +5,7 @@ import SignIn from '../sign-in';
 
 import styles from './header.css';
 
-//import logo from './ubuntu-logo.svg';
+import logo from './ubuntu-logo.svg';
 
 export default class Header extends Component {
   render() {
@@ -14,7 +14,7 @@ export default class Header extends Component {
       <div className={ styles.header }>
         <nav className={ styles.container }>
           <Link className={ styles.logo } to="/">
-            <img width="107" height="24" alt="Ubuntu" />
+            <img src={ logo } width="107" height="24" alt="Ubuntu" />
           </Link>
           <div className={ styles.sideNav }>
             <SignIn identity={ identity } />
