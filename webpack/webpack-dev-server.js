@@ -15,8 +15,14 @@ const compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
   contentBase: webpackDevUrl.href,
+  quiet: false,
   hot: true,
-  noInfo: true,
+  noInfo: false,
+  stats: {
+    colors: true,
+    chunks: false,
+    children: false
+  },
   headers: { 'Access-Control-Allow-Origin': '*' },
   publicPath: webpackConfig.output.publicPath })
 );
