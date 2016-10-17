@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const vars = require('postcss-simple-vars');
 const autoprefixer = require('autoprefixer');
 
@@ -27,8 +26,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('style.css', { allChunks: true }),
-    new ManifestPlugin()
+    new ExtractTextPlugin('style.css', { allChunks: true })
   ],
   module: {
     loaders: require('./loaders-config.js')
