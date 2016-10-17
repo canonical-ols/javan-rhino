@@ -17,9 +17,10 @@ app.use(webpackDevMiddleware(compiler, {
   contentBase: webpackDevUrl.href,
   hot: true,
   noInfo: true,
+  stats: { colors: true },
   headers: { 'Access-Control-Allow-Origin': '*' },
-  publicPath: webpackConfig.output.publicPath })
-);
+  publicPath: webpackConfig.output.publicPath
+}));
 
 app.use(webpackHotMiddleware(compiler));
 

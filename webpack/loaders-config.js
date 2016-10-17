@@ -2,12 +2,12 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = [
   {
-    test: /\.js$/,
+    test: /\.js$/i,
     exclude: /node_modules/,
     loaders: ['react-hot', 'babel'],
   },
   {
-    test: /\.css$/,
+    test: /\.css$/i,
     loader: ExtractTextPlugin.extract(
       [
         'style-loader',
@@ -27,8 +27,8 @@ module.exports = [
     )
   },
   {
-    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-    loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+    test: /\.svg$/i,
+    loader: 'file-loader?name=icons/[hash].[ext]'
   }
 ];
 

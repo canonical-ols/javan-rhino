@@ -3,9 +3,14 @@ import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 
+const conf = require('../../server/configure.js');
+
+const assetHost = (global.NODE_ENV === 'production') ? ''
+  : conf.get('SERVER:WEBPACK_DEV_URL');
+
 export default class Html extends Component {
   render() {
-    const { assets, store, component, config } = this.props;
+    const { store, component, config } = this.props;
     const head = Helmet.rewind();
     const attrs = head.htmlAttributes.toComponent();
     const preloadedState = store.getState();
@@ -18,7 +23,7 @@ export default class Html extends Component {
           {head.meta.toComponent()}
           {head.link.toComponent()}
           {head.script.toComponent()}
-          <link rel="stylesheet" href={ assets.styles.main } />
+          <link rel="stylesheet" href={ `${assetHost}/static/style.css` } />
         </head>
         <body>
           {/* https://github.com/nfl/react-helmet/issues/149 */}
@@ -34,7 +39,7 @@ export default class Html extends Component {
           <script
             dangerouslySetInnerHTML={{ __html: `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}` }}
           />
-          <script src={ assets.javascript.main } charSet="UTF-8"/>
+          <script src={ `${assetHost}/static/bundle.js` } />
         </body>
       </html>
     );
