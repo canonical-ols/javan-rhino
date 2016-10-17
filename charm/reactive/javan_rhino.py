@@ -35,6 +35,7 @@ def configure(cache):
             })
         check_port('ols.{}.express'.format(service_name()), port())
         set_state('service.configured')
+        hookenv.status_set('active', 'systemd unit configured')
     else:
         hookenv.status_set('blocked',
                            'Service requires session_secret and '

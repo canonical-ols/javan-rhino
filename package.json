@@ -5,13 +5,13 @@
   "description": "Front-end to Ubuntu Store Payments",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development concurrently --kill-others \"node webpack/webpack-dev-server.js\" \"node server/\"",
+    "start": "NODE_ENV=development concurrently --kill-others \"node webpack/webpack-dev-server.js\" \"node src/server/\"",
     "start-prod": "NODE_ENV=production node dist/server/",
     "build": "./scripts/build.sh",
     "lint": "eslint -c .eslintrc.js '**/*.js'",
     "test": "nyc npm run test:run && npm run lint",
     "test:run": "npm run test:unit && npm run test:routes",
-    "test:unit": "BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --require babel-core/register --compilers js:babel-register ./test/unit/setup.js ./test/unit/**/*",
+    "test:unit": "BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --recursive --require babel-core/register --compilers js:babel-register ./test/unit/setup.js ./test/unit/**/*",
     "test:routes": "SESSION_SECRET=test BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --require babel-core/register --compilers js:babel-register ./test/routes/setup.js ./test/routes/**/*",
     "test:watch": "npm run test:unit -- --watch",
     "coverage": "nyc report --reporter=text-lcov | coveralls"

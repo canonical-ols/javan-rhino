@@ -4,10 +4,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const vars = require('postcss-simple-vars');
 const autoprefixer = require('autoprefixer');
 
-const conf = require('../server/configure.js');
+const conf = require('../src/server/configure.js');
 const WEBPACK_DEV_URL = conf.get('SERVER:WEBPACK_DEV_URL');
 
-const sharedVars = require('../src/style/variables');
+const sharedVars = require('../src/common/style/variables');
 
 module.exports = {
   context: path.resolve(__dirname, '..'),
@@ -15,7 +15,7 @@ module.exports = {
     'babel-polyfill',
     `webpack-hot-middleware/client?path=${WEBPACK_DEV_URL}/__webpack_hmr`,
     'webpack/hot/only-dev-server',
-    './src',
+    './src/common',
   ],
   output: {
     path: path.join(__dirname, '../public/static'),

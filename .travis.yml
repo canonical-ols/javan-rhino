@@ -3,4 +3,4 @@ node_js:
   - "6"
   - "node"
 after_success: npm run coverage
-before_install: if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
+before_install: npm i -g npm@3.10.7;

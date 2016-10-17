@@ -1,5 +1,5 @@
-import { app } from '../../server/server.js';
-import conf from '../../server/configure';
+import { app } from '../../src/server/server.js';
+import conf from '../../src/server/configure';
 import nock from 'nock';
 import { agent } from 'supertest';
 
