@@ -1439,7 +1439,15 @@
       "version": "1.2.0"
     },
     "generic-names": {
-      "version": "1.0.1"
+      "version": "1.0.2",
+      "dependencies": {
+        "json5": {
+          "version": "0.5.0"
+        },
+        "loader-utils": {
+          "version": "0.2.16"
+        }
+      }
     },
     "get-stdin": {
       "version": "4.0.1"
