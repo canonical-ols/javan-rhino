@@ -4,7 +4,6 @@ import conf from '../configure.js';
 import RelyingParty from '../openid/relyingparty.js';
 import constants from '../constants';
 
-let rp;
 const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
 const OPENID_IDENTIFIER = conf.get('SERVER:UBUNTU_SSO_URL');
 
@@ -35,7 +34,7 @@ export const getMacaroon = (req, res, next) => {
 };
 
 export const authenticate = (req, res, next) => {
-  rp = RelyingParty(req.session.cid);
+  const rp = RelyingParty(req.session.cid);
 
   // TODO log errors to sentry
   rp.authenticate(OPENID_IDENTIFIER, false, (error, authUrl) => {
@@ -52,6 +51,8 @@ export const authenticate = (req, res, next) => {
 };
 
 export const verify = (req, res, next) => {
+  const rp = RelyingParty(req.session.cid);
+
   rp.verifyAssertion(req, (error, result) => {
     if (error) {
       // TODO log errors to sentry
