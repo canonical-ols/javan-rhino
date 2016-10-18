@@ -18,7 +18,7 @@ JUJU_REPOSITORY = $(BUILDDIR)
 CHARMDIR = $(BUILDDIR)/$(CHARM_SERIES)/$(NAME)
 CHARMREPODIR = $(BUILDDIR)/build
 GIT_CHARMREPODIR = $(CHARMREPODIR)/.git
-PAYLOAD = $(CHARMDIR)/files/$(NAME).tgz
+PAYLOAD = $(CHARMDIR)/files/$(NAME)/
 CHARM = $(CHARMDIR)/.done
 LAYER_PATH = $(TMPDIR)/layer
 INTERFACE_PATH = $(TMPDIR)/interface
@@ -63,8 +63,8 @@ $(DIST):
 	npm run build
 	touch $@
 
-$(PAYLOAD): $(CHARM) $(DIST) version-info build-tar-exclude.txt $(SRC) $(SRC)/* $(SRC_PREQS)
-	tar cz --exclude-vcs --exclude-from build-tar-exclude.txt -f $(PAYLOAD) .
+$(PAYLOAD): $(CHARM) $(DIST) version-info build-exclude.txt $(SRC) $(SRC)/* $(SRC_PREQS)
+	rsync -a -m --ignore-times --delete --exclude-from build-exclude.txt . $(PAYLOAD)
 
 ## build the charm and payload
 build: $(PAYLOAD)
@@ -92,9 +92,8 @@ $(GIT_CHARMREPODIR): check-git-build-vars $(BUILDDIR)
 		|| (cd $(CHARMREPODIR) && GIT_DIR=$(GIT_CHARMREPODIR) && git pull)
 
 git-build: EXTRA_CHARM_BUILD_ARGS = --force
-git-build: RSYNC_EXCLUDES = --exclude=.git --exclude=.gitignore --exclude=.done --exclude=.build.manifest
 git-build: build $(GIT_CHARMREPODIR)
-	rsync -a -m --ignore-times --delete $(RSYNC_EXCLUDES) $(CHARMDIR)/ $(CHARMREPODIR)/
+	rsync -a -m --ignore-times --delete --exclude-from build-exclude.txt  $(CHARMDIR)/ $(CHARMREPODIR)/
 	cd $(CHARMREPODIR) && GIT_DIR=$(GIT_CHARMREPODIR) git add .
 	cd $(CHARMREPODIR) && GIT_DIR=$(GIT_CHARMREPODIR) git commit -am "Build of $(NAME) from $(GIT_HEAD_HASH)"
 	cd $(CHARMREPODIR) && GIT_DIR=$(GIT_CHARMREPODIR) git push origin $(BUILDBRANCH)
