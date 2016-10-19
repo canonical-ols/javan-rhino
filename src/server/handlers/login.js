@@ -34,7 +34,7 @@ export const getMacaroon = (req, res, next) => {
 };
 
 export const authenticate = (req, res, next) => {
-  const rp = RelyingParty(req.session.cid);
+  const rp = RelyingParty(req.session);
 
   // TODO log errors to sentry
   rp.authenticate(OPENID_IDENTIFIER, false, (error, authUrl) => {
@@ -48,10 +48,11 @@ export const authenticate = (req, res, next) => {
       res.redirect(authUrl);
     }
   });
+
 };
 
 export const verify = (req, res, next) => {
-  const rp = RelyingParty(req.session.cid);
+  const rp = RelyingParty(req.session);
 
   rp.verifyAssertion(req, (error, result) => {
     if (error) {

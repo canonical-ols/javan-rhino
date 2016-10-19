@@ -7,7 +7,40 @@ openid['Macaroons'] = Macaroons;
 const OPENID_VERIFY_URL = conf.get('SERVER:OPENID:VERIFY_URL');
 const MU_URL = conf.get('UNIVERSAL:MU_URL');
 
-export default (cid) => {
+
+export default (session) => {
+
+  session.associations = session.associations || {};
+
+  openid.saveAssociation = (provider, type, handle, secret, expiry_time_in_seconds, callback) => {
+    setTimeout(() => {
+      openid.removeAssociation(handle);
+    }, expiry_time_in_seconds * 1000);
+
+    session.associations[handle] = {
+      provider,
+      type,
+      secret
+    };
+    callback(null); // Custom implementations may report error as first argument
+  };
+
+  openid.loadAssociation = (handle, callback) => {
+    if(session.associations[handle])
+    {
+      callback(null, session.associations[handle]);
+    }
+    else
+    {
+      callback(null, null);
+    }
+  };
+
+  openid.removeAssociation = (handle) => {
+    delete session.associations[handle];
+    return true;
+  };
+
   const extensions = [
     new openid.SimpleRegistration({
       'email' : 'required',
@@ -15,9 +48,9 @@ export default (cid) => {
     })
   ];
 
-  if (cid) {
+  if (session.cid) {
     extensions.push(
-      new openid.Macaroons(cid)
+      new openid.Macaroons(session.cid)
     );
   }
   return new openid.RelyingParty(
