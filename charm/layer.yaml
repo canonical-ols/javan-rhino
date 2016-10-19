@@ -6,6 +6,7 @@ options:
     ols:
         service_name: javan-rhino
         user: ubuntu
+        tarball_payload: false
 
 exclude:
     - tmp
