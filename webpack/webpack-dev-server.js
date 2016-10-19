@@ -6,7 +6,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware  = require('webpack-hot-middleware');
 
 const webpackConfig = require('./dev-config');
-const conf = require('../server/configure.js');
+const conf = require('../src/server/configure.js');
 
 const webpackDevUrl = url.parse(conf.get('SERVER:WEBPACK_DEV_URL'));
 

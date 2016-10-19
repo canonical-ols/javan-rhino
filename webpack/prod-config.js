@@ -9,13 +9,12 @@ const webpackIsomorphicToolsPlugin =
   new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools-configuration'))
   .development();
 
-const sharedVars = require('../src/style/variables');
+const sharedVars = require('../src/common/style/variables');
 
 module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: [
-    'babel-polyfill',
-    './src',
+    './dist/common',
   ],
   output: {
     path: path.join(__dirname, '../dist/public/static'),
