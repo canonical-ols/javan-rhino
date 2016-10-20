@@ -100,7 +100,7 @@ export class PaymentsForm extends Component {
       },
       billingPostcode: {
         name: 'billingPostcode',
-        label: 'Phone number',
+        label: 'Postcode',
         required: true,
         ...initialState
       },
