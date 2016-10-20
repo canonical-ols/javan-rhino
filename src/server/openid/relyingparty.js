@@ -24,7 +24,6 @@ const saveAssociation = (session) => {
 
 const loadAssociation = (session) => {
   return (handle, callback) => {
-    debugger;
     if(session.association)
     {
       callback(null, session.association);
