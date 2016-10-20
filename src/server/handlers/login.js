@@ -1,7 +1,7 @@
 import request from 'request';
 import { extractCaveatId, formatMacaroonAuthHeader } from '../macaroons';
 import conf from '../configure.js';
-import RelyingParty from '../openid/relyingparty.js';
+import RelyingPartyFactory from '../openid/relyingparty.js';
 import constants from '../constants';
 
 const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
@@ -34,7 +34,7 @@ export const getMacaroon = (req, res, next) => {
 };
 
 export const authenticate = (req, res, next) => {
-  const rp = RelyingParty(req.session.cid);
+  const rp = RelyingPartyFactory(req.session);
 
   // TODO log errors to sentry
   rp.authenticate(OPENID_IDENTIFIER, false, (error, authUrl) => {
@@ -48,10 +48,11 @@ export const authenticate = (req, res, next) => {
       res.redirect(authUrl);
     }
   });
+
 };
 
 export const verify = (req, res, next) => {
-  const rp = RelyingParty(req.session.cid);
+  const rp = RelyingPartyFactory(req.session);
 
   rp.verifyAssertion(req, (error, result) => {
     if (error) {
