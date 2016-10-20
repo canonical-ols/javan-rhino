@@ -7,39 +7,48 @@ openid['Macaroons'] = Macaroons;
 const OPENID_VERIFY_URL = conf.get('SERVER:OPENID:VERIFY_URL');
 const MU_URL = conf.get('UNIVERSAL:MU_URL');
 
-
-export default (session) => {
-
-  session.associations = session.associations || {};
-
-  openid.saveAssociation = (provider, type, handle, secret, expiry_time_in_seconds, callback) => {
+const saveAssociation = (session) => {
+  return (provider, type, handle, secret, expiry_time_in_seconds, callback) => {
     setTimeout(() => {
       openid.removeAssociation(handle);
     }, expiry_time_in_seconds * 1000);
 
-    session.associations[handle] = {
+    session.association = {
       provider,
       type,
       secret
     };
     callback(null); // Custom implementations may report error as first argument
   };
+};
 
-  openid.loadAssociation = (handle, callback) => {
-    if(session.associations[handle])
+const loadAssociation = (session) => {
+  return (handle, callback) => {
+    debugger;
+    if(session.association)
     {
-      callback(null, session.associations[handle]);
+      callback(null, session.association);
     }
     else
     {
       callback(null, null);
     }
   };
+};
 
-  openid.removeAssociation = (handle) => {
-    delete session.associations[handle];
+const removeAssociation = (session) => {
+  return () => {
+    delete session.association;
     return true;
   };
+};
+
+
+const RelyingPartyFactory = (session) => {
+
+  openid.saveAssociation = saveAssociation(session);
+  openid.loadAssociation = loadAssociation(session);
+  openid.removeAssociation = removeAssociation(session);
 
   const extensions = [
     new openid.SimpleRegistration({
@@ -60,4 +69,10 @@ export default (session) => {
     false, // Strict mode
     extensions
   );
+};
+
+export { RelyingPartyFactory as default,
+  loadAssociation,
+  saveAssociation,
+  removeAssociation
 };
