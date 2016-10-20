@@ -46,7 +46,9 @@ def configure(cache):
 @when_not('apt.queued_installs')
 def install_custom_nodejs():
     deb_path = join(dirname(dirname(__file__)), 'files', 'nodejs*.deb')
-    if glob(deb_path):
+    paths = glob(deb_path)
+    if paths:
+        deb_path = paths[0]
         deb_pkg_version_output = check_output(['dpkg-deb', '-I', deb_path])
         deb_pkg_version = search('Version: (.*)',
                                  deb_pkg_version_output.decode('ascii'))
