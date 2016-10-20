@@ -1,5 +1,6 @@
+from glob import glob
 from re import search
-from os.path import dirname, exists, join
+from os.path import dirname, join
 from subprocess import check_call, check_output
 
 from charmhelpers.core import hookenv
@@ -44,8 +45,8 @@ def configure(cache):
 
 @when_not('apt.queued_installs')
 def install_custom_nodejs():
-    deb_path = join(dirname(dirname(__file__)), 'files', 'nodejs.deb')
-    if exists(deb_path):
+    deb_path = join(dirname(dirname(__file__)), 'files', 'nodejs*.deb')
+    if glob(deb_path):
         deb_pkg_version_output = check_output(['dpkg-deb', '-I', deb_path])
         deb_pkg_version = search('Version: (.*)',
                                  deb_pkg_version_output.decode('ascii'))
