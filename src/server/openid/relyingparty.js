@@ -24,12 +24,9 @@ const saveAssociation = (session) => {
 
 const loadAssociation = (session) => {
   return (handle, callback) => {
-    if(session.association)
-    {
+    if (session.association) {
       callback(null, session.association);
-    }
-    else
-    {
+    } else {
       callback(null, null);
     }
   };
