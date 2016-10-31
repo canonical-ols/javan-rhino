@@ -19,7 +19,7 @@ export class AddCard extends Component {
     return (
       <div className={ styles.container }>
         <Helmet
-          title='payment details'
+          title='Payment details'
         />
         <Welcome />
         <SignInBanner identity={ identity } url={ url } />
