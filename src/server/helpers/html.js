@@ -6,10 +6,12 @@ import { Provider } from 'react-redux';
 export default class Html extends Component {
   render() {
     const { assets, store, component, config } = this.props;
-    const head = Helmet.rewind();
-    const attrs = head.htmlAttributes.toComponent();
     const preloadedState = store.getState();
     const content = component ? this.renderComponent(component, store) : '';
+
+    // read Helmet props after component is rendered
+    const head = Helmet.rewind();
+    const attrs = head.htmlAttributes.toComponent();
 
     return (
       <html {...attrs}>
@@ -19,14 +21,19 @@ export default class Html extends Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
           <link rel="stylesheet" href={ assets.styles.main } />
+
+          {/*
+            Can't add script to Helmet in here (as we are already rendering <head>).
+            And having script added to Helmet in App causes script to be loaded
+            twice (once from server side rendered HTML, once on client side).
+
+            See more:
+            https://github.com/nfl/react-helmet/issues/149
+            https://github.com/canonical-ols/javan-rhino/issues/176
+          */}
+          <script src='https://js.stripe.com/v2/'></script>
         </head>
         <body>
-          {/* https://github.com/nfl/react-helmet/issues/149 */}
-          <Helmet
-            script={[
-              { src: 'https://js.stripe.com/v2/' }
-            ]}
-          />
           <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
           <script
             dangerouslySetInnerHTML={{ __html: `window.__CONFIG__ = ${JSON.stringify(config)}` }}
