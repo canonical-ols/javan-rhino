@@ -1,4 +1,4 @@
-import { app } from '../../src/server/server.js';
+import app from '../../src/server/server.js';
 import conf from '../../src/server/configure';
 import nock from 'nock';
 import { agent } from 'supertest';
@@ -6,6 +6,8 @@ import { agent } from 'supertest';
 const SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
 
 describe('purchases api', () => {
+
+  console.log(app);
 
   const authorization = 'Macaroon root=foo discharge=bar';
   let testagent;

@@ -1,4 +1,4 @@
-import { app } from '../../src/server/server.js';
+import app from '../../src/server/server.js';
 import conf from '../../src/server/configure.js';
 import nock from 'nock';
 import supertest from 'supertest';
