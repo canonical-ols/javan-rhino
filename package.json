@@ -46,12 +46,21 @@
     "classnames": "^2.2.5",
     "concurrently": "^3.1.0",
     "connect-memcached": "^0.2.0",
+<<<<<<< HEAD
     "coveralls": "^2.11.14",
     "css-loader": "^0.25.0",
     "css-modules-require-hook": "^4.0.5",
     "enzyme": "^2.5.1",
     "eslint": "^3.8.1",
     "eslint-plugin-react": "^6.4.1",
+=======
+    "coveralls": "^2.11.12",
+    "css-loader": "^0.23.1",
+    "css-modules-require-hook": "^4.0.5",
+    "enzyme": "^2.4.1",
+    "eslint": "^3.3.0",
+    "eslint-plugin-react": "^6.1.0",
+>>>>>>> 360f6681ef3aa002a1a6f9e2ddea4de8dd8f9279
     "expect": "^1.20.2",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
