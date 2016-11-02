@@ -1,5 +1,5 @@
 import 'isomorphic-fetch';
-import { showNotification, dismissNotification } from './notifications';
+import { showNotification } from './notifications';
 
 import conf from '../config';
 
@@ -33,9 +33,6 @@ export function sendStripeTokenFailure(errors) {
         'Please verify that card details you provided are correct or use a different card and try again.'
       ].join(' '),
       status: 'error',
-      action: () => {
-        dispatch(dismissNotification());
-      },
       actionText: 'Dismiss'
     }));
 

@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 
 import CustomerSuccess from '../components/customer-success';
@@ -17,6 +18,9 @@ export class AddCard extends Component {
     const { identity } = this.props;
     return (
       <div className={ styles.container }>
+        <Helmet
+          title='Payment details'
+        />
         <Welcome />
         <SignInBanner identity={ identity } url={ url } />
         { !this.props.customer.tosAccepted &&
