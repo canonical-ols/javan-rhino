@@ -1,16 +1,28 @@
-import app from '../../src/server/server.js';
-import conf from '../../src/server/configure';
+import Express from 'express';
 import nock from 'nock';
 import supertest, { agent } from 'supertest';
+import session from 'express-session';
 
+import api from '../../src/server/routes/api';
+import conf from '../../src/server/configure';
+import sessionConfig from '../../src/server/helpers/session';
+
+/**
+ * Universal route captures all, meaning we can't modify the app route stack
+ * after the fact, hence configuring a new server.
+ */
+const app = Express();
 const SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
+
+app.use(session(sessionConfig(conf)));
+app.use('/api', api);
 
 describe('purchases api', () => {
   afterEach(() => {
     nock.cleanAll();
   });
 
-  describe('unauthorised', () => {
+  describe('unauthorised user', () => {
 
     it('should return 401 from local server, not sca', (done) => {
 
@@ -32,25 +44,22 @@ describe('purchases api', () => {
     });
   });
 
-  describe('authorised', () => {
-    const authorization = 'Macaroon root=foo discharge=bar';
-    let testagent;
+  describe('authorised user', () => {
 
-    beforeEach(() => {
-      // routes to populate req.session, persisted throughout test so we have
-      // an authenticated session
-      app.get('/test/mock-openid', (req, res) => {
-        req.session.authenticated = true;
-        res.send('Test');
-      });
-
-      app.get('/test/mock-macaroon', (req, res) => {
-        req.session.authorization = authorization;
-        res.send('Test');
-      });
-
-      testagent = agent(app);
+    // routes to populate req.session, persisted throughout test so we have
+    // an authenticated session
+    app.get('/test/mock-openid', (req, res) => {
+      req.session.authenticated = true;
+      res.send('<h1>Test</h1>');
     });
+
+    app.get('/test/mock-macaroon', (req, res) => {
+      req.session.authorization = authorization;
+      res.send('Test');
+    });
+
+    const testagent = agent(app);
+    const authorization = 'Macaroon root=foo discharge=bar';
 
     describe('agent setup for persisted session', () => {
       it('should mock openid authentication', (done) => {
