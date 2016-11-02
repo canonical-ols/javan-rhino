@@ -65,6 +65,6 @@ export const handleMatch = (req, res, error, redirectLocation, renderProps) => {
         />
       ));
   } else {
-    res.status(404).send('~ Not found ~');
+    res.status(404).send('Not found');
   }
 };
