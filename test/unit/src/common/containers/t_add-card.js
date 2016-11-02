@@ -20,7 +20,7 @@ describe('<AddCard /> container', () => {
         validatedCardData: false
       },
       customer: {
-        tosAccepted: false
+        success: false
       }
     };
     wrapper = shallow(<AddCard { ...props }/>);
@@ -46,7 +46,7 @@ describe('<AddCard /> container', () => {
     expect(wrapper.find(CustomerSuccess).length).toBe(0);
   });
 
-  describe('with no tosAccepted', () => {
+  describe('with no customer success', () => {
     let wrapper;
 
     beforeEach(() => {
@@ -57,7 +57,7 @@ describe('<AddCard /> container', () => {
           validatedCardData: true
         },
         customer: {
-          tosAccepted: false
+          success: false
         }
       };
       wrapper = shallow(<AddCard { ...props }/>);

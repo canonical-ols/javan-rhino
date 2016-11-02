@@ -23,10 +23,10 @@ export class AddCard extends Component {
         />
         <Welcome />
         <SignInBanner identity={ identity } url={ url } />
-        { !this.props.customer.tosAccepted &&
+        { !this.props.customer.success &&
           <PaymentsForm />
         }
-        { this.props.customer.tosAccepted &&
+        { this.props.customer.success &&
           <div>
             <PaymentDetails />
             <CustomerSuccess />
@@ -41,7 +41,7 @@ AddCard.propTypes = {
   dispatch: PropTypes.func.isRequired,
   customer: PropTypes.shape({
     isFetching: PropTypes.bool,
-    tosAccepted: PropTypes.bool
+    success: PropTypes.bool
   }).isRequired,
   stripe: PropTypes.shape({
     isFetching: PropTypes.bool,

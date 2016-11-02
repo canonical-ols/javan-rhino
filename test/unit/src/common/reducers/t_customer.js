@@ -9,6 +9,7 @@ describe('customer reducers', () => {
     expect(customer(undefined, {})).toEqual({
       errors: false,
       isFetching: false,
+      success: false,
       token: false,
       tosAccepted: false
     });
@@ -18,6 +19,7 @@ describe('customer reducers', () => {
     const state = {
       errors: false,
       isFetching: false,
+      success: false,
       token: false,
       tosAccepted: 'date string'
     };
@@ -29,6 +31,7 @@ describe('customer reducers', () => {
     expect(customer(state, action)).toEqual({
       errors: false,
       isFetching: true,
+      success: false,
       token: 'foo',
       tosAccepted: 'date string'
     });
@@ -42,6 +45,7 @@ describe('customer reducers', () => {
 
     expect(customer({}, action)).toEqual({
       isFetching: false,
+      success: true,
       tosAccepted: 'datetime'
     });
   });
@@ -54,6 +58,7 @@ describe('customer reducers', () => {
 
     expect(customer({}, action)).toEqual({
       isFetching: false,
+      success: false,
       errors: []
     });
   });
