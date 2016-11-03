@@ -1,4 +1,4 @@
-.fixedNotification {
+.fixedNotifications {
   composes: container from './container.css';
   padding: 0;
 
@@ -11,7 +11,7 @@
   z-index: 1000;
 }
 
-.staticNotification {
+.staticNotifications {
   composes: container from './container.css';
   padding-bottom: 0;
 }
