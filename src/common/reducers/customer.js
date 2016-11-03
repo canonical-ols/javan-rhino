@@ -2,6 +2,7 @@ import * as ActionTypes from '../actions/customer';
 
 export function customer(state = {
   isFetching: false,
+  success: false,
   tosAccepted: false,
   errors: false,
   token: false
@@ -17,12 +18,14 @@ export function customer(state = {
       return {
         ...state,
         isFetching: false,
+        success: true,
         tosAccepted: action.tosAccepted
       };
     case ActionTypes.SEND_STRIPE_TOKEN_FAILURE:
       return {
         ...state,
         isFetching: false,
+        success: false,
         errors: action.errors
       };
     default:
