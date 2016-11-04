@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import conf from '../../server/configure';
 
-const assetHost = (global.NODE_ENV === 'production') ? ''
+const assetHost = (process.env.NODE_ENV === 'production') ? ''
   : conf.get('SERVER:WEBPACK_DEV_URL');
 
 export default class Html extends Component {
