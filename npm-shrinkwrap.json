@@ -88,6 +88,17 @@
     "assertion-error": {
       "version": "1.0.2"
     },
+    "assets-webpack-plugin": {
+      "version": "3.5.0",
+      "dependencies": {
+        "camelcase": {
+          "version": "1.2.1"
+        },
+        "lodash.merge": {
+          "version": "3.3.2"
+        }
+      }
+    },
     "async": {
       "version": "1.5.2"
     },
@@ -1787,6 +1798,9 @@
     "lodash-es": {
       "version": "4.16.4"
     },
+    "lodash._arraycopy": {
+      "version": "3.0.0"
+    },
     "lodash._arrayeach": {
       "version": "3.0.0"
     },
@@ -1802,8 +1816,14 @@
     "lodash._baseeach": {
       "version": "3.0.4"
     },
+    "lodash._basefor": {
+      "version": "3.0.3"
+    },
     "lodash._bindcallback": {
       "version": "3.0.1"
+    },
+    "lodash._createassigner": {
+      "version": "3.1.1"
     },
     "lodash._createcompounder": {
       "version": "3.0.0"
@@ -1816,6 +1836,9 @@
     },
     "lodash._root": {
       "version": "3.0.1"
+    },
+    "lodash.assign": {
+      "version": "3.2.0"
     },
     "lodash.assignin": {
       "version": "4.2.0"
@@ -1853,8 +1876,17 @@
     "lodash.isarray": {
       "version": "3.0.4"
     },
+    "lodash.isplainobject": {
+      "version": "3.2.0"
+    },
+    "lodash.istypedarray": {
+      "version": "3.0.6"
+    },
     "lodash.keys": {
       "version": "3.1.2"
+    },
+    "lodash.keysin": {
+      "version": "3.0.8"
     },
     "lodash.map": {
       "version": "4.6.0"
@@ -1871,8 +1903,14 @@
     "lodash.reject": {
       "version": "4.6.0"
     },
+    "lodash.restparam": {
+      "version": "3.6.1"
+    },
     "lodash.some": {
       "version": "4.6.0"
+    },
+    "lodash.toplainobject": {
+      "version": "3.0.0"
     },
     "lodash.words": {
       "version": "3.2.0"
@@ -1969,9 +2007,6 @@
     },
     "module-not-found-error": {
       "version": "1.0.1"
-    },
-    "moment": {
-      "version": "2.15.1"
     },
     "morgan": {
       "version": "1.7.0"
@@ -3193,9 +3228,6 @@
     "source-map-support": {
       "version": "0.4.5"
     },
-    "spawn-default-shell": {
-      "version": "1.1.0"
-    },
     "spdx-correct": {
       "version": "1.0.2"
     },
@@ -3311,9 +3343,6 @@
     },
     "tough-cookie": {
       "version": "2.3.1"
-    },
-    "tree-kill": {
-      "version": "1.1.0"
     },
     "trim-newlines": {
       "version": "1.0.0"

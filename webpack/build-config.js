@@ -1,15 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
-const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
+const AssetsPlugin = require('assets-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const vars = require('postcss-simple-vars');
 const autoprefixer = require('autoprefixer');
 
-const webpackIsomorphicToolsPlugin =
-  new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools-configuration'))
-  .development();
-
 const sharedVars = require('../src/common/style/variables');
+
+
 
 module.exports = {
   context: path.resolve(__dirname, '..'),
@@ -18,11 +16,11 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, '../dist/public/static'),
-    filename: 'bundle.js',
+    filename: 'bundle.[hash].js',
     publicPath: '/static/'
   },
   plugins: [
-    new ExtractTextPlugin('style.css', { allChunks: true }),
+    new ExtractTextPlugin('style.[hash].css', { allChunks: true }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
@@ -30,7 +28,7 @@ module.exports = {
         warnings: false
       }
     }),
-    webpackIsomorphicToolsPlugin,
+    new AssetsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')

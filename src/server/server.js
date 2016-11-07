@@ -26,7 +26,7 @@ if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
 }
 
-app.use(Express.static(__dirname + '/../public'));
+app.use(Express.static(__dirname + '/../public', { maxAge: '365d' }));
 
 app.use('/', routes.login);
 app.use('/api', routes.api);

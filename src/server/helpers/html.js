@@ -3,14 +3,9 @@ import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 
-import conf from '../../server/configure';
-
-const assetHost = (process.env.NODE_ENV === 'production') ? ''
-  : conf.get('SERVER:WEBPACK_DEV_URL');
-
 export default class Html extends Component {
   render() {
-    const { store, component, config } = this.props;
+    const { assets, store, component, config } = this.props;
     const preloadedState = store.getState();
     const content = component ? this.renderComponent(component, store) : '';
 
@@ -25,7 +20,7 @@ export default class Html extends Component {
           {head.meta.toComponent()}
           {head.link.toComponent()}
           {head.script.toComponent()}
-          <link rel="stylesheet" href={ `${assetHost}/static/style.css` } />
+          <link rel="stylesheet" href={ assets.main.css } />
           {/*
             Can't add script to Helmet in here (as we are already rendering <head>).
             And having script added to Helmet in App causes script to be loaded
@@ -45,7 +40,7 @@ export default class Html extends Component {
           <script
             dangerouslySetInnerHTML={{ __html: `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}` }}
           />
-          <script src={ `${assetHost}/static/bundle.js` } />
+          <script src={ assets.main.js } />
         </body>
       </html>
     );
@@ -63,5 +58,11 @@ export default class Html extends Component {
 Html.propTypes = {
   config: PropTypes.object,
   component: PropTypes.node,
-  store: PropTypes.object
+  store: PropTypes.object,
+  assets: PropTypes.shape({
+    main: PropTypes.shape({
+      js: PropTypes.string,
+      css: PropTypes.string
+    })
+  })
 };

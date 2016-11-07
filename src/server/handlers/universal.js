@@ -55,6 +55,9 @@ export const handleMatch = (req, res, error, redirectLocation, renderProps) => {
     // below, if you're using a catch-all route.
     const component = <RouterContext {...renderProps} />;
 
+    // TODO: load/import it elsewhere?
+    const assets = require('../../../webpack-assets.json');
+
     res.status(200);
     res.send('<!doctype html>\n' +
       renderToString(
@@ -62,6 +65,7 @@ export const handleMatch = (req, res, error, redirectLocation, renderProps) => {
           store={ store }
           component={ component }
           config={ config }
+          assets={ assets }
         />
       ));
   } else {
