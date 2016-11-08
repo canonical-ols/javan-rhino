@@ -5,7 +5,7 @@
   "description": "Front-end to Ubuntu Store Payments",
   "main": "index.js",
   "scripts": {
-    "start": "node ./scripts/start-dev.js",
+    "start": "node ./webpack/webpack-dev-server.js",
     "start-build": "node dist/server/",
     "build": "./scripts/build.sh",
     "lint": "eslint -c .eslintrc.js '**/*.js'",

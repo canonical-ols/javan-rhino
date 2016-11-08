@@ -13,7 +13,7 @@ const webpackDevUrl = url.parse(conf.get('SERVER:WEBPACK_DEV_URL'));
 const app = Express();
 const compiler = webpack(webpackConfig);
 
-app.use(webpackDevMiddleware(compiler, {
+const webpackMiddleware = webpackDevMiddleware(compiler, {
   contentBase: webpackDevUrl.href,
   quiet: false,
   hot: true,
@@ -25,7 +25,14 @@ app.use(webpackDevMiddleware(compiler, {
   },
   headers: { 'Access-Control-Allow-Origin': '*' },
   publicPath: webpackConfig.output.publicPath
-}));
+});
+
+// run dev express server once bundle is ready
+webpackMiddleware.waitUntilValid(() => {
+  require('../src/server');
+});
+
+app.use(webpackMiddleware);
 
 app.use(webpackHotMiddleware(compiler));
 

@@ -7,6 +7,8 @@ import conf from '../configure.js';
 import configureStore from '../../common/store/configureStore';
 import routes from '../../common/routes';
 
+import assets from '../../../webpack-assets.json';
+
 export const universal = (req, res) => {
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     handleMatch(req, res, error, redirectLocation, renderProps);
@@ -54,9 +56,6 @@ export const handleMatch = (req, res, error, redirectLocation, renderProps) => {
     // your "not found" component or route respectively, and send a 404 as
     // below, if you're using a catch-all route.
     const component = <RouterContext {...renderProps} />;
-
-    // TODO: load/import it elsewhere?
-    const assets = require('../../../webpack-assets.json');
 
     res.status(200);
     res.send('<!doctype html>\n' +
