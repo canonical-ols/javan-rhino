@@ -1,4 +1,25 @@
-import app from '../../src/server/server.js';
+// load server/server.js via proxyquire to stub webpack-assets.json
+import proxyquire from 'proxyquire';
+
+// stubbing webpack-assets.json imported by handlers/universal
+const webpackAssetsStub = {
+  main: { js: {}, css: {} },
+  // tell proxyquire not to try to load stubbed file
+  '@noCallThru': true,
+  // tell proxyquire this dependency can be loaded by nested modules
+  // WARNING: this disables require cache, which may cause side effects
+  // see: https://github.com/thlorenz/proxyquire#caveat
+  '@global': true
+};
+const stubDependencies = {
+  '../../../webpack-assets.json': webpackAssetsStub
+};
+
+const app = proxyquire(
+  '../../src/server/server.js',
+  stubDependencies
+).default;
+
 import conf from '../../src/server/configure.js';
 import nock from 'nock';
 import supertest from 'supertest';
