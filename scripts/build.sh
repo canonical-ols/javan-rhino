@@ -10,5 +10,5 @@ babel --out-dir=dist/settings settings --copy-files
 babel --out-dir=dist/webpack webpack --copy-files
 
 # Build application components
-webpack --verbose --colors --display-error-details --config webpack/build-config.js
+webpack --progress --verbose --colors --display-error-details --config webpack/build-config.js
 cp ./webpack-*.json dist/

@@ -8,7 +8,6 @@ const autoprefixer = require('autoprefixer');
 const sharedVars = require('../src/common/style/variables');
 
 
-
 module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: [
@@ -40,5 +39,10 @@ module.exports = {
   },
   postcss: function () {
     return [ vars({ variables: () => sharedVars }), autoprefixer ];
+  },
+  stats: {
+    colors: true,
+    chunks: false,
+    children: false
   }
 };
