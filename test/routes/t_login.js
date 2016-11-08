@@ -1,18 +1,18 @@
 // load server/server.js via proxyquire to stub webpack-assets.json
 import proxyquire from 'proxyquire';
 
-// stubbing webpack-assets.json imported by handlers/universal
-const webpackAssetsStub = {
-  main: { js: {}, css: {} },
-  // tell proxyquire not to try to load stubbed file
-  '@noCallThru': true,
-  // tell proxyquire this dependency can be loaded by nested modules
-  // WARNING: this disables require cache, which may cause side effects
-  // see: https://github.com/thlorenz/proxyquire#caveat
-  '@global': true
+// import login routes for testing
+import loginRoutes from '../../src/server/routes/login.js';
+
+const routesStub = {
+  login: loginRoutes,
+  api: () => {},
+  universal: () => {},
+  // tell proxyquire not to try to load stubbed module
+  '@noCallThru': true
 };
 const stubDependencies = {
-  '../../../webpack-assets.json': webpackAssetsStub
+  './routes/': routesStub
 };
 
 const app = proxyquire(
