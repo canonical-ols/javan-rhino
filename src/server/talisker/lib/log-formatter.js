@@ -1,4 +1,4 @@
-import winston from 'winston';
+import chalk from 'chalk';
 
 // slightly modified version of winston serializer to match talisker style
 // http://talisker.readthedocs.io/en/latest/logging.html#log-format
@@ -21,6 +21,7 @@ export const serialize = (obj, key) => {
     obj = 'false';
   }
 
+  // talisker specific substitutions: spaces, equals, doublequote
   if (key) {
     key = key
       .replace(/ /g, '_')
@@ -29,6 +30,7 @@ export const serialize = (obj, key) => {
   }
 
   if (typeof obj !== 'object') {
+    // talisker specific
     if (obj.split(' ').length > 1) {
       obj = `"${obj}"`;
     }
@@ -71,36 +73,11 @@ export const serialize = (obj, key) => {
   return msg;
 };
 
-const customLevels = {
-  levels: {
-    debug: 0,
-    info: 1
-  },
-  colors: {
-    debug: 'red',
-    info: 'blue'
-  }
+export default (options) => {
+  const meta = options.meta && Object.keys(options.meta).length ? serialize(options.meta) : '';
+  const message = options.message ? JSON.stringify(options.message) : '';
+  return `${chalk.magenta(options.timestamp())} ${chalk.yellow(options.level.toUpperCase())}`
+    + ` ${chalk.magenta(options.label)}`
+    + ` ${message}`
+    + ` ${meta}`.trim();
 };
-
-winston.addColors(customLevels.colors);
-
-winston.loggers.add('app', {
-  console: {
-    label: 'app',
-    levels: customLevels.levels,
-    colorize: true,
-    timestamp: function() {
-      return new Date().toISOString()
-        .replace(/T/, ' ');
-    },
-    formatter: function(options) {
-      return `${options.timestamp()} ${options.level.toUpperCase()} \
-${options.label} \
-"${(options.message ? options.message : '')}" \
-${(options.meta && Object.keys(options.meta).length ? serialize(options.meta) : '' )}`.trim();
-    },
-    stderrLevels: ['info']
-  }
-});
-
-export default winston;

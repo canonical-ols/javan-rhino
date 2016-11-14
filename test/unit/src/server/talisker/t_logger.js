@@ -1,8 +1,11 @@
+import chalk from 'chalk';
 import expect from 'expect';
 import sinon from 'sinon';
 import stdMocks from 'std-mocks';
+import winston from 'winston';
 
-import winston, { serialize } from '../../../../src/server/logger';
+import '../../../../../src/server/talisker/logger.js';
+import { serialize } from '../../../../../src/server/talisker/lib/log-formatter';
 
 /*eslint no-console: 'off' */
 describe('logger', () => {
@@ -18,6 +21,10 @@ describe('logger', () => {
         .toEqual('foo=bar, bar="baz qux"');
     });
 
+    it('should format values with dots', () => {
+      expect(serialize({ 'foo': 'x.y' })).toEqual('foo=x.y');
+    });
+
     it('should format keys with spaces', () => {
       expect(serialize({ 'foo bar': 'baz' })).toEqual('foo_bar=baz');
     });
@@ -26,6 +33,7 @@ describe('logger', () => {
       expect(serialize({ 'foo=bar': 'baz' })).toEqual('foobar=baz');
     });
 
+
     it('should format keys with equal sign', () => {
       expect(serialize({ '"foo"': 'bar' })).toEqual('foo=bar');
     });
@@ -33,8 +41,7 @@ describe('logger', () => {
 
   describe('app logger', () => {
 
-    const logger = winston.loggers.get('app');
-    const message = 'something happened';
+    const message = 'make logs "great" again';
     const tags = {
       foo: 'bar',
       baz: 'qux quux'
@@ -50,7 +57,7 @@ describe('logger', () => {
       });
 
       // log then capture stderr
-      logger.info(message, tags);
+      winston.info(message, tags);
       line = stdMocks.flush().stderr[0];
     });
 
@@ -61,7 +68,7 @@ describe('logger', () => {
 
     it('should log with correct format', () => {
       expect(line).toBe(
-        '1970-01-01 00:00:00.000Z INFO app "something happened" foo=bar, baz="qux quux"\n');
+        `${chalk.magenta('1970-01-01 00:00:00.000Z')} INFO app "make logs \\\"great\\\" again" foo=bar, baz="qux quux"\n`);
     });
 
     it('should log to stderr', () => {
@@ -69,19 +76,19 @@ describe('logger', () => {
     });
 
     it('should log with correct date format', () => {
-      expect(line).toMatch(/^1970-01-01 00:00:00.000Z/);
+      expect(line).toMatch(/1970-01-01 00:00:00.000Z/);
     });
 
     it('should include level in log', () => {
-      expect(line).toMatch(/ INFO /);
+      expect(line).toMatch(/INFO/);
     });
 
     it('should include logger label in log', () => {
-      expect(line).toMatch(/ app /);
+      expect(line).toMatch(/app/);
     });
 
     it('should include logged message, quoted', () => {
-      expect(line).toMatch(new RegExp(` "${message}"`));
+      expect(line).toMatch(new RegExp(/\"make logs \\\"great\\\" again\"/));
     });
 
     it('should include logged tags, logfmt style', () => {

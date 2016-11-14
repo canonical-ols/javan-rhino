@@ -5,11 +5,11 @@ const url = require('url');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware  = require('webpack-hot-middleware');
 
-const winston = require('../src/server/logger.js').default;
+const winston = require('winston');
+require('../src/server/talisker'); // TODO rename to talisker
 const webpackConfig = require('./dev-config');
 const conf = require('../src/server/configure');
 
-const logger = winston.loggers.get('app');
 const webpackDevUrl = url.parse(conf.get('SERVER:WEBPACK_DEV_URL'));
 
 const webpackApp = Express();
@@ -40,6 +40,6 @@ const webpackServer = webpackApp.listen(port, address, () => {
   const host = webpackServer.address().address;
   const port = webpackServer.address().port;
 
-  logger.info('WebPack development server listening on http://%s:%s', host, port);
+  winston.info('WebPack development server listening on http://%s:%s', host, port);
   require('../src/server');
 });
