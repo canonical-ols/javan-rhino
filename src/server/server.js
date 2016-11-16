@@ -11,7 +11,7 @@ import logging from './logging';
 
 const appUrl = url.parse(conf.get('UNIVERSAL:MU_URL'));
 const app = Express();
-const logger = logging.getLogger('app');
+const logger = logging.getLogger('express');
 
 app.use(expressWinston.logger({
   winstonInstance: logger
