@@ -77,13 +77,14 @@ export const serialize = (obj, key) => {
   return msg;
 };
 
+// all the colours
 export const formatter = (options) => {
   const name = options.meta.__LOGGER_NAME__;
   delete options.meta.__LOGGER_NAME__;
   const meta = options.meta && Object.keys(options.meta).length ? serialize(options.meta) : '';
   const message = options.message ? JSON.stringify(options.message) : '';
-  return `${chalk.magenta(options.timestamp())} ${chalk.yellow(options.level.toUpperCase())}`
+  return `${chalk.magenta(options.timestamp())} ${options.level.toUpperCase()}`
     + ` ${chalk.blue(name)}`
-    + ` ${message}`
-    + ` ${meta}`;
+    + ` ${chalk.yellow(message)}`
+    + ` ${chalk.cyan(meta)}`;
 };
