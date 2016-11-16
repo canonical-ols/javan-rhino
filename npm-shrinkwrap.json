@@ -205,7 +205,7 @@
       "version": "1.0.2"
     },
     "fbjs": {
-      "version": "0.8.5"
+      "version": "0.8.6"
     },
     "finalhandler": {
       "version": "0.5.0"
@@ -294,9 +294,6 @@
     },
     "ienoopen": {
       "version": "1.0.0"
-    },
-    "immutable": {
-      "version": "3.8.1"
     },
     "inherits": {
       "version": "2.0.1"
@@ -514,10 +511,10 @@
       "version": "2.1.7"
     },
     "react": {
-      "version": "15.3.2"
+      "version": "15.4.0"
     },
     "react-dom": {
-      "version": "15.3.2"
+      "version": "15.4.0"
     },
     "react-helmet": {
       "version": "3.2.2"
@@ -634,7 +631,7 @@
       "version": "3.1.2"
     },
     "ua-parser-js": {
-      "version": "0.7.11"
+      "version": "0.7.12"
     },
     "uid-safe": {
       "version": "2.1.3"
