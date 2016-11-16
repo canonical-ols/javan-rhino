@@ -70,6 +70,13 @@ var schema = {
 
     SERVER__OPENID__VERIFY_URL: {
       description: 'Please enter a SSO landing URL'
+    },
+
+    /**
+     * Sentry settings
+     */
+    SERVER__SENTRY_DSN: {
+      description: 'Please enter a Sentry DSN (containing public key and secret)'
     }
   }
 };

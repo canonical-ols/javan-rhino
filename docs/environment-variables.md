@@ -67,3 +67,12 @@ The URL of the service used to obtain [macaroon authorisation credentials](http:
 - **Example**: `http://127.0.0.1:3000/login/verify`
 
 The landing page to which users will be redirected to complete logging in to the application.
+
+## Sentry settings
+
+### SERVER__SENTRY_DSN
+- **Example**: `https://1234567890987654321:0987654321@sentry.ols.canonical.com/42`
+
+The Sentry DSN (containing both public key and secret) in a form of `https://[key]:[secret]@sentry.ols.canonical.com/[id]` that will be used by Raven to send error reports to Sentry.
+
+To get DSN key and secret check project settings at https://sentry.ols.canonical.com/

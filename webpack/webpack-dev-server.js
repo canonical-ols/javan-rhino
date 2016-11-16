@@ -11,10 +11,10 @@ const logging = require('../src/server/logging').default;
 
 const logger = logging.getLogger('webpack');
 const webpackDevUrl = url.parse(conf.get('SERVER:WEBPACK_DEV_URL'));
-const webpackApp = Express();
+const app = Express();
 const compiler = webpack(webpackConfig);
 
-webpackApp.use(webpackDevMiddleware(compiler, {
+const webpackMiddleware = webpackDevMiddleware(compiler, {
   contentBase: webpackDevUrl.href,
   quiet: false,
   hot: true,
@@ -26,18 +26,23 @@ webpackApp.use(webpackDevMiddleware(compiler, {
   },
   headers: { 'Access-Control-Allow-Origin': '*' },
   publicPath: webpackConfig.output.publicPath
-}));
+});
 
-webpackApp.use(webpackHotMiddleware(compiler));
-webpackApp.use(Express.static('public'));
+// run dev express server once bundle is ready
+webpackMiddleware.waitUntilValid(() => {
+  require('../src/server');
+});
+
+app.use(webpackMiddleware);
+app.use(webpackHotMiddleware(compiler));
+app.use(Express.static('public'));
 
 const port = webpackDevUrl.port;
 const address = webpackDevUrl.hostname;
 
-const webpackServer = webpackApp.listen(port, address, () => {
+const webpackServer = app.listen(port, address, () => {
   const host = webpackServer.address().address;
   const port = webpackServer.address().port;
 
   logger.info('WebPack development server listening on http://%s:%s', host, port);
-  require('../src/server');
 });
