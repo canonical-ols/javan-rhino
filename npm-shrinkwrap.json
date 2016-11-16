@@ -1482,6 +1482,33 @@
       "from": "express-session@1.14.1",
       "resolved": "https://registry.npmjs.org/express-session/-/express-session-1.14.1.tgz"
     },
+    "express-winston": {
+      "version": "2.0.0",
+      "from": "express-winston@latest",
+      "resolved": "https://registry.npmjs.org/express-winston/-/express-winston-2.0.0.tgz",
+      "dependencies": {
+        "ansi-styles": {
+          "version": "1.0.0",
+          "from": "ansi-styles@>=1.0.0 <1.1.0",
+          "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-1.0.0.tgz"
+        },
+        "chalk": {
+          "version": "0.4.0",
+          "from": "chalk@>=0.4.0 <0.5.0",
+          "resolved": "https://registry.npmjs.org/chalk/-/chalk-0.4.0.tgz"
+        },
+        "lodash": {
+          "version": "4.11.2",
+          "from": "lodash@>=4.11.1 <4.12.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.11.2.tgz"
+        },
+        "strip-ansi": {
+          "version": "0.1.1",
+          "from": "strip-ansi@>=0.1.0 <0.2.0",
+          "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-0.1.1.tgz"
+        }
+      }
+    },
     "extend": {
       "version": "3.0.0",
       "from": "extend@3.0.0",
@@ -2361,6 +2388,11 @@
       "version": "2.0.0",
       "from": "has-ansi@2.0.0",
       "resolved": "https://registry.npmjs.org/has-ansi/-/has-ansi-2.0.0.tgz"
+    },
+    "has-color": {
+      "version": "0.1.7",
+      "from": "has-color@>=0.1.0 <0.2.0",
+      "resolved": "https://registry.npmjs.org/has-color/-/has-color-0.1.7.tgz"
     },
     "has-flag": {
       "version": "1.0.0",

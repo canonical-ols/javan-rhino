@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import stdMocks from 'std-mocks';
 
 import logging from '../../../../../src/server/logging';
-import { serialize } from '../../../../../src/server/loggging/lib/log-formatter';
+import { serialize } from '../../../../../src/server/logging/lib/log-formatter';
 
 /*eslint no-console: 'off' */
 describe('logger', () => {

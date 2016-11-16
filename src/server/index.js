@@ -2,7 +2,7 @@ require('babel-register');
 require('css-modules-require-hook/preset');
 
 const logging = require('./logging/').default;
-const logger = logging.getLogger('app');
+const logger = logging.getLogger('express');
 
 
 const conf = require('./configure');

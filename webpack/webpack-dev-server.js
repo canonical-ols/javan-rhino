@@ -62,7 +62,8 @@ webpackApp.use(webpackDevMiddleware(compiler, {
         if (obj.assets && obj.assets.length > 0) {
 
           obj.assets.forEach((asset) => {
-            options.log(asset.name, {
+            options.log('stats', {
+              asset: asset.name,
               size: prettyBytes(asset.size)
             });
           });

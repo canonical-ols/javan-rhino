@@ -1,22 +1,21 @@
 import Express from 'express';
-import fs from 'fs';
 import helmet from 'helmet';
-import morgan from 'morgan';
-import path from 'path';
 import session from 'express-session';
 import url from 'url';
+import expressWinston from 'express-winston';
 
 import * as routes from './routes/';
 import conf from './configure';
 import sessionConfig from './helpers/session';
+import logging from './logging';
 
-const logsPath = conf.get('SERVER:LOGS_PATH') || path.join(__dirname, '../../logs/');
-const accessLogStream = fs.createWriteStream(
-  path.join(logsPath, 'access.log'),
-  { flags: 'a' }
-);
 const appUrl = url.parse(conf.get('UNIVERSAL:MU_URL'));
 const app = Express();
+const logger = logging.getLogger('app');
+
+app.use(expressWinston.logger({
+  winstonInstance: logger
+}));
 
 // config
 if (app.get('env') === 'production') {
@@ -28,7 +27,6 @@ app.locals.port = conf.get('SERVER:PORT') || appUrl.port;
 
 // middleware
 app.use(helmet());
-app.use(morgan('combined', { stream: accessLogStream }));
 app.use(session(sessionConfig(conf)));
 app.use(Express.static(__dirname + '/../public'));
 
