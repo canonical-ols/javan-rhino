@@ -1,40 +1,42 @@
-import chalk from 'chalk';
+import stripAnsi from 'strip-ansi';
 import expect from 'expect';
 import sinon from 'sinon';
 import stdMocks from 'std-mocks';
-import winston from 'winston';
 
-import '../../../../../src/server/talisker/logger.js';
-import { serialize } from '../../../../../src/server/talisker/lib/log-formatter';
+import logging from '../../../../../src/server/logging';
+import { serialize } from '../../../../../src/server/loggging/lib/log-formatter';
 
 /*eslint no-console: 'off' */
 describe('logger', () => {
   describe('serializer', () => {
 
-    it('should format simple tags', () => {
-      expect(serialize({ foo: 'bar', baz: 'qux quux' }))
-        .toEqual('foo=bar, baz="qux quux"');
+    it('should not quote simple tags', () => {
+      expect(serialize({ foo: 'bar' }))
+        .toEqual('foo=bar');
     });
 
-    it('should format values with spaces', () => {
+    it('should quote values with spaces', () => {
       expect(serialize({ foo: 'bar', bar: 'baz qux' }))
         .toEqual('foo=bar, bar="baz qux"');
     });
 
-    it('should format values with dots', () => {
+    it('should handle values containing periods', () => {
       expect(serialize({ 'foo': 'x.y' })).toEqual('foo=x.y');
     });
 
-    it('should format keys with spaces', () => {
+    it('should reformat keys containing spaces', () => {
       expect(serialize({ 'foo bar': 'baz' })).toEqual('foo_bar=baz');
     });
 
-    it('should format keys with equal sign', () => {
-      expect(serialize({ 'foo=bar': 'baz' })).toEqual('foobar=baz');
+    it('should reformat keys containing equal sign', () => {
+      expect(serialize({ 'foo=bar': 'baz' })).toEqual('foo_bar=baz');
     });
 
+    it('should reformat keys containing commas', () => {
+      expect(serialize({ 'foo,bar': 'baz' })).toEqual('foo_bar=baz');
+    });
 
-    it('should format keys with equal sign', () => {
+    it('should reformat keys with quotes', () => {
       expect(serialize({ '"foo"': 'bar' })).toEqual('foo=bar');
     });
   });
@@ -57,8 +59,10 @@ describe('logger', () => {
       });
 
       // log then capture stderr
-      winston.info(message, tags);
+      const logger = logging.getLogger('test123');
+      logger.info(message, tags);
       line = stdMocks.flush().stderr[0];
+      line = stripAnsi(line);
     });
 
     afterEach(() => {
@@ -68,7 +72,7 @@ describe('logger', () => {
 
     it('should log with correct format', () => {
       expect(line).toBe(
-        `${chalk.magenta('1970-01-01 00:00:00.000Z')} INFO app "make logs \\\"great\\\" again" foo=bar, baz="qux quux"\n`);
+        '1970-01-01 00:00:00.000Z INFO test123 "make logs \\\"great\\\" again" foo=bar, baz="qux quux"\n');
     });
 
     it('should log to stderr', () => {
@@ -80,20 +84,40 @@ describe('logger', () => {
     });
 
     it('should include level in log', () => {
-      expect(line).toMatch(/INFO/);
+      expect(line).toMatch(/ INFO /);
     });
 
-    it('should include logger label in log', () => {
-      expect(line).toMatch(/app/);
+    it('should include logger name in log', () => {
+      expect(line).toMatch(/ test123 /);
     });
 
     it('should include logged message, quoted', () => {
-      expect(line).toMatch(new RegExp(/\"make logs \\\"great\\\" again\"/));
+      expect(line).toMatch(new RegExp(/ \"make logs \\\"great\\\" again\" /));
     });
 
     it('should include logged tags, logfmt style', () => {
-      expect(line).toMatch(/foo=bar/);
+      expect(line).toMatch(/ foo=bar/);
     });
+
+    describe('errors', () => {
+      beforeEach(() => {
+        const logger = logging.getLogger('test324');
+        try {
+          throw new Error('this thing failed');
+        } catch (e) {
+          logger.info(e);
+        }
+        line = stdMocks.flush().stderr[0];
+        line = stripAnsi(line);
+      });
+      it('should log error message to meta/tags', () => {
+        expect(line).toMatch(/message="this thing failed"/);
+      });
+      it('should log stacktrace to meta/tags', () => {
+        expect(line).toMatch(/stack="Error: this thing failed/);
+      });
+    });
+
 
   });
 });

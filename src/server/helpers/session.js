@@ -1,7 +1,8 @@
 import session from 'express-session';
 import ConnectMemcached from 'connect-memcached';
+import logging from '../logging/';
 
-import winston from 'winston';
+const logger = logging.getLogger('session');
 
 const MemcachedStore = ConnectMemcached(session);
 const SESSION_DEFAULTS = {
@@ -21,19 +22,19 @@ export default function sessionStorageConfig(config) {
   }
 
   if(config.get('SESSION_SECRET')) {
-    winston.info('Starting with configured session secret');
+    logger.info('Starting with configured session secret');
     settings.secret = config.get('SESSION_SECRET');
   } else {
     if(process.env.NODE_ENV === 'production') {
       throw new Error('Refusing to start without SESSION_SECRET environment variable');
     }
 
-    winston.info('Starting with development default session secret');
+    logger.info('Starting with development default session secret');
     settings.secret = 'dont-use-me-in-production';
   }
 
   if(config.get('SESSION_MEMCACHED_HOST') && config.get('SESSION_MEMCACHED_SECRET')) {
-    winston.info('Starting with memcached session store');
+    logging.info('Starting with memcached session store');
     settings.store = new MemcachedStore({
       hosts: config.get('SESSION_MEMCACHED_HOST').split(','),
       secret: config.get('SESSION_MEMCACHED_SECRET')

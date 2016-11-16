@@ -1,5 +1,10 @@
 import chalk from 'chalk';
 
+export const timestamp = () => {
+  return new Date().toISOString()
+    .replace(/T/, ' ');
+};
+
 // slightly modified version of winston serializer to match talisker style
 // http://talisker.readthedocs.io/en/latest/logging.html#log-format
 export const serialize = (obj, key) => {
@@ -24,14 +29,13 @@ export const serialize = (obj, key) => {
   // talisker specific substitutions: spaces, equals, doublequote
   if (key) {
     key = key
-      .replace(/ /g, '_')
-      .replace(/=/g, '')
+      .replace(/[ =,]/g, '_')
       .replace(/"/g, '');
   }
 
   if (typeof obj !== 'object') {
     // talisker specific
-    if (obj.split(' ').length > 1) {
+    if (obj.split && obj.split(' ').length > 1) {
       obj = `"${obj}"`;
     }
     return key ? key + '=' + obj : obj;
@@ -73,11 +77,13 @@ export const serialize = (obj, key) => {
   return msg;
 };
 
-export default (options) => {
+export const formatter = (options) => {
+  const name = options.meta.__LOGGER_NAME__;
+  delete options.meta.__LOGGER_NAME__;
   const meta = options.meta && Object.keys(options.meta).length ? serialize(options.meta) : '';
   const message = options.message ? JSON.stringify(options.message) : '';
   return `${chalk.magenta(options.timestamp())} ${chalk.yellow(options.level.toUpperCase())}`
-    + ` ${chalk.magenta(options.label)}`
+    + ` ${chalk.blue(name)}`
     + ` ${message}`
-    + ` ${meta}`.trim();
+    + ` ${meta}`;
 };

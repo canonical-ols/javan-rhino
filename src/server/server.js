@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import path from 'path';
 import session from 'express-session';
 import url from 'url';
-import winston from 'winston';
 
 import * as routes from './routes/';
 import conf from './configure';
@@ -22,7 +21,6 @@ const app = Express();
 // config
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
-  winston.info('trust proxy set');
 }
 // FIXME sstewart 07-Nov-2016 simplify config to host and port
 app.locals.host = conf.get('SERVER:HOST') || appUrl.hostname;
