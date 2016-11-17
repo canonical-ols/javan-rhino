@@ -1,7 +1,7 @@
 module.exports = {
   UNIVERSAL: {
     MU_URL: 'https://my.ubuntu.com',
-    STRIPE_PUBLISHABLE_KEY: 'pk_test_daBepdMharNP0PTQYoyQJPjH'
+    STRIPE_PUBLISHABLE_KEY: 'pk_live_A5e9FwxhMJu4LZwr94Pk7uIP'
   },
   SERVER: {
     HOST: '0.0.0.0',
