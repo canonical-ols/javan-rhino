@@ -16,7 +16,6 @@ const appUrl = url.parse(conf.get('UNIVERSAL:MU_URL'));
 const app = Express();
 const logger = logging.getLogger('express');
 
-
 // config
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
@@ -26,7 +25,9 @@ app.locals.host = conf.get('SERVER:HOST') || appUrl.hostname;
 app.locals.port = conf.get('SERVER:PORT') || appUrl.port;
 
 // middleware
-app.use(expressWinston.logger({ winstonInstance: logger }));
+app.use(expressWinston.logger({
+  winstonInstance: logger
+}));
 app.use(raven.middleware.express.requestHandler(conf.get('SERVER:SENTRY_DSN')));
 app.use(helmet());
 app.use(session(sessionConfig(conf)));

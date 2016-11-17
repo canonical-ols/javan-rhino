@@ -1,25 +1,28 @@
+import fs from 'fs';
 import winston from 'winston';
+import 'winston-daily-rotate-file';
 
 import { formatter, timestamp } from './lib/log-formatter.js';
 
 // configure the 2 transports, share with all loggers, label from config ...
 // add bug that label should be set in logger
 
-// path for debug logs
 const debug = process.env.DEBUGLOG;
 
 // console transport for info level messages, sent to stderr
 const transports = [
   new winston.transports.Console({
+    colorize: true,
+    formatter: formatter,
+    handleExceptions: true,
+    humanReadableUnhandledException: true,
     level: 'info',
     stderrLevels: ['info'],
-    timestamp: timestamp,
-    formatter: formatter,
-    handleExceptions: true
+    timestamp: timestamp
   })
 ];
 
-// our default logger settings
+// default logger settings
 const loggerDefaults = {
   emitErrors: false,
   exitOnError: false,
@@ -27,30 +30,37 @@ const loggerDefaults = {
     info: 0,
     debug: 1
   },
+  rewriters: [ idRewriter ],
   transports: transports,
-  rewriters: [ idRewriter ]
 };
 
-// set up the default logger on winston, so we can log before any application
-// specific loggers are set up
 winston.configure({
   ...loggerDefaults,
-  id: 'winston'
+  id: 'root'
 });
 
 if (debug) {
-  // TODO test if can write to file
-  // TODO overwrite this file every 24hrs
-  // winston.info('enabling debug log', { 'path': debug });
-  // winston.info('could not enable debug log, could not write to path');
-  transports.push(
-    winston.transports.File, {
-      level: 'debug',
-      timestamp: timestamp,
+  fs.access(debug, fs.constants.R_OK | fs.constants.W_OK, (err) => {
+    if (err) {
+      return winston.info('could not enable debug log, could not write to path', {
+        path: debug
+      });
+    }
+    // TODO daily rotating log transport
+    const transport = new winston.transports.File({
+      filename: debug,
       formatter: formatter,
-      maxFiles: 0,
-      filename: debug
+      json: false,
+      level: 'debug',
+      maxFiles: 1,
+      maxsize: 1e+8, // 100MB
+      tailable: true,
+      timestamp: timestamp
     });
+    winston.add(transport, null, true);
+    winston.info('enabling debug log', { path: debug });
+    transports.push(transport);
+  });
 }
 
 export function idRewriter (level, msg, meta, logger) {
