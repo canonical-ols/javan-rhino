@@ -10,11 +10,10 @@ Environment='SESSION_SECRET={{ session_secret }}'
 Environment='SERVER__LOGS_PATH={{ logs_path }}'
 Environment='SESSION_MEMCACHED_HOST={{ cache_hosts | join(",") }}'
 Environment='SESSION_MEMCACHED_SECRET={{ memcache_session_secret }}'
-Environment='SERVER__PORT=8000'
+Environment='SENTRY_DSN={{ sentry_dsn }}'
 WorkingDirectory={{ working_dir }}
 User={{ user }}
-Environment='DEPLOY_ENV={{ environment }}'
-ExecStart=/usr/bin/npm run start-build
+ExecStart=/usr/bin/npm run start-build -- --env=env/{{ environment }}.env
 Restart=on-failure
 RestartSec=15 5
 

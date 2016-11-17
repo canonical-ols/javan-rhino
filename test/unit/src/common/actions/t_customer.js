@@ -13,7 +13,6 @@ import {
 import * as ActionTypes from '../../../../../src/common/actions/customer';
 
 const MU_URL = conf.get('UNIVERSAL:MU_URL');
-
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 
