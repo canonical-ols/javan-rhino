@@ -4,7 +4,7 @@ import conf from '../configure.js';
 
 const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
 
-const client = new raven.Client(conf.get('SERVER:SENTRY_DSN'));
+const client = new raven.Client(conf.get('SENTRY_DSN'));
 
 export const customers = (req, res) => {
   const auth = req.session.authorization;
