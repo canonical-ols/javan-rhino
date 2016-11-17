@@ -24,6 +24,16 @@ var schema = {
       description: 'Please enter a path for log location',
     },
 
+    UNIVERSAL__MU_URL: {
+      description: 'Please enter a base URL for site',
+      default: 'http://localhost:3000'
+    },
+
+    SERVER__WEBPACK_DEV_URL: {
+      description: 'Please enter a WebPack dev server URL',
+      default: 'http://localhost:3001'
+    },
+
     /**
      * Environment settings
      */
@@ -34,19 +44,15 @@ var schema = {
       default: 'development',
     },
 
-    DEPLOY_ENV: {
-      description: 'Please enter a DEPLOY_ENV setting (development/staging/production)',
-      pattern: /development|staging|production/,
-      message: 'NODE_ENV must be "development", "staging" or "production"',
-      default: 'development',
-    },
-
     /**
      * Session storage settings
      */
     SESSION_SECRET: {
-      description: 'Please enter session secret',
-      default: 'dont-use-me-in-prod'
+      description: 'Please enter session secret'
+    },
+
+    SERVER__COOKIE__SECURE: {
+      description: 'Please enter a setting for secure cookies'
     },
 
     SESSION_MEMCACHED_HOST: {
@@ -61,21 +67,37 @@ var schema = {
      * SSO settings
      */
     SERVER__UBUNTU_SSO_URL: {
-      description: 'Please enter a URL for the SSO service'
+      description: 'Please enter a URL for the SSO service',
+      default: 'https://login.staging.ubuntu.com'
     },
 
     SERVER__UBUNTU_SCA_URL: {
-      description: 'Please enter a URL for the macaroon service'
+      description: 'Please enter a URL for the macaroon service',
+      default: 'https://myapps.developer.staging.ubuntu.com'
     },
 
     SERVER__OPENID__VERIFY_URL: {
-      description: 'Please enter a SSO landing URL'
+      description: 'Please enter a SSO landing URL',
+      default: 'http://localhost:3000/login/verify'
+    },
+
+    SERVER__OPENID__TEAMS: {
+      description: 'Please enter a JSON string of openid teams',
+      default: '"[\"ubuntuone-hackers\"]"'
+    },
+
+    /**
+     * Stripe settings
+     */
+    UNIVERSAL__STRIPE_PUBLISHABLE_KEY: {
+      description: 'Please enter a Stripe publishable key',
+      default: 'pk_test_daBepdMharNP0PTQYoyQJPjH'
     },
 
     /**
      * Sentry settings
      */
-    SERVER__SENTRY_DSN: {
+    SENTRY_DSN: {
       description: 'Please enter a Sentry DSN (containing public key and secret)'
     }
   }

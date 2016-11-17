@@ -28,7 +28,7 @@ app.locals.port = conf.get('SERVER:PORT') || appUrl.port;
 app.use(expressWinston.logger({
   winstonInstance: logger
 }));
-app.use(raven.middleware.express.requestHandler(conf.get('SERVER:SENTRY_DSN')));
+app.use(raven.middleware.express.requestHandler(conf.get('SENTRY_DSN')));
 app.use(helmet());
 app.use(session(sessionConfig(conf)));
 app.use(Express.static(__dirname + '/../public', { maxAge: '365d' }));
