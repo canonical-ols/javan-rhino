@@ -1,6 +1,5 @@
 import fs from 'fs';
 import winston from 'winston';
-import 'winston-daily-rotate-file';
 
 import { formatter, timestamp } from './lib/log-formatter.js';
 
