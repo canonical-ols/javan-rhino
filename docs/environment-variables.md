@@ -70,7 +70,7 @@ The landing page to which users will be redirected to complete logging in to the
 
 ## Sentry settings
 
-### SERVER__SENTRY_DSN
+### SENTRY_DSN
 - **Example**: `https://1234567890987654321:0987654321@sentry.ols.canonical.com/42`
 
 The Sentry DSN (containing both public key and secret) in a form of `https://[key]:[secret]@sentry.ols.canonical.com/[id]` that will be used by Raven to send error reports to Sentry.

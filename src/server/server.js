@@ -20,7 +20,7 @@ const accessLogStream = fs.createWriteStream(
 
 const app = Express();
 
-app.use(raven.middleware.express.requestHandler(conf.get('SERVER:SENTRY_DSN')));
+app.use(raven.middleware.express.requestHandler(conf.get('SENTRY_DSN')));
 
 app.use(helmet());
 app.use(morgan('combined', { stream: accessLogStream }));
@@ -37,7 +37,7 @@ app.use('/', routes.login);
 app.use('/api', routes.api);
 app.use('/', routes.universal);
 
-app.use(raven.middleware.express.errorHandler(conf.get('SERVER:SENTRY_DSN')));
+app.use(raven.middleware.express.errorHandler(conf.get('SENTRY_DSN')));
 
 if (process.env.NODE_ENV === 'development') {
   // Do "hot-reloading" of express stuff on the server

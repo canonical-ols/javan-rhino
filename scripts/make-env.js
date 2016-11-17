@@ -75,7 +75,7 @@ var schema = {
     /**
      * Sentry settings
      */
-    SERVER__SENTRY_DSN: {
+    SENTRY_DSN: {
       description: 'Please enter a Sentry DSN (containing public key and secret)'
     }
   }
