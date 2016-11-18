@@ -14,19 +14,21 @@ import { clearRequireCache } from './helpers/hot-load';
 
 const appUrl = url.parse(conf.get('UNIVERSAL:MU_URL'));
 const app = Express();
-const logger = logging.getLogger('express');
+const accessLogger = logging.getLogger('express-access');
+const errorLogger = logging.getLogger('express-error');
 
 // config
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
 }
-// FIXME sstewart 07-Nov-2016 simplify config to host and port
+// FIXME sstewart 07-Nov-2016 simplify config for host and port
 app.locals.host = conf.get('SERVER:HOST') || appUrl.hostname;
 app.locals.port = conf.get('SERVER:PORT') || appUrl.port;
 
 // middleware
 app.use(expressWinston.logger({
-  winstonInstance: logger
+  winstonInstance: accessLogger,
+  level: 'info'
 }));
 app.use(raven.middleware.express.requestHandler(conf.get('SENTRY_DSN')));
 app.use(helmet());
@@ -37,6 +39,13 @@ app.use(Express.static(__dirname + '/../public', { maxAge: '365d' }));
 app.use('/', routes.login);
 app.use('/api', routes.api);
 app.use('/', routes.universal);
+
+// FIXME sstewart 18-Nov-16 won't ever log because of
+// https://github.com/canonical-ols/javan-rhino/issues/210
+app.use(expressWinston.errorLogger({
+  winstonInstance: errorLogger,
+  level: 'info'
+}));
 
 if (process.env.NODE_ENV === 'development') {
   // Do "hot-reloading" of express stuff on the server
