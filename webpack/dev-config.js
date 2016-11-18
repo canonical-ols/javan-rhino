@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const AssetsPlugin = require('assets-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const vars = require('postcss-simple-vars');
 const autoprefixer = require('autoprefixer');
@@ -26,7 +27,8 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('style.css', { allChunks: true })
+    new ExtractTextPlugin('style.css', { allChunks: true }),
+    new AssetsPlugin()
   ],
   module: {
     loaders: require('./loaders-config.js')

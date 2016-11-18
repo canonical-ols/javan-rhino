@@ -5,9 +5,18 @@ import { renderToString } from 'react-dom/server';
 import Html from '../helpers/html';
 import conf from '../configure.js';
 import configureStore from '../../common/store/configureStore';
-import routes from '../../common/routes';
+
+let routes = require('../../common/routes').default;
+
+import assets from '../../../webpack-assets.json';
 
 export const universal = (req, res) => {
+  if (process.env.NODE_ENV === 'development') {
+    // Hot-reload application files when changes
+    // made when running as a development site
+    routes = require('../../common/routes').default;
+  }
+
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     handleMatch(req, res, error, redirectLocation, renderProps);
   });
@@ -62,6 +71,7 @@ export const handleMatch = (req, res, error, redirectLocation, renderProps) => {
           store={ store }
           component={ component }
           config={ config }
+          assets={ assets }
         />
       ));
   } else {

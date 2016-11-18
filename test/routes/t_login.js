@@ -1,4 +1,25 @@
-import app from '../../src/server/server.js';
+// load server/server.js via proxyquire to stub webpack-assets.json
+import proxyquire from 'proxyquire';
+
+// import login routes for testing
+import loginRoutes from '../../src/server/routes/login.js';
+
+const routesStub = {
+  login: loginRoutes,
+  api: () => {},
+  universal: () => {},
+  // tell proxyquire not to try to load stubbed module
+  '@noCallThru': true
+};
+const stubDependencies = {
+  './routes/': routesStub
+};
+
+const app = proxyquire(
+  '../../src/server/server.js',
+  stubDependencies
+).default;
+
 import conf from '../../src/server/configure.js';
 import nock from 'nock';
 import supertest from 'supertest';

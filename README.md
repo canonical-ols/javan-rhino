@@ -11,15 +11,6 @@ If you have nvm istalled (https://github.com/creationix/nvm) simple do
 in project root and you'll be switched to the correct version of node
 for this project.
 
-## Session Secret
-Required by [express-session](https://github.com/expressjs/session#secret).
-
-To set this up temporarily, run the following on your command-line:
-```
-export SESSION_SECRET="its a secret"
-```
-To set it up permanently, add the same line to your `.bashrc` file in your home directory.
-
 ## npm packages:
 
     $ npm install
@@ -28,26 +19,29 @@ To set it up permanently, add the same line to your `.bashrc` file in your home 
 
     $ npm start
 
-    > javan-rhino@1.0.0 start /Users/cprov/Canonical/ols/javan-rhino
-    > NODE_ENV=development concurrently --kill-others "npm run watch-client" "node server/"
+# About .env files
+The My Ubuntu application uses .env files to facilitate environment variable configuration.
 
-    [0]
-    [0] > javan-rhino@1.0.0 watch-client /Users/cprov/Canonical/ols/javan-rhino
-    [0] > node webpack/webpack-dev-server.js
-    [0]
-    [0] 31 Aug 16:56:25 - 🚧  WebPack development server listening on http://127.0.0.1:3001 🚧
-    [1] 31 Aug 16:56:25 - 🚂  Express server listening on http://127.0.0.1:3000 🚂
-    ...
+## Writing .env files
+A utility is bundled for writing your own .env files:
 
-# Prod/Staging Environment Vars
+    $ npm run make-env
 
-```
-NODE_ENV='production'
-DEPLOY_ENV=['staging'|'production']
-SESSION_SECRET
-SESSION_MEMCACHED_HOST
-SESSION_MEMCACHED_SECRET
-```
+You will be prompted for config settings for things such as the host and port for the application to run on, and settings for session storage.
+
+Settings will be written to file named `.env`. Renaming this file with a memorable name is recommended.
+
+## Reading .env files
+Supply a path for an .env file to use using the ENV environment variable:
+
+	$ npm start -- --env=env/staging.env
+
+## Sharing .env files
+Have you created your own .env file that is useful for a common development situation? Share it on IRC!
+
+## Environment variable definitions
+See [Environment Variables](docs/environment-variables.md).
+
 
 # Why javan-rhino?
 

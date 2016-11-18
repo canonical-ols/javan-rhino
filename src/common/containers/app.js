@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import Notification from '../components/notification';
-import Oyez from '../components/oyez';
 import styles from './app.css';
 
 export class App extends Component {
@@ -30,14 +29,14 @@ export class App extends Component {
           ]}
         />
         <Header identity={ identity }/>
-        { oyez && oyez.map((oy, i) => {
-          return <Oyez key={i} { ...oy}/>;
-        })}
-        {notifications.notification &&
-          <div className={ styles.staticNotification }>
+        <div className={ styles.staticNotifications }>
+          { oyez && oyez.map((oy, i) => {
+            return <Notification key={i} { ...oy}/>;
+          })}
+          {notifications.notification &&
             <Notification { ...notifications.notification } />
-          </div>
-        }
+          }
+        </div>
         { this.props.children }
         <Footer />
       </div>

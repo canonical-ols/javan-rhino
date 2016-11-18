@@ -14,11 +14,9 @@ describe('<Html /> helper', () => {
     store = mockStore();
 
     assets = {
-      styles: {
-        main: 'example.css'
-      },
-      javascript: {
-        main: 'example.js'
+      main: {
+        css: 'example.css',
+        js: 'example.js'
       }
     };
   });

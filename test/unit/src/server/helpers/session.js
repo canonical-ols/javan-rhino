@@ -55,18 +55,29 @@ describe('The session helper', () => {
     });
   });
 
-  context('when session secret config is not set', () => {
+  context('when NODE_ENV is production', () => {
     let mockConfig = {};
+    let env = process.env.NODE_ENV;
+    mockConfig.get = sinon.stub();
 
     beforeEach(() => {
-      mockConfig.get = sinon.stub();
-      mockConfig.get.withArgs('SESSION_MEMCACHED_HOST').returns(null);
-      mockConfig.get.withArgs('SESSION_MEMCACHED_SECRET').returns(null);
-      mockConfig.get.withArgs('SESSION_SECRET').returns(null);
+      process.env.NODE_ENV = 'production';
     });
 
-    it('should throw an error', () => {
-      expect(sessionStorageConfig.bind(undefined, mockConfig)).toThrow();
+    afterEach(() => {
+      process.env.NODE_ENV = env;
+    });
+
+    context('when session secret config is not set', () => {
+      beforeEach(() => {
+        mockConfig.get.withArgs('SESSION_MEMCACHED_HOST').returns(null);
+        mockConfig.get.withArgs('SESSION_MEMCACHED_SECRET').returns(null);
+        mockConfig.get.withArgs('SESSION_SECRET').returns(null);
+      });
+
+      it('should throw an error', () => {
+        expect(sessionStorageConfig.bind(undefined, mockConfig)).toThrow();
+      });
     });
   });
 });
