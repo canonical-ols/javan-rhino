@@ -5,6 +5,7 @@ import proxyquire from 'proxyquire';
 import loginRoutes from '../../src/server/routes/login.js';
 
 const routesStub = {
+  status: () => {},
   login: loginRoutes,
   api: () => {},
   universal: () => {},
