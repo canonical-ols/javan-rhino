@@ -66,6 +66,7 @@ describe('logger', () => {
     });
 
     afterEach(() => {
+      logging.closeLogger('test123');
       stdMocks.restore();
       clock.restore();
     });
@@ -98,51 +99,64 @@ describe('logger', () => {
     it('should include logged tags, logfmt style', () => {
       expect(line).toMatch(/ foo=bar/);
     });
-
-    describe('errors', () => {
-      beforeEach(() => {
-        const logger = logging.getLogger('test324');
-        try {
-          throw new Error('this thing failed');
-        } catch (e) {
-          logger.info(e);
-        }
-        line = stdMocks.flush().stderr[0];
-        line = stripAnsi(line);
-      });
-
-      it('should log error message to meta/tags', () => {
-        expect(line).toMatch(/message="this thing failed"/);
-      });
-
-      it('should log stacktrace to meta/tags', () => {
-        expect(line).toMatch(/stack="Error: this thing failed/);
-      });
-    });
-
-    describe('container', () => {
-
-      beforeEach(() => {
-        logging.getLogger('foo');
-        logging.addLogger('bar');
-        logging.getLogger('bar');
-        logging.getLogger('baz');
-        logging.closeLogger('baz');
-      });
-
-
-      it('should create logger instance through get', () => {
-        expect(logging.hasLogger('foo')).toExist();
-      });
-
-      it('should create logger instance through add', () => {
-        expect(logging.hasLogger('bar')).toExist();
-      });
-
-      it('should close and delete logger', () => {
-        expect(logging.hasLogger('baz')).toNotExist();
-      });
-    });
-
   });
+
+  describe('errors', () => {
+    let line;
+
+    beforeEach(() => {
+      stdMocks.use({
+        stdout: false
+      });
+
+      const logger = logging.getLogger('test324');
+      try {
+        throw new Error('this thing failed');
+      } catch (e) {
+        logger.info(e);
+        logger.debug(e);
+      }
+      line = stdMocks.flush().stderr[0];
+      line = stripAnsi(line);
+    });
+
+
+    afterEach(() => {
+      stdMocks.restore();
+      logging.closeLogger('test324');
+    });
+
+    it('should log error message to meta/tags', () => {
+      expect(line).toMatch(/message="this thing failed"/);
+    });
+
+    it('should log stacktrace to meta/tags', () => {
+      expect(line).toMatch(/stack="Error: this thing failed/);
+    });
+  });
+
+  describe('container', () => {
+
+    beforeEach(() => {
+      logging.getLogger('foo');
+      logging.addLogger('bar');
+      logging.getLogger('bar');
+      logging.getLogger('baz');
+      logging.closeLogger('baz');
+    });
+
+
+    it('should create logger instance through get', () => {
+      expect(logging.hasLogger('foo')).toExist();
+    });
+
+    it('should create logger instance through add', () => {
+      expect(logging.hasLogger('bar')).toExist();
+    });
+
+    it('should close and delete logger', () => {
+      expect(logging.hasLogger('baz')).toNotExist();
+    });
+  });
+
 });

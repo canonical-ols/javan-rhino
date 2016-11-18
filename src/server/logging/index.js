@@ -1,4 +1,3 @@
-import fs from 'fs';
 import winston from 'winston';
 
 import { formatter, timestamp } from './lib/log-formatter.js';
@@ -13,8 +12,6 @@ const transports = [
   new winston.transports.Console({
     colorize: true,
     formatter: formatter,
-    handleExceptions: true,
-    humanReadableUnhandledException: true,
     level: 'info',
     stderrLevels: ['info'],
     timestamp: timestamp
@@ -23,7 +20,6 @@ const transports = [
 
 // default logger settings
 const loggerDefaults = {
-  emitErrors: false,
   exitOnError: false,
   levels: {
     info: 0,
@@ -39,27 +35,33 @@ winston.configure({
 });
 
 if (debug) {
-  fs.access(debug, fs.constants.R_OK | fs.constants.W_OK, (err) => {
+  enableDebugLogger(debug, formatter, timestamp, winston);
+}
+
+export function enableDebugLogger(filename, formatter, timestamp, winston) {
+  // TODO daily rotating log transport
+  const transport = new winston.transports.File({
+    filename: filename,
+    formatter: formatter,
+    json: false,
+    level: 'debug',
+    maxFiles: 1,
+    maxsize: 1e+8, // 100MB
+    tailable: true,
+    timestamp: timestamp
+  });
+  winston.add(transport, null, true);
+  // winston file transport will try and open file (maxRetries) and if it fails,
+  // throw an error
+  winston.info('enabling debug log', { path: debug }, (err) => {
     if (err) {
-      return winston.info('could not enable debug log, could not write to path', {
-        path: debug
+      winston.info('could not enable debug log', {
+        path: debug,
+        error: err
       });
     }
-    // TODO daily rotating log transport
-    const transport = new winston.transports.File({
-      filename: debug,
-      formatter: formatter,
-      json: false,
-      level: 'debug',
-      maxFiles: 1,
-      maxsize: 1e+8, // 100MB
-      tailable: true,
-      timestamp: timestamp
-    });
-    winston.add(transport, null, true);
-    winston.info('enabling debug log', { path: debug });
-    transports.push(transport);
   });
+  transports.push(transport);
 }
 
 export function idRewriter (level, msg, meta, logger) {
