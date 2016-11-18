@@ -511,13 +511,13 @@
       "version": "2.1.7"
     },
     "react": {
-      "version": "15.4.0"
+      "version": "15.3.2"
     },
     "react-addons-test-utils": {
-      "version": "15.4.0"
+      "version": "15.3.2"
     },
     "react-dom": {
-      "version": "15.4.0"
+      "version": "15.3.2"
     },
     "react-helmet": {
       "version": "3.2.2"
