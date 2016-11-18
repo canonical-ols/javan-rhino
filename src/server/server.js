@@ -11,6 +11,7 @@ import * as routes from './routes/';
 import conf from './configure';
 import sessionConfig from './helpers/session';
 import { clearRequireCache } from './helpers/hot-load';
+import setRevisionHeader from './middleware/set-revision-header.js';
 
 const logsPath = conf.get('SERVER:LOGS_PATH') || path.join(__dirname, '../../logs/');
 const accessLogStream = fs.createWriteStream(
@@ -20,6 +21,7 @@ const accessLogStream = fs.createWriteStream(
 
 const app = Express();
 
+app.use(setRevisionHeader);
 app.use(raven.middleware.express.requestHandler(conf.get('SENTRY_DSN')));
 
 app.use(helmet());
