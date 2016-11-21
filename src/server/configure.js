@@ -1,6 +1,6 @@
 const nconf = require('nconf');
 
-let envFile = 'env/development.env';
+let envFile = 'environments/development.env';
 if (nconf.get('env')) {
   envFile = nconf.get('env');
 }

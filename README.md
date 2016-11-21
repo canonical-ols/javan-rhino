@@ -34,7 +34,7 @@ Settings will be written to file named `.env`. Renaming this file with a memorab
 ## Reading .env files
 Supply a path for an .env file to use using the ENV environment variable:
 
-	$ npm start -- --env=env/staging.env
+	$ npm start -- --env=environments/staging.env
 
 ## Sharing .env files
 Have you created your own .env file that is useful for a common development situation? Share it on IRC!
