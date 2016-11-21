@@ -29,6 +29,7 @@ DEPLOY_ENV ?= devel
 DISTDIR = dist
 DIST = $(DISTDIR)/.done
 GIT_HEAD_HASH = $(shell git rev-parse HEAD)
+BUILDBRANCH ?= staging
 
 export INTERFACE_PATH
 export LAYER_PATH
@@ -79,8 +80,6 @@ deploy: build
 
 
 # Targets for building, committing and pushing charm builds to a git repo
-
-$(GIT_CHARMREPODIR) git-build: BUILDBRANCH ?= staging
 
 check-git-build-vars:
 ifndef BUILDREPO
