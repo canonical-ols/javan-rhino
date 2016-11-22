@@ -1,13 +1,16 @@
+const path = require('path');
 const nconf = require('nconf');
-
-let envFile = 'environments/development.env';
-if (nconf.get('env')) {
-  envFile = nconf.get('env');
-}
+const dotenv = require('dotenv');
 
 nconf.argv();
 
-require('dotenv').config({ path: envFile });
+let envFile = 'environments/development.env';
+
+if (nconf.get('env')) {
+  envFile = path.resolve('./', nconf.get('env'));
+}
+
+dotenv.config({ path: envFile });
 
 nconf.env({
   separator: '__'
