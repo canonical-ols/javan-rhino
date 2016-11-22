@@ -11,13 +11,13 @@ import conf from './configure';
 import sessionConfig from './helpers/session';
 import logging from './logging';
 import { clearRequireCache } from './helpers/hot-load';
+import setRevisionHeader from './middleware/set-revision-header.js';
 
 const appUrl = url.parse(conf.get('UNIVERSAL:MU_URL'));
 const app = Express();
 const accessLogger = logging.getLogger('express-access');
 const errorLogger = logging.getLogger('express-error');
 
-// config
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
 }
@@ -26,6 +26,7 @@ app.locals.host = conf.get('SERVER:HOST') || appUrl.hostname;
 app.locals.port = conf.get('SERVER:PORT') || appUrl.port;
 
 // middleware
+app.use(setRevisionHeader);
 app.use(raven.middleware.express.requestHandler(conf.get('SENTRY_DSN')));
 app.use(expressWinston.logger({
   winstonInstance: accessLogger,
