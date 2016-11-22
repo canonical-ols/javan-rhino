@@ -17,11 +17,6 @@ export function sendStripeToken(token) {
 }
 
 export function sendStripeTokenSuccess(tosAccepted) {
-  // TODO:
-  // if tosAccepted (latest_tos_accepted from JSON is false) is an edge case
-  // that should be logged to sentry once we have it set up
-  // https://github.com/canonical-ols/javan-rhino/issues/151
-  // https://github.com/canonical-ols/javan-rhino/issues/184
   return (dispatch) => {
     dispatch({
       type: SEND_STRIPE_TOKEN_SUCCESS,
