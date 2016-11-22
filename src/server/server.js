@@ -30,7 +30,6 @@ app.use(expressWinston.logger({
   winstonInstance: accessLogger,
   level: 'info'
 }));
-app.use(raven.middleware.express.requestHandler(conf.get('SENTRY_DSN')));
 app.use(helmet());
 app.use(session(sessionConfig(conf)));
 app.use(Express.static(__dirname + '/../public', { maxAge: '365d' }));
@@ -42,6 +41,7 @@ app.use('/', routes.universal);
 
 // FIXME sstewart 18-Nov-16 won't ever log because of
 // https://github.com/canonical-ols/javan-rhino/issues/210
+app.use(raven.middleware.express.requestHandler(conf.get('SENTRY_DSN')));
 app.use(expressWinston.errorLogger({
   winstonInstance: errorLogger,
   level: 'info'
