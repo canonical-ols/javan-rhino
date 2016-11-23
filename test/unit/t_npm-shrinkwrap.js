@@ -40,7 +40,7 @@ function deepFind(haystack, needle) {
     return true;
   }
 
-  const keys = Object.keys(haystack)
+  const keys = Object.keys(haystack);
 
   let result = false;
 
