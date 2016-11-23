@@ -19,7 +19,9 @@ describe('deepFind', () => {
     foo: 'abc',
     bar: 'def',
     baz: {
-      qux: 'ghi'
+      dependencies: {
+        qux: 'ghi'
+      }
     }
   };
   it('should find keys', () => {
