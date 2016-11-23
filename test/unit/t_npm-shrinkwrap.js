@@ -15,7 +15,7 @@ describe('npm-shrinkwrap', () => {
 describe('deepFind', () => {
   const fixture = {
     foo: 'abc',
-    bar: 'def'
+    bar: 'def',
     baz: {
       qux: 'ghi'
     }
