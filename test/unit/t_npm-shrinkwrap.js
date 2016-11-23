@@ -5,10 +5,12 @@ import shrinkwrap from '../../npm-shrinkwrap.json';
 describe('npm-shrinkwrap', () => {
   describe('modules', () => {
     it('should not include fsevents', () => {
-      expect(deepFind(shrinkwrap.dependencies, 'fsevents')).toBe(false);
+      expect(deepFind(shrinkwrap.dependencies, 'fsevents'))
+        .toNotExist('fsevents is macOS only, and should not be shrinkwrapped.');
     });
     it('should not include resolved fields', () => {
-      expect(deepFind(shrinkwrap.dependencies, 'resolved')).toBe(false);
+      expect(deepFind(shrinkwrap.dependencies, 'resolved'))
+        .toNotExist('use shonkwrap to strip resolved fields from shrinkwrap.');
     });
   });
 });
@@ -45,7 +47,6 @@ function deepFind(haystack, needle) {
     let sheaf = haystack[key];
 
     if (sheaf.dependencies) {
-      console.log(sheaf.dependencies[needle]);
       result = deepFind(sheaf.dependencies, needle);
 
       if (result) break;
