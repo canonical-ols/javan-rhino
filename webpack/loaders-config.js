@@ -5,8 +5,7 @@ module.exports = [
     test: /\.js$/i,
     exclude: /node_modules/,
     loaders: ['babel'],
-  },
-  {
+  }, {
     test: /\.css$/i,
     loader: ExtractTextPlugin.extract(
       [
@@ -25,10 +24,12 @@ module.exports = [
         'postcss-loader'
       ].join('!')
     )
-  },
-  {
+  }, {
     test: /\.svg$/i,
     loader: 'file-loader?name=icons/[hash].[ext]'
+  }, {
+    test: /\.json$/i,
+    loader: 'json'
   }
 ];
 
