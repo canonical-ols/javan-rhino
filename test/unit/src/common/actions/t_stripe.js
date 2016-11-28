@@ -174,18 +174,11 @@ describe('stripe actions', () => {
       });
 
       it('dispatches CREATE_STRIPE_TOKEN_FAILURE action', () => {
-        const expectedActions = [
-          { type: ActionTypes.CREATE_STRIPE_TOKEN, formCardData },
-          { type: SHOW_NOTIFICATION,
-            notification: {
-              actionText: 'Dismiss',
-              message: response.error.message,
-              status: 'error'
-            }
-          },
-          { type: ActionTypes.CREATE_STRIPE_TOKEN_FAILURE, error: response.error }
-        ];
-        expect(store.getActions()).toEqual(expectedActions);
+        expect(store.getActions()).toHaveActionOfType(ActionTypes.CREATE_STRIPE_TOKEN_FAILURE);
+      });
+
+      it('dispatches SHOW_NOTIFICATION action', () => {
+        expect(store.getActions()).toHaveActionOfType(SHOW_NOTIFICATION);
       });
     });
 
