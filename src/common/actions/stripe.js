@@ -31,7 +31,7 @@ export function createStripeTokenSuccess(token) {
 export function createStripeTokenFailure(error) {
   return (dispatch) => {
     dispatch(showNotification({
-      message: error,
+      message: error.message,
       status: 'error',
       actionText: 'Dismiss'
     }));
