@@ -81,11 +81,13 @@ describe('stripe actions', () => {
     });
 
     it('should create actions to handle failure response', () => {
-      const error = 'foo';
+      const error = {
+        message: 'foo'
+      };
       const expectedActions = [{
         type: SHOW_NOTIFICATION,
         notification: {
-          message: error,
+          message: error.message,
           status: 'error',
           actionText: 'Dismiss'
         }
@@ -177,7 +179,7 @@ describe('stripe actions', () => {
           { type: SHOW_NOTIFICATION,
             notification: {
               actionText: 'Dismiss',
-              message: response.error,
+              message: response.error.message,
               status: 'error'
             }
           },
