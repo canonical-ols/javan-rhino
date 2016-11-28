@@ -4,6 +4,8 @@ import thunk from 'redux-thunk';
 import { stub } from 'sinon';
 import proxyquire from 'proxyquire';
 
+import { SHOW_NOTIFICATION } from '../../../../../src/common/actions/notifications';
+
 // load stripe actions module through proxyquire to stub postStripeToken calls
 let postStripeTokenStub = stub();
 
@@ -74,14 +76,30 @@ describe('stripe actions', () => {
 
   context('createStripeTokenFailure', () => {
 
-    it('should create an action to recieve failure response', () => {
-      const error = { type: 'card_error' };
-      const expectedAction = {
+    it('should return a thunk', () => {
+      expect(createStripeTokenFailure()).toBeA(Function);
+    });
+
+    it('should create actions to handle failure response', () => {
+      const error = 'foo';
+      const expectedActions = [{
+        type: SHOW_NOTIFICATION,
+        notification: {
+          message: error,
+          status: 'error',
+          actionText: 'Dismiss'
+        }
+      }, {
         type: ActionTypes.CREATE_STRIPE_TOKEN_FAILURE,
         error
-      };
+      }];
 
-      expect(createStripeTokenFailure(error)).toEqual(expectedAction);
+      const thunk = createStripeTokenFailure(error);
+      const store = mockStore();
+
+      thunk(store.dispatch);
+
+      expect(store.getActions()).toEqual(expectedActions);
     });
 
   });
@@ -156,6 +174,13 @@ describe('stripe actions', () => {
       it('dispatches CREATE_STRIPE_TOKEN_FAILURE action', () => {
         const expectedActions = [
           { type: ActionTypes.CREATE_STRIPE_TOKEN, formCardData },
+          { type: SHOW_NOTIFICATION,
+            notification: {
+              actionText: 'Dismiss',
+              message: response.error,
+              status: 'error'
+            }
+          },
           { type: ActionTypes.CREATE_STRIPE_TOKEN_FAILURE, error: response.error }
         ];
         expect(store.getActions()).toEqual(expectedActions);

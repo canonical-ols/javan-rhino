@@ -35,6 +35,11 @@ export function createStripeTokenFailure(error) {
       status: 'error',
       actionText: 'Dismiss'
     }));
+
+    dispatch({
+      type: CREATE_STRIPE_TOKEN_FAILURE,
+      error
+    });
   };
 }
 
