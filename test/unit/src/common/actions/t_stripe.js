@@ -76,15 +76,15 @@ describe('stripe actions', () => {
 
   context('createStripeTokenFailure', () => {
 
-    it('should return a thunk', () => {
-      expect(createStripeTokenFailure()).toBeA(Function);
-    });
+    let error;
+    let expectedActions;
+    let store;
 
-    it('should create actions to handle failure response', () => {
-      const error = {
+    beforeEach(() => {
+      error = {
         message: 'foo'
       };
-      const expectedActions = [{
+      expectedActions = [{
         type: SHOW_NOTIFICATION,
         notification: {
           message: error.message,
@@ -95,9 +95,15 @@ describe('stripe actions', () => {
         type: ActionTypes.CREATE_STRIPE_TOKEN_FAILURE,
         error
       }];
-      const store = mockStore();
-
+      store = mockStore();
       store.dispatch(createStripeTokenFailure(error));
+    });
+
+    it('should return a thunk', () => {
+      expect(createStripeTokenFailure()).toBeA(Function);
+    });
+
+    it('should create actions to handle failure response', () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
 
