@@ -95,12 +95,9 @@ describe('stripe actions', () => {
         type: ActionTypes.CREATE_STRIPE_TOKEN_FAILURE,
         error
       }];
-
-      const thunk = createStripeTokenFailure(error);
       const store = mockStore();
 
-      thunk(store.dispatch);
-
+      store.dispatch(createStripeTokenFailure(error));
       expect(store.getActions()).toEqual(expectedActions);
     });
 
