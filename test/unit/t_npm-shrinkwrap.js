@@ -5,11 +5,11 @@ import shrinkwrap from '../../npm-shrinkwrap.json';
 describe('npm-shrinkwrap', () => {
   describe('modules', () => {
     it('should not include fsevents', () => {
-      expect(deepFind(shrinkwrap.dependencies, 'fsevents'))
+      expect(deepFind(shrinkwrap, 'fsevents'))
         .toNotExist('fsevents is macOS only, and should not be shrinkwrapped.');
     });
     it('should not include resolved fields', () => {
-      expect(deepFind(shrinkwrap.dependencies, 'resolved'))
+      expect(deepFind(shrinkwrap, 'resolved'))
         .toNotExist('use shonkwrap to strip resolved fields from shrinkwrap.');
     });
   });
@@ -19,8 +19,8 @@ describe('deepFind', () => {
     foo: 'abc',
     bar: 'def',
     baz: {
-      dependencies: {
-        qux: 'ghi'
+      qux: {
+        quux: 'ghi'
       }
     }
   };
@@ -31,7 +31,7 @@ describe('deepFind', () => {
     expect(deepFind(fixture, 'abc')).toBe(false);
   });
   it('should find nested keys', () => {
-    expect(deepFind(fixture, 'qux')).toBe(true);
+    expect(deepFind(fixture, 'quux')).toBe(true);
   });
 });
 
@@ -48,12 +48,11 @@ function deepFind(haystack, needle) {
     let key = keys[i];
     let sheaf = haystack[key];
 
-    if (sheaf.dependencies) {
-      result = deepFind(sheaf.dependencies, needle);
-
-      if (result) break;
-
+    if (sheaf instanceof Object) {
+      result = deepFind(sheaf, needle);
     }
+
+    if (result) break;
   }
 
   return result;
