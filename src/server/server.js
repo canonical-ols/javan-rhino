@@ -32,13 +32,20 @@ if (statsdDsn) {
       logger.debug(err);
     }
   });
+  app.set('metrics', metrics);
   app.use(responseTime((req, res, time) => {
-    const stat = (req.method + req.url).toLowerCase()
-      .replace(/[:\.]/g, '')
-      .replace(/\//g, '_');
-    logger.info(stat, time);
-    metrics.timing(stat, time);
+    const logger = app.get('logger');
+    const metrics = app.get('metrics');
+    if (metrics) {
+      const stat = (req.method + req.url).toLowerCase()
+        .replace(/[:\.]/g, '')
+        .replace(/\//g, '_');
+      logger.info(stat, time);
+      metrics.timing(stat, time);
+    }
   }));
+} else {
+  logger.debug('STATSD_DSN not set.');
 }
 
 if (app.get('env') === 'production') {
