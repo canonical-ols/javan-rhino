@@ -18,31 +18,28 @@ const app = Express();
 const logger = logging.getLogger('express');
 const accessLogger = logging.getLogger('express-access');
 const errorLogger = logging.getLogger('express-error');
-const logger = logging.getLogger('express');
 
 app.set('logger', logger);
 
 const statsdDsn = conf.get('STATSD_DSN');
 
-const { hostname, port, path } = url.parse(statsdDsn);
+if (statsdDsn) {
+  const { hostname, port, path } = url.parse(statsdDsn);
 
-const metrics = new lynx(hostname, port, {
-  scope: path,
-  on_error: (err) => {
-    logger.debug(err);
-  }
-});
-
-const statsdDsn = conf.get('STATSD_DSN');
-
-const { hostname, port, path } = url.parse(statsdDsn);
-
-const metrics = new lynx(hostname, port, {
-  scope: path,
-  on_error: (err) => {
-    logger.debug(err);
-  }
-});
+  const metrics = new lynx(hostname, port, {
+    scope: path,
+    on_error: (err) => {
+      logger.debug(err);
+    }
+  });
+  app.use(responseTime((req, res, time) => {
+    const stat = (req.method + req.url).toLowerCase()
+      .replace(/[:\.]/g, '')
+      .replace(/\//g, '_');
+    logger.info(stat, time);
+    metrics.timing(stat, time);
+  }));
+}
 
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
@@ -61,13 +58,6 @@ app.use(expressWinston.logger({
 app.use(helmet());
 app.use(session(sessionConfig(conf)));
 app.use(Express.static(__dirname + '/../public', { maxAge: '365d' }));
-app.use(responseTime((req, res, time) => {
-  const stat = (req.method + req.url).toLowerCase()
-    .replace(/[:\.]/g, '')
-    .replace(/\//g, '_');
-  logger.info(stat, time);
-  metrics.timing(stat, time);
-}));
 
 // routes
 app.use('/', routes.login);
