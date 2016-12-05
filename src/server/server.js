@@ -33,6 +33,17 @@ const metrics = new lynx(hostname, port, {
   }
 });
 
+const statsdDsn = conf.get('STATSD_DSN');
+
+const { hostname, port, path } = url.parse(statsdDsn);
+
+const metrics = new lynx(hostname, port, {
+  scope: path,
+  on_error: (err) => {
+    logger.debug(err);
+  }
+});
+
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
 }
