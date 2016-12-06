@@ -880,9 +880,6 @@
     "react-dom": {
       "version": "15.4.0"
     },
-    "react-ga": {
-      "version": "2.1.2"
-    },
     "react-helmet": {
       "version": "3.2.2"
     },
