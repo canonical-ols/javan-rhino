@@ -14,14 +14,12 @@ const component = (
 );
 
 history.listen((location) => {
-  if ('undefined' !== typeof window) {
-    const ga = window.ga;
-    if (ga) {
-      ga('send', {
-        hitType: 'pageview',
-        page: location.pathname
-      });
-    }
+  const ga = window.ga;
+  if (ga) {
+    ga('send', {
+      hitType: 'pageview',
+      page: location.pathname
+    });
   }
 });
 
