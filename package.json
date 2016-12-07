@@ -65,7 +65,7 @@
     "redux-logger": "^2.7.0",
     "redux-thunk": "^2.1.0",
     "request": "^2.79.0",
-    "response-time": "https://registry.npmjs.org/response-time/-/response-time-2.3.2.tgz",
+    "response-time": "^2.3.2",
     "winston": "^2.3.0"
   },
   "devDependencies": {
