@@ -1,7 +1,7 @@
-import webdriver, { Builder } from 'selenium-webdriver';
+import { Builder } from 'selenium-webdriver';
 import expect from 'expect';
 
-import conf from '../../server/configure.js';
+import conf from '../../src/server/configure.js';
 import Util from './utils';
 
 const driver = new Builder().forBrowser('phantomjs').build();
