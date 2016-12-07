@@ -13,6 +13,16 @@ const component = (
   <Router routes={routes} history={history} />
 );
 
+history.listen((location) => {
+  const ga = window.ga;
+  if (ga) {
+    ga('send', {
+      hitType: 'pageview',
+      page: location.pathname
+    });
+  }
+});
+
 export default class Root extends Component {
   render() {
     return (
