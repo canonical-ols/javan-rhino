@@ -5,9 +5,6 @@
     "accepts": {
       "version": "1.3.3"
     },
-    "adm-zip": {
-      "version": "0.4.7"
-    },
     "alphanum-sort": {
       "version": "1.0.2"
     },
@@ -98,9 +95,6 @@
     "boom": {
       "version": "2.10.1"
     },
-    "brace-expansion": {
-      "version": "1.1.6"
-    },
     "browserslist": {
       "version": "1.4.0"
     },
@@ -163,9 +157,6 @@
     },
     "commander": {
       "version": "2.9.0"
-    },
-    "concat-map": {
-      "version": "0.0.1"
     },
     "connect": {
       "version": "3.4.1",
@@ -375,9 +366,6 @@
     "fresh": {
       "version": "0.3.0"
     },
-    "fs.realpath": {
-      "version": "1.0.0"
-    },
     "function-bind": {
       "version": "1.1.0"
     },
@@ -397,9 +385,6 @@
           "version": "1.0.0"
         }
       }
-    },
-    "glob": {
-      "version": "7.1.1"
     },
     "glob-to-regexp": {
       "version": "0.1.0"
@@ -484,9 +469,6 @@
     },
     "indexes-of": {
       "version": "1.0.1"
-    },
-    "inflight": {
-      "version": "1.0.6"
     },
     "inherits": {
       "version": "2.0.3"
@@ -658,9 +640,6 @@
     "min-document": {
       "version": "2.19.0"
     },
-    "minimatch": {
-      "version": "3.0.3"
-    },
     "minimist": {
       "version": "0.0.8"
     },
@@ -715,23 +694,14 @@
     "on-headers": {
       "version": "1.0.1"
     },
-    "once": {
-      "version": "1.4.0"
-    },
     "openid": {
       "version": "2.0.6"
     },
     "os-locale": {
       "version": "1.4.0"
     },
-    "os-tmpdir": {
-      "version": "1.0.2"
-    },
     "parseurl": {
       "version": "1.3.1"
-    },
-    "path-is-absolute": {
-      "version": "1.0.1"
     },
     "path-to-regexp": {
       "version": "0.1.7"
@@ -996,9 +966,6 @@
     "retry": {
       "version": "0.6.0"
     },
-    "rimraf": {
-      "version": "2.5.4"
-    },
     "sax": {
       "version": "1.2.1"
     },
@@ -1007,9 +974,6 @@
     },
     "seekout": {
       "version": "1.0.2"
-    },
-    "selenium-webdriver": {
-      "version": "3.0.1"
     },
     "send": {
       "version": "0.14.1"
@@ -1078,9 +1042,6 @@
     },
     "symbol-observable": {
       "version": "1.0.4"
-    },
-    "tmp": {
-      "version": "0.0.30"
     },
     "to-fast-properties": {
       "version": "1.0.2"
@@ -1160,17 +1121,8 @@
     "wrap-ansi": {
       "version": "2.0.0"
     },
-    "wrappy": {
-      "version": "1.0.2"
-    },
     "x-xss-protection": {
       "version": "1.0.0"
-    },
-    "xml2js": {
-      "version": "0.4.17"
-    },
-    "xmlbuilder": {
-      "version": "4.2.1"
     },
     "xtend": {
       "version": "4.0.1"

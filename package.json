@@ -64,7 +64,6 @@
     "redux-logger": "^2.7.0",
     "redux-thunk": "^2.1.0",
     "request": "^2.79.0",
-    "selenium-webdriver": "^3.0.1",
     "winston": "^2.3.0"
   },
   "devDependencies": {
