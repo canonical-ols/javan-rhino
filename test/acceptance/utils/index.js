@@ -4,6 +4,6 @@ const By = webdriver.By;
 
 module.exports = (driver) => ({
   findElement: function(value) {
-    return driver.findElement(By.xpath(`//*[@data-qa='${ value }']`));
+    return driver.findElement(By.css(`[data-qa='${ value }']`));
   }
 });

@@ -43,6 +43,8 @@ Have you created your own .env file that is useful for a common development situ
 See [Environment Variables](docs/environment-variables.md).
 
 
-# Why javan-rhino?
+## Acceptance testing
 
-Win a prize if you figure it out!
+```
+brew install chromedriver geckodriver
+```

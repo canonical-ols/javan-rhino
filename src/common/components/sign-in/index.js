@@ -9,7 +9,7 @@ export default class SignIn extends Component {
     if (user.isAuthenticated) {
       link = <div className={ style.link }>
         { user.name &&
-          <span className={ style.username }>{ user.name }</span>
+          <span data-qa="sign-in:username" className={ style.username }>{ user.name }</span>
         }
         { ' ' }
         <a data-qa="sign-in:logout" href="/logout">Logout</a>
