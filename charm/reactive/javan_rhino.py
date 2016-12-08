@@ -22,6 +22,7 @@ def configure(cache):
     session_secret = hookenv.config('session_secret')
     memcache_session_secret = hookenv.config('memcache_session_secret')
     sentry_dsn = hookenv.config('sentry_dsn')
+    statsd_dsn = hookenv.config('statsd_dsn')
     if session_secret and memcache_session_secret:
         render(
             source='javan-rhino_systemd.j2',
@@ -35,6 +36,7 @@ def configure(cache):
                 'cache_hosts': cache.memcache_hosts(),
                 'memcache_session_secret': memcache_session_secret,
                 'sentry_dsn': sentry_dsn,
+                'statsd_dsn': statsd_dsn,
             })
         check_port('ols.{}.express'.format(service_name()), port())
         set_state('service.configured')
