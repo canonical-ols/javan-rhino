@@ -28,7 +28,7 @@ export default function(driver) {
     successThanks: byData('customer-success:thanks')
   };
 
-  // XXX remove this 
+  // avoid sendkeys spilling out into next input, and give us somethign to assert
   function untilElementValueIs(element, entry) {
     return driver.findElement(element).getAttribute('value')
       .then((value) => {
@@ -55,43 +55,43 @@ export default function(driver) {
     },
     enterCardNumber: function(number) {
       driver.findElement(elements.cardNumber).sendKeys(number);
-      return driver.wait(untilElementValueIs(elements.cardNumber, number));
+      return driver.wait(untilElementValueIs(elements.cardNumber, number), 1000);
     },
     enterCardExpiryDate: function(mmyy = expiryDate()) {
       driver.findElement(elements.expiryDate).sendKeys(mmyy);
-      return driver.wait(untilElementValueIs(elements.expiryDate, mmyy));
+      return driver.wait(untilElementValueIs(elements.expiryDate, mmyy), 1000);
     },
     enterCardSecurityNumber: function(cvc) {
       driver.findElement(elements.securityNumber).sendKeys(cvc);
-      return driver.wait(untilElementValueIs(elements.securityNumber, cvc));
+      return driver.wait(untilElementValueIs(elements.securityNumber, cvc), 1000);
     },
     enterAddressName: function(fullname) {
       driver.findElement(elements.addressFullName).sendKeys(fullname);
-      return driver.wait(untilElementValueIs(elements.addressFullName, fullname));
+      return driver.wait(untilElementValueIs(elements.addressFullName, fullname), 1000);
     },
     enterAddressLine1: function(line) {
       driver.findElement(elements.addressLine1).sendKeys(line);
-      return driver.wait(untilElementValueIs(elements.addressLine1, line));
+      return driver.wait(untilElementValueIs(elements.addressLine1, line), 1000);
     },
     enterAddressLine2: function(line) {
       driver.findElement(elements.addressLine2).sendKeys(line);
-      return driver.wait(untilElementValueIs(elements.addressLine2, line));
+      return driver.wait(untilElementValueIs(elements.addressLine2, line), 1000);
     },
     enterAddressState: function(state) {
       driver.findElement(elements.addressState).sendKeys(state);
-      return driver.wait(untilElementValueIs(elements.addressState, state));
+      return driver.wait(untilElementValueIs(elements.addressState, state), 1000);
     },
     enterAddressCity: function(city) {
       driver.findElement(elements.addressCity).sendKeys(city);
-      return driver.wait(untilElementValueIs(elements.addressCity, city));
+      return driver.wait(untilElementValueIs(elements.addressCity, city), 1000);
     },
     enterAddressPostcode: function(postcode) {
       driver.findElement(elements.addressPostcode).sendKeys(postcode);
-      return driver.wait(untilElementValueIs(elements.addressPostcode, postcode));
+      return driver.wait(untilElementValueIs(elements.addressPostcode, postcode), 1000);
     },
     enterAddressPhone: function(number) {
       driver.findElement(elements.addressPhone).sendKeys(number);
-      return driver.wait(untilElementValueIs(elements.addressPhone, number));
+      return driver.wait(untilElementValueIs(elements.addressPhone, number), 1000);
     },
     selectAddressCountry: function(code = 'GB') {
       return driver.findElement(

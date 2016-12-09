@@ -5,7 +5,7 @@ import expect from 'expect';
 import PaymentPage from './pages/payment.js';
 
 const driver = new Builder()
-  .forBrowser('phantomjs')
+  .forBrowser('chrome')
   .build();
 
 const page = PaymentPage(driver);
@@ -34,14 +34,32 @@ test.describe('authenticated session', () => {
     expect( yield page.enterCardSecurityNumber('123')).toBe(true);
   });
 
-  test.it('should allow entering security number', function() {
-    page.enterAddressName('Acceptance Test User');
-    page.enterAddressLine1('Webdriver Lane');
-    page.enterAddressState('Testing');
-    page.enterAddressCity('Testington-upon-sea');
-    page.enterAddressPostcode('WD1 0AA');
-    page.selectAddressCountry();
-    page.acceptTerms();
+  test.it('should allow entering full name', function*() {
+    expect( yield page.enterAddressName('Acceptance Test User')).toBe(true);
+  });
+
+  test.it('should allow entering address', function*() {
+    expect( yield page.enterAddressLine1('Webdriver Lane')).toBe(true);
+  });
+
+  test.it('should allow entering state', function*() {
+    expect( yield page.enterAddressState('Testing') ).toBe(true);
+  });
+
+  test.it('should allow entering city', function*() {
+    expect( yield page.enterAddressCity('Testington-upon-sea')).toBe(true);
+  });
+
+  test.it('should allow entering postcode', function*() {
+    expect( yield page.enterAddressPostcode('WD1 0AA')).toBe(true);
+  });
+
+  test.it('should allow selecting country', function*() {
+    expect( yield page.selectAddressCountry()).toBe(null);
+  });
+
+  test.it('should allow accepting terms', function*() {
+    expect( yield page.acceptTerms()).toBe(null);
   });
 
   test.it('should successfully submit', function*() {
