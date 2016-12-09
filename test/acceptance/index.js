@@ -1,57 +1,53 @@
-import webdriver, { Builder } from 'selenium-webdriver';
+import { Builder } from 'selenium-webdriver';
+import test from 'selenium-webdriver/testing';
 import expect from 'expect';
 
-import conf from '../../src/server/configure.js';
-import Util from './utils';
-const By = webdriver.By;
-const until = webdriver.until;
+import PaymentPage from './pages/payment.js';
 
 const driver = new Builder()
-  .forBrowser('chrome')
+  .forBrowser('phantomjs')
   .build();
 
-const util = Util(driver);
-const MU_URL = conf.get('UNIVERSAL:MU_URL');
+const page = PaymentPage(driver);
 
-// ask the browser to open a page
 // TODO assumes server is running :)
 
-describe('sign in', () => {
+test.describe('authenticated session', () => {
 
-  before(() => driver.navigate().to(MU_URL));
+  test.before(() => page.login());
 
-  after(() => driver.quit());
+  test.after(() => driver.quit());
 
-  it('should allow user to login', function*() {
-    const rpConfirmSelector = '[data-qa-id=\'rp_confirm_login\']';
-
-    driver.findElement(byData('sign-in:login')).click();
-    driver.wait(until.elementLocated(By.id('id_email')));
-    driver.findElement(By.id('id_email'))
-      .sendKeys(process.env.TEST_USER_EMAIL);
-    driver.findElement(By.id('id_password'))
-      .sendKeys(process.env.TEST_USER_PASSWORD);
-    driver.findElement(By.css('[data-qa-id=\'login_button\']')).click();
-
-    // Ubuntu SSO
-    driver.wait(until.elementLocated(By.css(rpConfirmSelector)));
-    driver.findElement(By.css(rpConfirmSelector)).click();
-
-    // MU
-    expect( yield driver.wait(until.titleContains('my.ubuntu.com'))).toBe(true);
+  test.it('should have test account username', function*() {
+    expect( yield page.getUsername() ).toBe('MU STAGING TEST USER');
   });
 
-  it('should have test account username', function*() {
-    expect(yield driver.findElement(byData('sign-in:username'))
-      .getText()).toBe('MU STAGING TEST USER');
+  test.it('should allow entering card number', function*() {
+    expect( yield page.enterCardNumber('4242424242424242')).toBe(true);
   });
 
-  it('should have logout button', function*() {
-    expect(yield driver.findElement(byData('sign-in:logout'))).toExist();
+  test.it('should allow entering expiry date', function*() {
+    expect( yield page.enterCardExpiryDate()).toBe(true);
+  });
+
+  test.it('should allow entering security number', function*() {
+    expect( yield page.enterCardSecurityNumber('123')).toBe(true);
+  });
+
+  test.it('should allow entering security number', function() {
+    page.enterAddressName('Acceptance Test User');
+    page.enterAddressLine1('Webdriver Lane');
+    page.enterAddressState('Testing');
+    page.enterAddressCity('Testington-upon-sea');
+    page.enterAddressPostcode('WD1 0AA');
+    page.selectAddressCountry();
+    page.acceptTerms();
+  });
+
+  test.it('should successfully submit', function*() {
+    page.submit();
+    expect( yield page.getPaymentSuccess() ).toMatch('thank you');
   });
 
 });
 
-function byData(value) {
-  return By.css(`[data-qa='${value}']`);
-}

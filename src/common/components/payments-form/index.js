@@ -235,7 +235,7 @@ export class PaymentsForm extends Component {
               I agree that my use of any services or related APIs is subject to my compliance with the applicable <a href="/terms" target="_blank">Terms of service</a>
             </CheckboxField>
             <div className={ styles['button-container'] }>
-              <Button appearance='secondary' disabled={!isFormReady}>
+              <Button data-qa="payments-form:submit" appearance='secondary' disabled={!isFormReady}>
                 Add payment details
               </Button>
               { isFetching &&
