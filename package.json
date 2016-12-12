@@ -94,7 +94,6 @@
     "mocha": "^3.1.2",
     "nock": "^9.0.2",
     "nyc": "^9.0.1",
-    "phantomjs-prebuilt": "^2.1.13",
     "postcss-loader": "^1.0.0",
     "postcss-simple-vars": "^3.0.0",
     "prompt": "^1.0.0",

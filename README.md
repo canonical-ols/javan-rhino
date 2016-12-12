@@ -45,6 +45,8 @@ See [Environment Variables](docs/environment-variables.md).
 
 ## Acceptance testing
 
+
+Install chromedriver https://sites.google.com/a/chromium.org/chromedriver/downloads
 With a running dev server at http://localhost:3000:
 
 ```
