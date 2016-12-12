@@ -5,7 +5,13 @@ import expect from 'expect';
 import PaymentPage from './pages/payment.js';
 
 const driver = new Builder()
-  .forBrowser('phantomjs')
+  .usingServer('http://hub-cloud.browserstack.com/wd/hub')
+  .withCapabilities({
+    'browserName' : 'chrome',
+    'browserstack.user' : process.env.BS_USER,
+    'browserstack.key' : process.env.BS_KEY
+  })
+//.forBrowser('phantomjs')
   .build();
 
 const page = PaymentPage(driver);

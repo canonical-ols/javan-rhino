@@ -46,5 +46,5 @@ See [Environment Variables](docs/environment-variables.md).
 ## Acceptance testing
 
 ```
-brew install chromedriver geckodriver
+TEST_USER_EMAIL=email  TEST_USER_PASSWORD=password npm run test:acceptance
 ```
