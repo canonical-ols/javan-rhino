@@ -31,7 +31,7 @@ export default function(driver) {
   };
 
   return {
-    url: 'http://my.staging.ubuntu.com/',
+    url: 'http://localhost:3000',
     login: function() {
       // TODO should be in an sso page object
       driver.navigate().to(this.url);
