@@ -75,12 +75,34 @@ export default function(driver) {
       return utils.sendAndVerifyKeys(number, elements.addressPhone);
     },
     selectAddressCountry: function(code = 'GB') {
-      return driver.findElement(
+      const country = driver.findElement(
         By.css(`#ID_SELECT_FIELD_billingCountry > option[value='${code}']`)
-      ).click();
+      );
+      country.click();
+      return country.getAttribute('value')
+        .then((value) => {
+          return new Promise((resolve, reject) => {
+            if (value === code) {
+              resolve(true);
+            } else {
+              reject(false);
+            }
+          });
+        });
     },
     acceptTerms: function() {
-      return driver.findElement(elements.termsCheckbox).click();
+      const terms = driver.findElement(elements.termsCheckbox);
+      terms.click();
+      return terms.getAttribute('checked')
+        .then((value) => {
+          return new Promise((resolve, reject) => {
+            if (value === 'true') {
+              resolve(true);
+            } else {
+              reject(false);
+            }
+          });
+        });
     },
     getSubmitButton: function() {
       return driver.findElement(elements.submitButton);

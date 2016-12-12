@@ -53,11 +53,11 @@ test.describe('authenticated session', () => {
   });
 
   test.it('should allow selecting country', function*() {
-    expect( yield page.selectAddressCountry()).toBe(null);
+    expect( yield page.selectAddressCountry('GB')).toBe(true);
   });
 
   test.it('should allow accepting terms', function*() {
-    expect( yield page.acceptTerms()).toBe(null);
+    expect( yield page.acceptTerms()).toBe(true);
   });
 
   test.it('should successfully submit', function*() {
@@ -66,4 +66,3 @@ test.describe('authenticated session', () => {
   });
 
 });
-
