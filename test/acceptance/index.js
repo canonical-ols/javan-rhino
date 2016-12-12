@@ -5,7 +5,7 @@ import expect from 'expect';
 import PaymentPage from './pages/payment.js';
 
 const driver = new Builder()
-  .forBrowser('chrome')
+  .forBrowser('phantomjs')
   .build();
 
 const page = PaymentPage(driver);
