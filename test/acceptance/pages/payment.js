@@ -1,15 +1,17 @@
 import webdriver from 'selenium-webdriver';
 
+import SsoPage from './sso';
+import Utils from './../utils';
+
+
 const By = webdriver.By;
 const until = webdriver.until;
 
 export default function(driver) {
 
+  const sso = SsoPage(driver);
+  const utils = Utils(driver);
   const elements = {
-    ssoEmail: By.id('id_email'),
-    ssoPassword: By.id('id_password'),
-    ssoLogin: By.css('[data-qa-id=\'login_button\']'),
-    ssoConfirm: By.css('[data-qa-id=\'rp_confirm_login\']'),
     loginButton: byData('sign-in:login'),
     username: byData('sign-in:username'),
     cardNumber: By.id('ID_INPUT_FIELD_cardNumber'),
@@ -28,70 +30,49 @@ export default function(driver) {
     successThanks: byData('customer-success:thanks')
   };
 
-  // avoid sendkeys spilling out into next input, and give us somethign to assert
-  function untilElementValueIs(element, entry) {
-    return driver.findElement(element).getAttribute('value')
-      .then((value) => {
-        return value === entry;
-      });
-  }
-
   return {
     url: 'http://localhost:3000',
     login: function() {
+      // TODO should be in an sso page object
       driver.navigate().to(this.url);
       driver.wait(until.elementLocated(elements.loginButton));
       driver.findElement(elements.loginButton).click();
-      driver.wait(until.elementLocated(elements.ssoEmail));
-      driver.findElement(elements.ssoEmail).sendKeys(process.env.TEST_USER_EMAIL);
-      driver.findElement(elements.ssoPassword).sendKeys(process.env.TEST_USER_PASSWORD);
-      driver.findElement(elements.ssoLogin).click();
-      driver.wait(until.elementLocated(elements.ssoConfirm));
-      driver.findElement(elements.ssoConfirm).click();
+      sso.login();
+      sso.confirm();
       driver.wait(until.elementLocated(elements.username));
     },
     getUsername: function() {
       return driver.findElement(elements.username).getText();
     },
     enterCardNumber: function(number) {
-      driver.findElement(elements.cardNumber).sendKeys(number);
-      return driver.wait(untilElementValueIs(elements.cardNumber, number), 1000);
+      return utils.sendAndVerifyKeys(number, elements.cardNumber);
     },
-    enterCardExpiryDate: function(mmyy = expiryDate()) {
-      driver.findElement(elements.expiryDate).sendKeys(mmyy);
-      return driver.wait(untilElementValueIs(elements.expiryDate, mmyy), 1000);
+    enterCardExpiryDate: function(mmyy = getExpiryDate()) {
+      return utils.sendAndVerifyKeys(mmyy, elements.expiryDate);
     },
     enterCardSecurityNumber: function(cvc) {
-      driver.findElement(elements.securityNumber).sendKeys(cvc);
-      return driver.wait(untilElementValueIs(elements.securityNumber, cvc), 1000);
+      return utils.sendAndVerifyKeys(cvc, elements.securityNumber);
     },
     enterAddressName: function(fullname) {
-      driver.findElement(elements.addressFullName).sendKeys(fullname);
-      return driver.wait(untilElementValueIs(elements.addressFullName, fullname), 1000);
+      return utils.sendAndVerifyKeys(fullname, elements.addressFullName);
     },
     enterAddressLine1: function(line) {
-      driver.findElement(elements.addressLine1).sendKeys(line);
-      return driver.wait(untilElementValueIs(elements.addressLine1, line), 1000);
+      return utils.sendAndVerifyKeys(line, elements.addressLine1);
     },
     enterAddressLine2: function(line) {
-      driver.findElement(elements.addressLine2).sendKeys(line);
-      return driver.wait(untilElementValueIs(elements.addressLine2, line), 1000);
+      return utils.sendAndVerifyKeys(line, elements.addressLine2);
     },
     enterAddressState: function(state) {
-      driver.findElement(elements.addressState).sendKeys(state);
-      return driver.wait(untilElementValueIs(elements.addressState, state), 1000);
+      return utils.sendAndVerifyKeys(state, elements.addressState);
     },
     enterAddressCity: function(city) {
-      driver.findElement(elements.addressCity).sendKeys(city);
-      return driver.wait(untilElementValueIs(elements.addressCity, city), 1000);
+      return utils.sendAndVerifyKeys(city, elements.addressCity);
     },
     enterAddressPostcode: function(postcode) {
-      driver.findElement(elements.addressPostcode).sendKeys(postcode);
-      return driver.wait(untilElementValueIs(elements.addressPostcode, postcode), 1000);
+      return utils.sendAndVerifyKeys(postcode, elements.addressPostcode);
     },
     enterAddressPhone: function(number) {
-      driver.findElement(elements.addressPhone).sendKeys(number);
-      return driver.wait(untilElementValueIs(elements.addressPhone, number), 1000);
+      return utils.sendAndVerifyKeys(number, elements.addressPhone);
     },
     selectAddressCountry: function(code = 'GB') {
       return driver.findElement(
@@ -122,7 +103,7 @@ function byData(value) {
   return By.css(`[data-qa='${value}']`);
 }
 
-function expiryDate(date) {
+function getExpiryDate(date) {
   date = date || new Date();
   let month = date.getMonth();
   let year = date.getFullYear() + '';

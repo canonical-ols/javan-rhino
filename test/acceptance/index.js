@@ -10,8 +10,6 @@ const driver = new Builder()
 
 const page = PaymentPage(driver);
 
-// TODO assumes server is running :)
-
 test.describe('authenticated session', () => {
 
   test.before(() => page.login());
