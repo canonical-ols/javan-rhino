@@ -45,6 +45,8 @@ See [Environment Variables](docs/environment-variables.md).
 
 ## Acceptance testing
 
+With a running dev server at http://localhost:3000:
+
 ```
 TEST_USER_EMAIL=email  TEST_USER_PASSWORD=password npm run test:acceptance
 ```
