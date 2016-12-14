@@ -13,7 +13,7 @@
     "test:run": "npm run test:unit && npm run test:routes",
     "test:unit": "BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --recursive --require babel-core/register --compilers js:babel-register ./test/unit/setup.js ./test/unit/t_*.js ./test/unit/**/*",
     "test:routes": "SESSION_SECRET=test BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --require babel-core/register --compilers js:babel-register ./test/routes/setup.js ./test/routes/**/*",
-    "test:acceptance": "SESSION_SECRET=test BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --timeout 40000 --require babel-core/register --require babel-polyfill --compilers js:babel-register ./test/acceptance/t_*.js",
+    "test:acceptance": "SESSION_SECRET=test BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --reporter mocha-junit-reporter --timeout 20000 --require babel-core/register --require babel-polyfill --compilers js:babel-register ./test/acceptance/t_*.js",
     "test:watch": "npm run test:unit -- --watch",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "make-env": "./scripts/make-env.js"
@@ -92,6 +92,7 @@
     "file-loader": "^0.9.0",
     "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
+    "mocha-junit-reporter": "^1.12.1",
     "nock": "^9.0.2",
     "nyc": "^9.0.1",
     "postcss-loader": "^1.0.0",
