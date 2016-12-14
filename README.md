@@ -43,6 +43,12 @@ Have you created your own .env file that is useful for a common development situ
 See [Environment Variables](docs/environment-variables.md).
 
 
-# Why javan-rhino?
+## Acceptance testing
 
-Win a prize if you figure it out!
+
+Install chromedriver https://sites.google.com/a/chromium.org/chromedriver/downloads
+With a running dev server at http://localhost:3000:
+
+```
+TEST_USER_EMAIL=email  TEST_USER_PASSWORD=password npm run test:acceptance
+```
