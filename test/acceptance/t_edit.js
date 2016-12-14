@@ -1,22 +1,69 @@
-import { Builder } from 'selenium-webdriver';
 import test from 'selenium-webdriver/testing';
 import expect from 'expect';
+import request from 'request';
 
+import driver from './driver.js';
 import PaymentPage from './pages/payment.js';
 
-const driver = new Builder()
-  .forBrowser('chrome') // chromedriver required, see README
-  .build();
+const BS_KEY = process.env.BROWSERSTACK_KEY;
+const BS_USER = process.env.BROWSERSTACK_USER;
+const TEST_USER_EMAIL = process.env.TEST_USER_EMAIL;
+const TEST_USER_PASSWORD = process.env.TEST_USER_PASSWORD;
+
+
+let sessionId;
+
+driver.session_.then((sessionData) => {
+  sessionId = sessionData.id_;
+});
 
 const page = PaymentPage(driver);
 
-test.describe('authenticated session', () => {
+test.describe('authenticated session', function() {
+  this.retries(3);
+  this.slow(1000);
 
-  test.before(() => page.login());
+  test.before(function() {
+    if(!(TEST_USER_EMAIL && TEST_USER_PASSWORD)) {
+      // eslint-disable-next-line
+      console.log('skipping, missing sso creds!');
+      this.skip();
+    }
+    if(!(BS_KEY && BS_USER)) {
+      // eslint-disable-next-line
+      console.log('skipping, missing browserstack creds!');
+      this.skip();
+    }
+  });
+
+  test.afterEach(function() {
+    if (this.currentTest.state === 'failed') {
+      request({
+        uri: `https://${BS_USER}:${BS_KEY}@www.browserstack.com/automate/sessions/${sessionId}.json`,
+        method:'PUT',
+        form: {
+          'status': 'failed',
+          'reason': ''
+        }
+      });
+    }
+  });
 
   test.after(() => driver.quit());
 
-  test.it('should have test account username', function*() {
+  test.it('should navigate to payments web site', function() {
+    expect(function() {
+      page.navigate();
+    }).toNotThrow();
+  });
+
+  test.it('should sign in via ubuntu one', function() {
+    expect(function() {
+      page.login();
+    }).toNotThrow();
+  });
+
+  test.it('should have test account username in header', function*() {
     expect( yield page.getUsername() ).toBe('MU STAGING TEST USER');
   });
 
@@ -57,6 +104,7 @@ test.describe('authenticated session', () => {
   });
 
   test.it('should allow accepting terms', function*() {
+    // XXX accepting terms should enable submit button
     expect( yield page.acceptTerms()).toBe(true);
   });
 

@@ -1,4 +1,4 @@
-import webdriver from 'selenium-webdriver';
+import webdriver, { Key } from 'selenium-webdriver';
 
 import SsoPage from './sso';
 import Utils from './../utils';
@@ -31,11 +31,13 @@ export default function(driver) {
   };
 
   return {
-    url: 'http://localhost:3000',
-    login: function() {
-      // TODO should be in an sso page object
+    url: 'https://my.staging.ubuntu.com',
+    navigate: function() {
       driver.navigate().to(this.url);
-      driver.wait(until.elementLocated(elements.loginButton));
+      return driver.wait(until.elementLocated(elements.loginButton));
+    },
+    login: function() {
+      this.navigate();
       driver.findElement(elements.loginButton).click();
       sso.login();
       sso.confirm();
@@ -92,17 +94,8 @@ export default function(driver) {
     },
     acceptTerms: function() {
       const terms = driver.findElement(elements.termsCheckbox);
-      terms.click();
-      return terms.getAttribute('checked')
-        .then((value) => {
-          return new Promise((resolve, reject) => {
-            if (value === 'true') {
-              resolve(true);
-            } else {
-              reject(false);
-            }
-          });
-        });
+      terms.sendKeys(Key.SPACE);
+      return terms.isSelected();
     },
     getSubmitButton: function() {
       return driver.findElement(elements.submitButton);
@@ -111,8 +104,9 @@ export default function(driver) {
       return driver.findElement(elements.successThanks);
     },
     submit: function() {
-      driver.wait(until.elementIsEnabled(this.getSubmitButton()));
-      return this.getSubmitButton().click();
+      const submitBtn = this.getSubmitButton();
+      driver.wait(until.elementIsEnabled(submitBtn));
+      return submitBtn.click();
     },
     getPaymentSuccess: function() {
       driver.wait(until.elementLocated(elements.successThanks));
