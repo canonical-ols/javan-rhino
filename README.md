@@ -45,10 +45,13 @@ See [Environment Variables](docs/environment-variables.md).
 
 ## Acceptance testing
 
-
-Install chromedriver https://sites.google.com/a/chromium.org/chromedriver/downloads
-With a running dev server at http://localhost:3000:
+Acceptance tests run on browserstack, to run locally you will need to set some
+environment variables (secrets available from project owner):
 
 ```
-TEST_USER_EMAIL=email  TEST_USER_PASSWORD=password npm run test:acceptance
+TEST_USER_EMAIL=email@example.com  TEST_USER_PASSWORD=password \
+BROWSERSTACK_USER=foo BROWSERSTACK_KEY=bar \
+SELENIUM_BROWSER=firefox:50:windows \
+SELENIUM_REMOTE_URL=http://hub-cloud.browserstack.com/wd/hub \
+npm run test:acceptance
 ```
