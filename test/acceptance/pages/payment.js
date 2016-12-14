@@ -1,4 +1,4 @@
-import webdriver, { Key } from 'selenium-webdriver';
+import webdriver from 'selenium-webdriver';
 
 import SsoPage from './sso';
 import Utils from './../utils';
@@ -24,8 +24,8 @@ export default function(driver) {
     addressCity: By.id('ID_INPUT_FIELD_billingCity'),
     addressPostcode: By.id('ID_INPUT_FIELD_billingPostcode'),
     addressPhone: By.id('ID_INPUT_FIELD_billingPhone'),
-    addressCountry: By.css('#ID_INPUT_FIELD_billingCountry'),
-    termsCheckbox: By.css('#ID_CHECKBOX_FIELD_tosAccepted'),
+    addressCountry: By.id('ID_INPUT_FIELD_billingCountry'),
+    termsCheckbox: By.id('ID_CHECKBOX_FIELD_tosAccepted'),
     submitButton: byData('payments-form:submit'),
     successThanks: byData('customer-success:thanks')
   };
@@ -94,7 +94,9 @@ export default function(driver) {
     },
     acceptTerms: function() {
       const terms = driver.findElement(elements.termsCheckbox);
-      terms.sendKeys(Key.SPACE);
+      // XXX FF50 didn't like click
+      //terms.sendKeys(Key.SPACE);
+      terms.click();
       return terms.isSelected();
     },
     getSubmitButton: function() {

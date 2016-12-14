@@ -30,7 +30,7 @@ export function sendStripeTokenFailure(errors) {
     dispatch(showNotification({
       message: [
         'There\'s been a problem adding your card.',
-        'Please verify that card details you provided are correct or use a different card and try again.'
+        'Please verify that the card details you provided are correct and try again.'
       ].join(' '),
       status: 'error',
       actionText: 'Dismiss'

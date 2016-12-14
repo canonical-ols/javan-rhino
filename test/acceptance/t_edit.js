@@ -6,7 +6,7 @@ import driver from './driver.js';
 import PaymentPage from './pages/payment.js';
 
 const BS_KEY = process.env.BROWSERSTACK_KEY;
-const BS_USER = process.env.BROWSERSTACK_USER;
+const BS_USER = process.env.BROWSERSTACK_USERNAME;
 const TEST_USER_EMAIL = process.env.TEST_USER_EMAIL;
 const TEST_USER_PASSWORD = process.env.TEST_USER_PASSWORD;
 
@@ -110,6 +110,7 @@ test.describe('authenticated session', function() {
 
   test.it('should successfully submit', function*() {
     page.submit();
+    // XXX assert no error message
     expect( yield page.getPaymentSuccess() ).toMatch('thank you');
   });
 

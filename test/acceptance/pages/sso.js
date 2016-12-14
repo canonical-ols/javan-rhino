@@ -1,4 +1,4 @@
-import webdriver, { Key } from 'selenium-webdriver';
+import webdriver from 'selenium-webdriver';
 
 const By = webdriver.By;
 const until = webdriver.until;
@@ -21,10 +21,11 @@ export default function(driver) {
     },
     confirm: function() {
       driver.wait(until.elementLocated(elements.confirm));
-      // XXX FF50 didn't like click on this button!?
-      return driver.findElement(elements.confirm).sendKeys(Key.ENTER);
-      // XXX beowulf - if in dev and on HTTP FF will stall here with a security alert, if
-      // it's not an issue in real testing I can live with it in dev for now.
+      driver.findElement(elements.confirm);
+      return driver.findElement(elements.confirm).click();
+      // XXX beowulf - if in dev and on HTTP FF will stall here with a security
+      // alert, it's not an issue in real testing, can live with it in dev for
+      // now.
     }
   };
 }
