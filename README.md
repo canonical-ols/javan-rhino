@@ -55,3 +55,37 @@ SELENIUM_BROWSER=firefox:50:windows \
 SELENIUM_REMOTE_URL=http://hub-cloud.browserstack.com/wd/hub \
 npm run test:acceptance
 ```
+
+## Deploying / working on the charm
+
+This projects includes a Juju charm layer under charm/. You can do local modifications to both the
+layer and the project itself, and then test building the final charm and deploying via Juju.
+
+Install some prerequisites:
+
+```
+sudo add-apt-repository ppa:mojo-maintainers/ppa
+sudo apt-get update
+apt-get install npm nodejs-legacy python-codetree charm-tools
+```
+
+Get Juju working and bootstrapped. For example:
+```
+sudo apt-get install juju-local juju
+juju init
+juju bootstrap
+```
+
+Once Juju is ready to have charms deployed into it:
+
+```
+make build  # will build a charm with a javan-rhino payload based on the local branch
+make deploy  # will deploy in whichever environment Juju has bootstrapped
+```
+
+Note the memcached charm is unhappy with ipv6, if you see it failing to configure try:
+
+```
+juju set memcached allow-ufw-ip6-softfail=true
+juju resolved --retry memcached
+```
