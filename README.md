@@ -50,7 +50,7 @@ environment variables (secrets available from project owner):
 
 ```
 TEST_USER_EMAIL=email@example.com  TEST_USER_PASSWORD=password \
-BROWSERSTACK_USER=foo BROWSERSTACK_KEY=bar \
+BROWSERSTACK_USERNAME=foo BROWSERSTACK_KEY=bar \
 SELENIUM_BROWSER=firefox:50:windows \
 SELENIUM_REMOTE_URL=http://hub-cloud.browserstack.com/wd/hub \
 npm run test:acceptance
