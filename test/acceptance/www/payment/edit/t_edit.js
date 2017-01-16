@@ -1,25 +1,31 @@
+import { Builder } from 'selenium-webdriver';
 import test from 'selenium-webdriver/testing';
 import expect from 'expect';
 import request from 'request';
 
-import driver from './driver.js';
-import PaymentPage from './pages/payment.js';
+import PaymentPage from '../../../pages/payment.js';
 
 const BS_KEY = process.env.BROWSERSTACK_KEY;
 const BS_USER = process.env.BROWSERSTACK_USERNAME;
 const TEST_USER_EMAIL = process.env.TEST_USER_EMAIL;
 const TEST_USER_PASSWORD = process.env.TEST_USER_PASSWORD;
 
-
-let sessionId;
-
-driver.session_.then((sessionData) => {
-  sessionId = sessionData.id_;
-});
-
-const page = PaymentPage(driver);
+const capabilities = {
+  'project': 'my.staging.ubuntu.com',
+  'browserstack.user': BS_USER,
+  'browserstack.key': BS_KEY,
+  'browserName': 'Firefox',
+  'browser_version': '50',
+  'os': 'Windows',
+  'os_version': '10',
+  //'browserstack.debug': true
+};
 
 test.describe('authenticated session', function() {
+  let driver;
+  let sessionId;
+  let page;
+
   this.retries(3);
   this.slow(1000);
 
@@ -34,6 +40,18 @@ test.describe('authenticated session', function() {
       console.log('skipping, missing browserstack creds!');
       this.skip();
     }
+
+    driver = new Builder()
+      .usingServer('http://hub.browserstack.com/wd/hub')
+      .withCapabilities(capabilities)
+      .build();
+
+    driver.session_.then((sessionData) => {
+      sessionId = sessionData.id_;
+    });
+
+    page = PaymentPage(driver);
+
   });
 
   test.afterEach(function() {
