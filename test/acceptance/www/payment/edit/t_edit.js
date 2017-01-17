@@ -65,6 +65,7 @@ for (let browser of browsers) {
           ...capabilities,
           ...browser
         })
+        .usingWebDriverProxy(process.env.HTTP_PROXY)
         .build();
 
       driver.session_.then((sessionData) => {
