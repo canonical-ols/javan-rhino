@@ -60,12 +60,12 @@ for (let browser of browsers) {
       }
 
       driver = new Builder()
-        .usingServer('http://hub.browserstack.com/wd/hub')
+        .usingServer('https://hub.browserstack.com/wd/hub')
         .withCapabilities({
           ...capabilities,
           ...browser
         })
-        .usingWebDriverProxy(process.env.HTTP_PROXY)
+        .usingWebDriverProxy(process.env.HTTPS_PROXY)
         .build();
 
       driver.session_.then((sessionData) => {
