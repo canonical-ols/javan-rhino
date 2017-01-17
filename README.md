@@ -46,7 +46,8 @@ See [Environment Variables](docs/environment-variables.md).
 ## Acceptance testing
 
 Acceptance tests run on browserstack, to run locally you will need to set some
-secrets in `~/.config/mu/secrets.json` (secrets available from project owner):
+secrets in `~/.config/my-ubuntu/secrets.json` (secrets available from project
+owner):
 
 ```
 {

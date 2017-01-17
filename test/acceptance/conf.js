@@ -9,6 +9,6 @@ nconf
     'TEST_USER_EMAIL',
     'TEST_USER_PASSWORD'
   ])
-  .file(untildify('~/.config/mu/secrets.json'));
+  .file(untildify('~/.config/my-ubuntu/secrets.json'));
 
 export default nconf;
