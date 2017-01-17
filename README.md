@@ -46,12 +46,21 @@ See [Environment Variables](docs/environment-variables.md).
 ## Acceptance testing
 
 Acceptance tests run on browserstack, to run locally you will need to set some
-environment variables (secrets available from project owner):
+secrets in `~/.config/mu/secrets.json` (secrets available from project owner):
 
 ```
-TEST_USER_EMAIL=email@example.com  TEST_USER_PASSWORD=password \
-BROWSERSTACK_USERNAME=foo BROWSERSTACK_KEY=bar \
-npm run test:acceptance -- --reporter [spec|dot|nyan]
+{
+  "browserstack_key": "string",
+  "browserstack_username": "string",
+  "test_user_email": "string",
+  "test_user_password": "string"
+}
+```
+
+Run tests (output will appear https://www.browserstack.com/automate/builds):
+
+```
+npm run test:acceptance
 ```
 
 The default reporter is junit, which will not report anything to the cli but to
