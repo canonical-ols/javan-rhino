@@ -51,10 +51,10 @@ owner):
 
 ```
 {
-  "browserstack_key": "string",
-  "browserstack_username": "string",
-  "test_user_email": "string",
-  "test_user_password": "string"
+  "BROWSERSTACK_KEY": "string",
+  "BROWSERSTACK_USERNAME": "string",
+  "TEST_USER_EMAIL": "string",
+  "TEST_USER_PASSWORD": "string"
 }
 ```
 
