@@ -1,7 +1,11 @@
 import webdriver from 'selenium-webdriver';
 
+import conf from '../conf.js';
+
 const By = webdriver.By;
 const until = webdriver.until;
+const TEST_USER_EMAIL = conf.get('TEST_USER_EMAIL');
+const TEST_USER_PASSWORD = conf.get('TEST_USER_PASSWORD');
 
 export default function(driver) {
 
@@ -15,8 +19,8 @@ export default function(driver) {
   return {
     login: function() {
       driver.wait(until.elementLocated(elements.email));
-      driver.findElement(elements.email).sendKeys(process.env.TEST_USER_EMAIL);
-      driver.findElement(elements.password).sendKeys(process.env.TEST_USER_PASSWORD);
+      driver.findElement(elements.email).sendKeys(TEST_USER_EMAIL);
+      driver.findElement(elements.password).sendKeys(TEST_USER_PASSWORD);
       return driver.findElement(elements.login).click();
     },
     confirm: function() {

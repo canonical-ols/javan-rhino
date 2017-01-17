@@ -3,12 +3,13 @@ import test from 'selenium-webdriver/testing';
 import expect from 'expect';
 import request from 'request';
 
-import PaymentPage from '../../../pages/payment.js';
+import conf from '../../../conf';
+import PaymentPage from '../../../pages/payment';
 
-const BS_KEY = process.env.BROWSERSTACK_KEY;
-const BS_USER = process.env.BROWSERSTACK_USERNAME;
-const TEST_USER_EMAIL = process.env.TEST_USER_EMAIL;
-const TEST_USER_PASSWORD = process.env.TEST_USER_PASSWORD;
+const BS_KEY = conf.get('BROWSERSTACK_KEY');
+const BS_USER = conf.get('BROWSERSTACK_USERNAME');
+const TEST_USER_EMAIL = conf.get('TEST_USER_EMAIL');
+const TEST_USER_PASSWORD = conf.get('TEST_USER_PASSWORD');
 
 const capabilities = {
   build: Date.now().toString(36),
@@ -49,12 +50,12 @@ for (let browser of browsers) {
     test.before(function() {
       if(!(TEST_USER_EMAIL && TEST_USER_PASSWORD)) {
         // eslint-disable-next-line
-        console.log('skipping, missing sso creds!');
+        console.log('skipping test suite, missing sso creds!');
         this.skip();
       }
       if(!(BS_KEY && BS_USER)) {
         // eslint-disable-next-line
-        console.log('skipping, missing browserstack creds!');
+        console.log('skipping test suite, missing browserstack creds!');
         this.skip();
       }
 
@@ -87,7 +88,9 @@ for (let browser of browsers) {
       }
     });
 
-    test.after(() => driver.quit());
+    test.after(function() {
+      driver.quit();
+    });
 
     test.it('should navigate to payments web site', function() {
       expect(function() {

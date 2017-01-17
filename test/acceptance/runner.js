@@ -8,7 +8,9 @@ const files = glob.sync('/**/t_*.js', {
   root: 'test/acceptance'
 });
 const mocha = new Mocha({
-  timeout: 20000
+  fullTrace: true,
+  timeout: 30000,
+  reporter: 'mocha-junit-reporter'
 });
 
 for (let file of files) {
