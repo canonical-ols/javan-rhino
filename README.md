@@ -49,6 +49,9 @@ Acceptance tests run on browserstack, to run locally you will need to set some
 secrets in `~/.config/my-ubuntu/secrets.json` (secrets available from project
 owner):
 
+DO NOT USE YOUR OWN EMAIL, USE THE TEST_USER ACCOUNT SET UP FOR THIS PURPOSE.
+REMEMBER, DATA IS SENT TO A 3RD PARTY, BE CAREFUL.
+
 ```
 {
   "BROWSERSTACK_KEY": "string",
@@ -57,6 +60,9 @@ owner):
   "TEST_USER_PASSWORD": "string"
 }
 ```
+
+DO NOT USE YOUR OWN EMAIL, USE THE TEST_USER ACCOUNT SET UP FOR THIS PURPOSE.
+REMEMBER, DATA IS SENT TO A 3RD PARTY, BE CAREFUL.
 
 Run tests (output will appear https://www.browserstack.com/automate/builds):
 
