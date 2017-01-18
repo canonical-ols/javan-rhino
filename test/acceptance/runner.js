@@ -10,7 +10,7 @@ const files = glob.sync('/**/t_*.js', {
 const mocha = new Mocha({
   fullTrace: true,
   timeout: 30000,
-  reporter: 'mocha-junit-reporter'
+  reporter: 'spec'
 });
 
 for (let file of files) {
