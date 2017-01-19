@@ -24,18 +24,20 @@ export default function(driver) {
     addressCity: By.id('ID_INPUT_FIELD_billingCity'),
     addressPostcode: By.id('ID_INPUT_FIELD_billingPostcode'),
     addressPhone: By.id('ID_INPUT_FIELD_billingPhone'),
-    addressCountry: By.css('#ID_INPUT_FIELD_billingCountry'),
-    termsCheckbox: By.css('#ID_CHECKBOX_FIELD_tosAccepted'),
+    addressCountry: By.id('ID_INPUT_FIELD_billingCountry'),
+    termsCheckbox: By.id('ID_CHECKBOX_FIELD_tosAccepted'),
     submitButton: byData('payments-form:submit'),
     successThanks: byData('customer-success:thanks')
   };
 
   return {
-    url: 'http://localhost:3000',
-    login: function() {
-      // TODO should be in an sso page object
+    url: 'https://my.staging.ubuntu.com',
+    navigate: function() {
       driver.navigate().to(this.url);
-      driver.wait(until.elementLocated(elements.loginButton));
+      return driver.wait(until.elementLocated(elements.loginButton));
+    },
+    login: function() {
+      this.navigate();
       driver.findElement(elements.loginButton).click();
       sso.login();
       sso.confirm();
@@ -92,17 +94,10 @@ export default function(driver) {
     },
     acceptTerms: function() {
       const terms = driver.findElement(elements.termsCheckbox);
+      // XXX FF50 didn't like click
+      //terms.sendKeys(Key.SPACE);
       terms.click();
-      return terms.getAttribute('checked')
-        .then((value) => {
-          return new Promise((resolve, reject) => {
-            if (value === 'true') {
-              resolve(true);
-            } else {
-              reject(false);
-            }
-          });
-        });
+      return terms.isSelected();
     },
     getSubmitButton: function() {
       return driver.findElement(elements.submitButton);
@@ -111,8 +106,9 @@ export default function(driver) {
       return driver.findElement(elements.successThanks);
     },
     submit: function() {
-      driver.wait(until.elementIsEnabled(this.getSubmitButton()));
-      return this.getSubmitButton().click();
+      const submitBtn = this.getSubmitButton();
+      driver.wait(until.elementIsEnabled(submitBtn));
+      return submitBtn.click();
     },
     getPaymentSuccess: function() {
       driver.wait(until.elementLocated(elements.successThanks));

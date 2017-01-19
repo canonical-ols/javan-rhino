@@ -1,7 +1,11 @@
-import webdriver, { Key } from 'selenium-webdriver';
+import webdriver from 'selenium-webdriver';
+
+import conf from '../conf.js';
 
 const By = webdriver.By;
 const until = webdriver.until;
+const TEST_USER_EMAIL = conf.get('TEST_USER_EMAIL');
+const TEST_USER_PASSWORD = conf.get('TEST_USER_PASSWORD');
 
 export default function(driver) {
 
@@ -15,16 +19,17 @@ export default function(driver) {
   return {
     login: function() {
       driver.wait(until.elementLocated(elements.email));
-      driver.findElement(elements.email).sendKeys(process.env.TEST_USER_EMAIL);
-      driver.findElement(elements.password).sendKeys(process.env.TEST_USER_PASSWORD);
+      driver.findElement(elements.email).sendKeys(TEST_USER_EMAIL);
+      driver.findElement(elements.password).sendKeys(TEST_USER_PASSWORD);
       return driver.findElement(elements.login).click();
     },
     confirm: function() {
       driver.wait(until.elementLocated(elements.confirm));
-      // XXX FF50 didn't like click on this button!?
-      return driver.findElement(elements.confirm).sendKeys(Key.ENTER);
-      // XXX beowulf - if in dev and on HTTP FF will stall here with a security alert, if
-      // it's not an issue in real testing I can live with it in dev for now.
+      driver.findElement(elements.confirm);
+      return driver.findElement(elements.confirm).click();
+      // XXX beowulf - if in dev and on HTTP FF will stall here with a security
+      // alert, it's not an issue in real testing, can live with it in dev for
+      // now.
     }
   };
 }
