@@ -8,7 +8,8 @@ from charmhelpers.core.host import restart_on_change
 from charmhelpers.core.templating import render
 from charms.reactive import when, when_not, set_state
 from charms.apt import queue_install
-from charms.ols import check_port, code_dir, logs_dir, port, service_name, user
+from ols.base import check_port, code_dir, logs_dir, service_name, user
+from ols.http import port
 
 
 SYSTEMD_CONFIG = '/lib/systemd/system/javan-rhino.service'
@@ -22,6 +23,7 @@ def configure(cache):
     session_secret = hookenv.config('session_secret')
     memcache_session_secret = hookenv.config('memcache_session_secret')
     sentry_dsn = hookenv.config('sentry_dsn')
+    statsd_dsn = hookenv.config('statsd_dsn')
     if session_secret and memcache_session_secret:
         render(
             source='javan-rhino_systemd.j2',
@@ -35,6 +37,7 @@ def configure(cache):
                 'cache_hosts': cache.memcache_hosts(),
                 'memcache_session_secret': memcache_session_secret,
                 'sentry_dsn': sentry_dsn,
+                'statsd_dsn': statsd_dsn,
             })
         check_port('ols.{}.express'.format(service_name()), port())
         set_state('service.configured')

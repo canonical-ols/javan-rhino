@@ -2,6 +2,8 @@ import { Builder } from 'selenium-webdriver';
 import test from 'selenium-webdriver/testing';
 import expect from 'expect';
 import request from 'request';
+import { httpsOverHttp } from 'tunnel-agent';
+import url from 'url';
 
 import conf from '../../../conf';
 import PaymentPage from '../../../pages/payment';
@@ -36,6 +38,7 @@ const browsers = [{
   os_version: 'Sierra',
 }];
 
+const proxyUrl = url.parse(process.env.HTTP_PROXY);
 
 for (let browser of browsers) {
 
@@ -65,7 +68,12 @@ for (let browser of browsers) {
           ...capabilities,
           ...browser
         })
-        .usingWebDriverProxy(process.env.HTTPS_PROXY)
+        .usingHttpAgent(httpsOverHttp({
+          proxy: {
+            host: proxyUrl.hostname,
+            port: proxyUrl.port
+          }
+        }))
         .build();
 
       driver.session_.then((sessionData) => {
