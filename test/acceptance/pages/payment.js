@@ -40,7 +40,6 @@ export default function(driver) {
       this.navigate();
       driver.findElement(elements.loginButton).click();
       sso.login();
-      sso.confirm();
       return driver.wait(until.elementLocated(elements.username));
     },
     getUsername: function() {
