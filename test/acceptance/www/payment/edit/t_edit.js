@@ -38,7 +38,11 @@ const browsers = [{
   os_version: 'Sierra',
 }];
 
-const proxyUrl = url.parse(process.env.HTTP_PROXY);
+let proxyUrl = false;
+
+if (process.env.HTTP_PROXY) {
+  proxyUrl = url.parse(process.env.HTTP_PROXY);
+}
 
 for (let browser of browsers) {
 
@@ -62,19 +66,23 @@ for (let browser of browsers) {
         this.skip();
       }
 
-      driver = new Builder()
+      const builder = new Builder()
         .usingServer('https://hub.browserstack.com/wd/hub')
         .withCapabilities({
           ...capabilities,
           ...browser
-        })
-        .usingHttpAgent(httpsOverHttp({
+        });
+
+      if (proxyUrl) {
+        builder.usingHttpAgent(httpsOverHttp({
           proxy: {
             host: proxyUrl.hostname,
             port: proxyUrl.port
           }
-        }))
-        .build();
+        }));
+      }
+
+      driver = builder.build();
 
       driver.session_.then((sessionData) => {
         sessionId = sessionData.id_;
