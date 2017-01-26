@@ -16,8 +16,7 @@ export function createStatName(stage='devel', unit, req, res) {
     unit,
     'views',
     url.toLowerCase()
-    .replace(/[:\.]/g, '')
-    .replace(/^\//g, '')
+    .replace(/^\/|\/$|[:\.]/g, '')
     .replace(/\//g, '_'),
     method,
     statusCode,
