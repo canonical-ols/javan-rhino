@@ -1,5 +1,6 @@
 import conf from '../config';
 import { postStripeToken } from './customer';
+import { showNotification } from './notifications';
 
 export const CREATE_STRIPE_TOKEN = 'CREATE_STRIPE_TOKEN';
 export const SAVE_VALIDATED_CARD_DATA = 'SAVE_VALIDATED_CARD_DATA';
@@ -28,9 +29,17 @@ export function createStripeTokenSuccess(token) {
 }
 
 export function createStripeTokenFailure(error) {
-  return {
-    type: CREATE_STRIPE_TOKEN_FAILURE,
-    error
+  return (dispatch) => {
+    dispatch(showNotification({
+      message: error.message,
+      status: 'error',
+      actionText: 'Dismiss'
+    }));
+
+    dispatch({
+      type: CREATE_STRIPE_TOKEN_FAILURE,
+      error
+    });
   };
 }
 

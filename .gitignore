@@ -49,3 +49,9 @@ dist
 charm-dist
 tmp
 version-info.txt
+
+# Environment variables
+.env
+
+# JUnit
+test-results.xml

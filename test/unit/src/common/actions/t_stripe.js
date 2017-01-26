@@ -4,6 +4,8 @@ import thunk from 'redux-thunk';
 import { stub } from 'sinon';
 import proxyquire from 'proxyquire';
 
+import { SHOW_NOTIFICATION } from '../../../../../src/common/actions/notifications';
+
 // load stripe actions module through proxyquire to stub postStripeToken calls
 let postStripeTokenStub = stub();
 
@@ -74,14 +76,35 @@ describe('stripe actions', () => {
 
   context('createStripeTokenFailure', () => {
 
-    it('should create an action to recieve failure response', () => {
-      const error = { type: 'card_error' };
-      const expectedAction = {
+    let error;
+    let expectedActions;
+    let store;
+
+    beforeEach(() => {
+      error = {
+        message: 'foo'
+      };
+      expectedActions = [{
+        type: SHOW_NOTIFICATION,
+        notification: {
+          message: error.message,
+          status: 'error',
+          actionText: 'Dismiss'
+        }
+      }, {
         type: ActionTypes.CREATE_STRIPE_TOKEN_FAILURE,
         error
-      };
+      }];
+      store = mockStore();
+      store.dispatch(createStripeTokenFailure(error));
+    });
 
-      expect(createStripeTokenFailure(error)).toEqual(expectedAction);
+    it('should return a thunk', () => {
+      expect(createStripeTokenFailure()).toBeA(Function);
+    });
+
+    it('should create actions to handle failure response', () => {
+      expect(store.getActions()).toEqual(expectedActions);
     });
 
   });
@@ -154,11 +177,11 @@ describe('stripe actions', () => {
       });
 
       it('dispatches CREATE_STRIPE_TOKEN_FAILURE action', () => {
-        const expectedActions = [
-          { type: ActionTypes.CREATE_STRIPE_TOKEN, formCardData },
-          { type: ActionTypes.CREATE_STRIPE_TOKEN_FAILURE, error: response.error }
-        ];
-        expect(store.getActions()).toEqual(expectedActions);
+        expect(store.getActions()).toHaveActionOfType(ActionTypes.CREATE_STRIPE_TOKEN_FAILURE);
+      });
+
+      it('dispatches SHOW_NOTIFICATION action', () => {
+        expect(store.getActions()).toHaveActionOfType(SHOW_NOTIFICATION);
       });
     });
 

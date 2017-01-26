@@ -29,6 +29,7 @@ DEPLOY_ENV ?= devel
 DISTDIR = dist
 DIST = $(DISTDIR)/.done
 GIT_HEAD_HASH = $(shell git rev-parse HEAD)
+BUILDBRANCH ?= staging
 
 export INTERFACE_PATH
 export LAYER_PATH
@@ -61,6 +62,7 @@ $(DIST):
 	mkdir -p $(DISTDIR)
 	npm install || (cat npm-debug.log && exit 1)
 	npm run build
+	npm install --production || (cat npm-debug.log && exit 1)
 	touch $@
 
 $(PAYLOAD): $(CHARM) $(DIST) version-info build-exclude.txt $(SRC) $(SRC)/* $(SRC_PREQS)
@@ -79,8 +81,6 @@ deploy: build
 
 
 # Targets for building, committing and pushing charm builds to a git repo
-
-$(GIT_CHARMREPODIR) git-build: BUILDBRANCH ?= staging
 
 check-git-build-vars:
 ifndef BUILDREPO
