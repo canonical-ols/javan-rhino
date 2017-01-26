@@ -6,9 +6,11 @@ import {
   logout,
   errorHandler
 } from '../handlers/login.js';
+import metrics from '../middleware/metrics';
 
 const router = Router();
 
+router.use(metrics);
 router.get('/login/authenticate', getMacaroon, authenticate);
 router.get('/login/verify', verify);
 router.post('/login/verify', verify);
