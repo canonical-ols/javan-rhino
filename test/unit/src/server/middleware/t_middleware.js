@@ -3,9 +3,9 @@ import sinon, { stub } from 'sinon';
 import {
   requireAuthentication,
   requireAuthorization
-} from '../../../../src/server/middleware';
+} from '../../../../../src/server/middleware';
 
-describe('middleware', () => {
+describe('auth middleware', () => {
 
   let req;
   let res;
@@ -29,7 +29,7 @@ describe('middleware', () => {
     next = stub();
   });
 
-  describe('authenticated', () => {
+  describe('when authenticated', () => {
     beforeEach(() => {
       req.session.authenticated = true;
       requireAuthentication(req, res, next);
@@ -39,7 +39,7 @@ describe('middleware', () => {
     });
   });
 
-  describe('unauthenticated', () => {
+  describe('when unauthenticated', () => {
     beforeEach(() => {
       req.session.authenticated = false;
       requireAuthentication(req, res, next);
