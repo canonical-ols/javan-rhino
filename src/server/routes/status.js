@@ -26,6 +26,7 @@ export const error = () => {
 };
 
 export const metric = (req, res) => {
+  // metric sent via middleware on route
   res.send(200);
 };
 
