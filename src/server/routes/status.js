@@ -22,7 +22,6 @@ export const check = (req, res) => {
 };
 
 export const error = () => {
-  // TODO sentry
   throw new Error('This is a servicestatus error test');
 };
 
@@ -36,7 +35,7 @@ router.get('/ping', ping);
 router.head('/ping', ping);
 router.options('/ping', ping);
 router.get('/check', check);
-router.get('/error', error);
+router.get('/test/sentry', error);
 router.get('/test/statsd', responseMetrics, metric);
 
 export default router;
