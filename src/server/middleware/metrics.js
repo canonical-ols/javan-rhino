@@ -9,7 +9,6 @@ export function createStatName(stage='devel', unit, req, res) {
   const { statusCode } = res;
 
   let stat = [
-    'statsd',
     'ols',
     stage,
     'mu',
