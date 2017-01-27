@@ -15,7 +15,7 @@ export const check = (req, res, next) => {
 
   memcached.version((err, result) => {
     if (err) {
-      next(err);
+      return next(err);
     }
 
     res.send(JSON.stringify(result));
@@ -23,13 +23,13 @@ export const check = (req, res, next) => {
   });
 };
 
-export const error = () => {
-  throw new Error('This is a servicestatus error test');
+export const error = (req, res, next) => {
+  next(new Error('This is a servicestatus error test'));
 };
 
 export const metric = (req, res) => {
   // metric sent via middleware on route
-  res.sendStatus(200);
+  res.send('Ok');
 };
 
 const router = Router();
