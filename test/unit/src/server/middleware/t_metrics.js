@@ -23,17 +23,17 @@ describe('metrics middleware', function() {
 
     it('should create a stat name', function() {
       expect(createStatName('staging', 'unit', req, res))
-        .toBe('statsd.ols.staging.mu.unit.views.foo_bar.GET.200.response');
+        .toBe('ols.staging.mu.unit.views.foo_bar.GET.200.response');
     });
 
     it('should filter missing name parts', function() {
       expect(createStatName('staging', null, req, res))
-        .toBe('statsd.ols.staging.mu.views.foo_bar.GET.200.response');
+        .toBe('ols.staging.mu.views.foo_bar.GET.200.response');
     });
 
     it('should sanitise urls', function() {
       expect(createStatName('staging', null, req, res))
-        .toBe('statsd.ols.staging.mu.views.foo_bar.GET.200.response');
+        .toBe('ols.staging.mu.views.foo_bar.GET.200.response');
     });
   });
 });
