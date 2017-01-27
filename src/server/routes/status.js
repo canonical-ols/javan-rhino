@@ -9,7 +9,9 @@ export const ping = (req, res) => {
 };
 
 export const check = (req, res, next) => {
-  const memcached = new Memcached(conf.get('SESSION_MEMCACHED_HOST'));
+  const memcached = new Memcached(
+    conf.get('SESSION_MEMCACHED_HOST').split(',')
+  );
 
   memcached.version((err, result) => {
     if (err) {
