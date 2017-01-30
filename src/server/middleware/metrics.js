@@ -9,7 +9,6 @@ export function createStatName(stage='devel', unit, req, res) {
   const { statusCode } = res;
 
   let stat = [
-    'ols',
     stage,
     'mu',
     unit,
@@ -25,6 +24,15 @@ export function createStatName(stage='devel', unit, req, res) {
   return stat.filter(n => n).join('.');
 }
 
+export function createStatsdClient(dsn, scope, errorHandler) {
+  const { hostname, port } = url.parse(dsn);
+
+  return new lynx(hostname, port, {
+    scope: scope || '',
+    on_error: errorHandler
+  });
+}
+
 export function responseMetricsMiddleware(req, res, time) {
   const statsdDsn = conf.get('STATSD_DSN');
   const logger = logging.getLogger('express');
@@ -34,13 +42,7 @@ export function responseMetricsMiddleware(req, res, time) {
     return;
   }
 
-  const { hostname, port, path } = url.parse(statsdDsn);
-  const metrics = new lynx(hostname, port, {
-    scope: path,
-    on_error: (err) => {
-      logger.debug(err);
-    }
-  });
+  const metrics = createStatsdClient(statsdDsn, 'ols.', e => logger.debug(e));
   const unit = conf.get('JUJU_UNIT');
   const stage = conf.get('SERVICE_ENVIRONMENT');
   const stat = createStatName(stage, unit, req, res);
