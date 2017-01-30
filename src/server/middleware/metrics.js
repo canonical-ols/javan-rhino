@@ -4,6 +4,25 @@ import responseTime from 'response-time';
 import conf from '../configure';
 import logging from '../logging';
 
+const unit = conf.get('JUJU_UNIT');
+const stage = conf.get('SERVICE_ENVIRONMENT');
+const statsdDsn = conf.get('STATSD_DSN');
+const logger = logging.getLogger('express');
+const metrics = createStatsdClient(statsdDsn, 'ols.', e => logger.debug(e));
+
+export function responseMetricsMiddleware(req, res, time) {
+
+  if (!statsdDsn) {
+    logger.debug('STATSD_DSN not set, reponseTime metrics cannot be reported.');
+    return;
+  }
+
+  const stat = createStatName(stage, unit, req, res);
+
+  logger.info(stat, time);
+  metrics.timing(stat, time);
+}
+
 export function createStatName(stage='devel', unit, req, res) {
   const { url, method } = req;
   const { statusCode } = res;
@@ -24,31 +43,18 @@ export function createStatName(stage='devel', unit, req, res) {
   return stat.filter(n => n).join('.');
 }
 
-export function createStatsdClient(dsn, scope, errorHandler) {
+export function createStatsdClient(dsn, scope='', errorHandler) {
+  if (!dsn) {
+    logger.debug('createStatsdClient, missing required param dsn.');
+    return;
+  }
   const { hostname, port } = url.parse(dsn);
 
   return new lynx(hostname, port, {
-    scope: scope || '',
+    scope: scope,
     on_error: errorHandler
   });
 }
 
-export function responseMetricsMiddleware(req, res, time) {
-  const statsdDsn = conf.get('STATSD_DSN');
-  const logger = logging.getLogger('express');
-
-  if (!statsdDsn) {
-    logger.debug('STATSD_DSN not set, no metrics for you!');
-    return;
-  }
-
-  const metrics = createStatsdClient(statsdDsn, 'ols.', e => logger.debug(e));
-  const unit = conf.get('JUJU_UNIT');
-  const stage = conf.get('SERVICE_ENVIRONMENT');
-  const stat = createStatName(stage, unit, req, res);
-
-  logger.info(stat, time);
-  metrics.timing(stat, time);
-}
 
 export default responseTime(responseMetricsMiddleware);
