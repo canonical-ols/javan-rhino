@@ -27,13 +27,11 @@ describe('metrics middleware', function() {
   describe('createStatsdClient', function() {
 
     it('should create a lynx instance', function() {
-      expect(client)
-        .toBeA(lynx);
+      expect(client).toBeA(lynx);
     });
 
     it('should have correct scope', function() {
-      expect(client.scope)
-        .toBe('ols.');
+      expect(client.scope).toBe('ols.');
     });
 
   });
