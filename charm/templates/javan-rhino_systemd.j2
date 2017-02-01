@@ -6,6 +6,7 @@ Description=Front-end to Ubuntu Store Payments
 
 [Service]
 Type=simple
+Environment='JUJU_UNIT={{ juju_unit.replace('/', '-') }}'
 Environment='SENTRY_DSN={{ sentry_dsn }}'
 Environment='SERVER__LOGS_PATH={{ logs_path }}'
 Environment='SERVICE_ENVIRONMENT={{ environment }}'

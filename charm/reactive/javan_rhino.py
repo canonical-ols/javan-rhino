@@ -20,6 +20,7 @@ SYSTEMD_CONFIG = '/lib/systemd/system/javan-rhino.service'
 @restart_on_change({SYSTEMD_CONFIG: ['javan-rhino']}, stopstart=True)
 def configure(cache):
     environment = hookenv.config('environment')
+    juju_unit = hookenv.local_unit()
     session_secret = hookenv.config('session_secret')
     memcache_session_secret = hookenv.config('memcache_session_secret')
     sentry_dsn = hookenv.config('sentry_dsn')
@@ -38,6 +39,7 @@ def configure(cache):
                 'memcache_session_secret': memcache_session_secret,
                 'sentry_dsn': sentry_dsn,
                 'statsd_dsn': statsd_dsn,
+                'juju_unit': juju_unit,
             })
         check_port('ols.{}.express'.format(service_name()), port())
         set_state('service.configured')
