@@ -14,7 +14,7 @@ const TEST_USER_EMAIL = conf.get('TEST_USER_EMAIL');
 const TEST_USER_PASSWORD = conf.get('TEST_USER_PASSWORD');
 
 const capabilities = {
-  build: Date.now().toString(36),
+  build: new Date().toUTCString(),
   project: 'my.staging.ubuntu.com',
   'browserstack.user': BS_USER,
   'browserstack.key': BS_KEY,

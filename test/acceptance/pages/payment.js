@@ -120,14 +120,11 @@ function byData(value) {
   return By.css(`[data-qa='${value}']`);
 }
 
-function getExpiryDate(date) {
-  date = date || new Date();
-  let month = date.getMonth();
-  let year = date.getFullYear() + '';
-  year = year.substr(-2);
-
-  month += 1;
-  month = (month < 10) ? (month + '0') : month;
+function getExpiryDate(date = new Date()) {
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear() + 2;
+  year = year.toString().substr(-2);
+  month = (month < 10) ? ('0' + month) : month;
 
   return `${month}/${year}`;
 }
