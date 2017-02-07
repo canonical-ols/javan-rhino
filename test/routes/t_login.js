@@ -29,13 +29,13 @@ const SSO_HOST = conf.get('SERVER:UBUNTU_SSO_HOST');
 const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
 const VERIFY_URL = conf.get('SERVER:OPENID:VERIFY_URL');
 
-describe('login routes', () => {
+describe('login routes', function() {
 
-  afterEach(() => {
+  afterEach(function() {
     nock.cleanAll();
   });
 
-  describe('authenticate', () => {
+  describe('authenticate', function() {
     it('should redirect from /login/authenticate to SSO', function(done) {
       this.timeout(5000);
       this.slow(2000);
