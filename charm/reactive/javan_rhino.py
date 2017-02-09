@@ -8,23 +8,27 @@ from charmhelpers.core.host import restart_on_change
 from charmhelpers.core.templating import render
 from charms.reactive import when, when_not, set_state
 from charms.apt import queue_install
-from ols.base import check_port, code_dir, logs_dir, service_name, user
+from ols.base import check_port, code_dir, env_vars, etc_dir, logs_dir, service_name, user
 from ols.http import port
 
 
 SYSTEMD_CONFIG = '/lib/systemd/system/javan-rhino.service'
 
-
 @when('cache.available')
 @when('ols.service.installed')
 @restart_on_change({SYSTEMD_CONFIG: ['javan-rhino']}, stopstart=True)
 def configure(cache):
+    env_file = join(etc_dir(), "environment_variables")
     environment = hookenv.config('environment')
     session_secret = hookenv.config('session_secret')
     memcache_session_secret = hookenv.config('memcache_session_secret')
     sentry_dsn = hookenv.config('sentry_dsn')
     statsd_dsn = hookenv.config('statsd_dsn')
     if session_secret and memcache_session_secret:
+        render(source='javan-rhino_env.j2',
+               target=env_file,
+               context={'env_extra': sorted(env_vars().items())}
+        )
         render(
             source='javan-rhino_systemd.j2',
             target=SYSTEMD_CONFIG,
@@ -33,6 +37,7 @@ def configure(cache):
                 'user': user(),
                 'session_secret': session_secret,
                 'logs_path': logs_dir(),
+                'env_file': env_file,
                 'environment': environment,
                 'cache_hosts': sorted(cache.memcache_hosts()),
                 'memcache_session_secret': memcache_session_secret,

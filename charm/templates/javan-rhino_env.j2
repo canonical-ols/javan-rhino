@@ -1,0 +1,10 @@
+#--------------------------------------------------------------
+# This file is managed by Juju; ANY CHANGES WILL BE OVERWRITTEN
+#--------------------------------------------------------------
+# Additional environment variables for javan-rhino
+{% if env_extra -%}
+{% for k, v in env_extra -%}
+{{ k }}="{{ v }}"
+{% endfor -%}
+{% endif -%}
+
