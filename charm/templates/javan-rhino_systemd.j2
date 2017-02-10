@@ -6,10 +6,6 @@ Description=Front-end to Ubuntu Store Payments
 
 [Service]
 Type=simple
-Environment='SESSION_SECRET={{ session_secret }}'
-Environment='SERVER__LOGS_PATH={{ logs_path }}'
-Environment='SESSION_MEMCACHED_HOST={{ cache_hosts | join(",") }}'
-Environment='SESSION_MEMCACHED_SECRET={{ memcache_session_secret }}'
 {% if env_file %}
 EnvironmentFile={{ env_file }}
 {% endif %}

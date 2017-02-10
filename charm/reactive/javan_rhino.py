@@ -23,9 +23,17 @@ def configure(cache):
     session_secret = hookenv.config('session_secret')
     memcache_session_secret = hookenv.config('memcache_session_secret')
     if session_secret and memcache_session_secret:
+        env_extra = env_vars()
+        additional_vars = {
+                'SERVER__LOGS_PATH': logs_dir(),
+                'SESSION_SECRET': session_secret,
+                'SESSION_MEMCACHED_SECRET': memcache_session_secret,
+                'SESSION_MEMCACHED_HOST': ",".join(sorted(cache.memcache_hosts())),
+                }
+        env_extra.update(additional_vars)
         render(source='javan-rhino_env.j2',
                target=env_file,
-               context={'env_extra': sorted(env_vars().items())}
+               context={'env_extra': sorted(env_extra.items())}
         )
         render(
             source='javan-rhino_systemd.j2',
@@ -33,12 +41,8 @@ def configure(cache):
             context={
                 'working_dir': code_dir(),
                 'user': user(),
-                'session_secret': session_secret,
-                'logs_path': logs_dir(),
                 'env_file': env_file,
                 'environment': environment,
-                'cache_hosts': sorted(cache.memcache_hosts()),
-                'memcache_session_secret': memcache_session_secret,
             })
         check_port('ols.{}.express'.format(service_name()), port())
         set_state('service.configured')
