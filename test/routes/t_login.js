@@ -37,7 +37,7 @@ describe('login routes', function() {
 
   describe('authenticate', function() {
 
-    this.timeout(10000);
+    this.timeout(30000);
     this.slow(5000);
 
     it('should redirect from /login/authenticate to SSO', function(done) {
