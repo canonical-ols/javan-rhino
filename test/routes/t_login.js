@@ -37,8 +37,8 @@ describe('login routes', function() {
 
   describe('authenticate', function() {
     it('should redirect from /login/authenticate to SSO', function(done) {
-      this.timeout(5000);
-      this.slow(2000);
+      this.timeout(10000);
+      this.slow(5000);
       supertest(app)
         .get('/login/authenticate')
         .expect('location', new RegExp(SSO_HOST))
