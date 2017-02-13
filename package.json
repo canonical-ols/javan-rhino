@@ -9,7 +9,7 @@
     "start-build": "node dist/server/",
     "build": "./scripts/build.sh",
     "lint": "eslint -c .eslintrc.js '**/*.js'",
-    "test": "nyc npm run test:run && npm run lint",
+    "test": "DEBUG=express:* nyc npm run test:run && npm run lint",
     "test:run": "npm run test:unit && npm run test:routes",
     "test:unit": "BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --recursive --require babel-core/register --compilers js:babel-register ./test/unit/setup.js ./test/unit/t_*.js ./test/unit/**/*",
     "test:routes": "SESSION_SECRET=test BABEL_DISABLE_CACHE=1 NODE_ENV=TEST mocha --require babel-core/register --compilers js:babel-register ./test/routes/setup.js ./test/routes/**/*",
