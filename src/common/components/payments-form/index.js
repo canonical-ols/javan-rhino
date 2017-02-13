@@ -232,7 +232,7 @@ export class PaymentsForm extends Component {
               checked={ this.state.isTosAccepted }
               onChange={ this.onTosAcceptClick.bind(this) }
             >
-              I agree that my use of any services or related APIs is subject to my compliance with the applicable <a href="/terms" target="_blank">Terms of service</a>
+              I agree that my use of the services are subject to my adherence to, and acceptance of, the <a href="/terms" target="_blank">Terms of service</a>
             </CheckboxField>
             <div className={ styles['button-container'] }>
               <Button data-qa="payments-form:submit" appearance='secondary' disabled={!isFormReady}>
