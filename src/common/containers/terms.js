@@ -61,7 +61,7 @@ export default class Terms extends Component {
         </p>
 
         <p>
-          Details of the Services can be found here: <a href={ SNAPCRAFT_URL }>http://snapcraft.io/</a>
+          Details of the Services can be found here: <a href={ SNAPCRAFT_URL }>{ SNAPCRAFT_URL }</a>
         </p>
 
         <p>
