@@ -36,9 +36,13 @@ describe('login routes', function() {
   });
 
   describe('authenticate', function() {
+
+    this.timeout(30000);
+    this.slow(5000);
+    this.retries(3);
+
+
     it('should redirect from /login/authenticate to SSO', function(done) {
-      this.timeout(5000);
-      this.slow(2000);
       supertest(app)
         .get('/login/authenticate')
         .expect('location', new RegExp(SSO_HOST))
@@ -46,8 +50,6 @@ describe('login routes', function() {
     });
 
     it('should include verify url in redirect header', function(done) {
-      this.timeout(5000);
-      this.slow(2000);
       supertest(app)
         .get('/login/authenticate')
         .expect('location',
