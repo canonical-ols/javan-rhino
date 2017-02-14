@@ -39,6 +39,8 @@ describe('login routes', function() {
 
     this.timeout(30000);
     this.slow(5000);
+    this.retries(3);
+
 
     it('should redirect from /login/authenticate to SSO', function(done) {
       supertest(app)
