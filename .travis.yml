@@ -1,4 +1,7 @@
 language: node_js
+install:
+  - npm set save false
+  - npm install
 node_js:
   - "6"
   - "node"
