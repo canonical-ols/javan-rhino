@@ -73,7 +73,7 @@ var schema = {
 
     SERVER__UBUNTU_SCA_URL: {
       description: 'Please enter a URL for the macaroon service',
-      default: 'https://myapps.developer.staging.ubuntu.com'
+      default: 'https://dashboard.staging.snapcraft.io'
     },
 
     SERVER__OPENID__VERIFY_URL: {

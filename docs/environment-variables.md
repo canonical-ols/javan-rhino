@@ -51,7 +51,7 @@ The URL of the authentication service used to log users in.
 
 
 ### SERVER__UBUNTU_SCA_URL
-- **Example**: `https://myapps.developer.staging.ubuntu.com`
+- **Example**: `https://dashboard.staging.snapcraft.io`
 
 The URL of the service used to obtain [macaroon authorisation credentials](http://research.google.com/pubs/pub41892.html).
 
