@@ -2,7 +2,7 @@ import raven from 'raven';
 import request from 'request';
 import conf from '../configure.js';
 
-const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
+const STORE_API_URL = conf.get('SERVER:STORE_API_URL');
 
 const client = new raven.Client(conf.get('SENTRY_DSN'));
 
@@ -10,7 +10,7 @@ export const customers = (req, res) => {
   const auth = req.session.authorization;
 
   const options = {
-    uri: `${UBUNTU_SCA_URL}/purchases/v1/customers`,
+    uri: `${STORE_API_URL}/api/v1/snaps/purchases/customers`,
     headers: {
       authorization: auth
     },

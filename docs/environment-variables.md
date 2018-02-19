@@ -49,11 +49,15 @@ This is used in production by `connect-memcached` to [encrypt session contents i
 
 The URL of the authentication service used to log users in.
 
-
-### SERVER__UBUNTU_SCA_URL
+### SERVER__STORE_DEVELOPER_URL
 - **Example**: `https://dashboard.staging.snapcraft.io`
 
 The URL of the service used to obtain [macaroon authorisation credentials](http://research.google.com/pubs/pub41892.html).
+
+### SERVER__STORE_API_URL
+- **Example**: `https://api.staging.snapcraft.io`
+
+The URL of the service that handles purchasing data.
 
 ### SERVER\__OPENID__VERIFY_URL
 - **Example**: `http://127.0.0.1:3000/login/verify`
