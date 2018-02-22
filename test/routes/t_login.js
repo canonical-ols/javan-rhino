@@ -26,7 +26,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 
 const SSO_HOST = conf.get('SERVER:UBUNTU_SSO_HOST');
-const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
+const STORE_DEVELOPER_URL = conf.get('SERVER:STORE_DEVELOPER_URL');
 const VERIFY_URL = conf.get('SERVER:OPENID:VERIFY_URL');
 
 describe('login routes', function() {
@@ -61,7 +61,7 @@ describe('login routes', function() {
     context('when macaroon service responds with error', function() {
 
       it('should redirect home on error', function(done) {
-        const sca = nock(UBUNTU_SCA_URL)
+        const sca = nock(STORE_DEVELOPER_URL)
           .post('/dev/api/acl/', {
             'permissions': ['package_access', 'package_purchase']
           })

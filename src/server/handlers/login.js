@@ -4,12 +4,12 @@ import conf from '../configure.js';
 import RelyingPartyFactory from '../openid/relyingparty.js';
 import constants from '../constants';
 
-const UBUNTU_SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
+const STORE_DEVELOPER_URL = conf.get('SERVER:STORE_DEVELOPER_URL');
 const OPENID_IDENTIFIER = conf.get('SERVER:UBUNTU_SSO_URL');
 
 export const getMacaroon = (req, res, next) => {
   const options = {
-    url: `${UBUNTU_SCA_URL}/dev/api/acl/`,
+    url: `${STORE_DEVELOPER_URL}/dev/api/acl/`,
     method: 'POST',
     json: {
       'permissions': ['package_access', 'package_purchase']
