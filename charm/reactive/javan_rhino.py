@@ -21,15 +21,17 @@ from ols.http import port
 
 
 SYSTEMD_CONFIG = '/lib/systemd/system/javan-rhino.service'
+ENV_FILE = join(etc_dir(), "environment_variables")
 
 
 @when('cache.available')
 @when('ols.service.installed')
-@restart_on_change({SYSTEMD_CONFIG: ['javan-rhino']}, stopstart=True)
+@restart_on_change({SYSTEMD_CONFIG: ['javan-rhino'],
+                    ENV_FILE: ['javan-rhino']},
+                   stopstart=True)
 def configure(cache):
     javan_rhino_syslog_file = "/etc/rsyslog.d/22-javan-rhino.conf"
     javan_rhino_logrotate_file = "/etc/logrotate.d/javan-rhino"
-    env_file = join(etc_dir(), "environment_variables")
     environment = hookenv.config('environment')
     session_secret = hookenv.config('session_secret')
     memcache_session_secret = hookenv.config('memcache_session_secret')
@@ -44,7 +46,7 @@ def configure(cache):
                 }
         env_extra.update(additional_vars)
         render(source='javan-rhino_env.j2',
-               target=env_file,
+               target=ENV_FILE,
                context={'env_extra': sorted(env_extra.items())})
         render(
             source='javan-rhino_systemd.j2',
@@ -52,7 +54,7 @@ def configure(cache):
             context={
                 'working_dir': code_dir(),
                 'user': user(),
-                'env_file': env_file,
+                'env_file': ENV_FILE,
                 'environment': environment,
             })
         # render syslog config to get talisker logs on disk
