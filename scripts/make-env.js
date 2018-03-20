@@ -71,9 +71,9 @@ var schema = {
       default: 'https://login.staging.ubuntu.com'
     },
 
-    SERVER__UBUNTU_SCA_URL: {
+    SERVER__STORE_DEVELOPER_URL: {
       description: 'Please enter a URL for the macaroon service',
-      default: 'https://myapps.developer.staging.ubuntu.com'
+      default: 'https://dashboard.staging.snapcraft.io'
     },
 
     SERVER__OPENID__VERIFY_URL: {
@@ -84,6 +84,14 @@ var schema = {
     SERVER__OPENID__TEAMS: {
       description: 'Please enter a JSON string of openid teams',
       default: '"[\"ubuntuone-hackers\"]"'
+    },
+
+    /**
+     * Purchases backend settings
+     */
+    SERVER__STORE_API_URL: {
+      description: 'Please enter a URL for the Snap Store API',
+      default: 'https://api.staging.snapcraft.io'
     },
 
     /**

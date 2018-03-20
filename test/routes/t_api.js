@@ -12,7 +12,7 @@ import sessionConfig from '../../src/server/helpers/session';
  * after the fact, hence configuring a new server.
  */
 const app = Express();
-const SCA_URL = conf.get('SERVER:UBUNTU_SCA_URL');
+const STORE_API_URL = conf.get('SERVER:STORE_API_URL');
 
 app.use(session(sessionConfig(conf)));
 app.use('/api', api);
@@ -24,7 +24,7 @@ describe('purchases api', () => {
 
   describe('unauthorised user', () => {
 
-    it('should return 401 from local server, not sca', (done) => {
+    it('should return 401 from local server, not Store', (done) => {
 
       const body = {
         'stripe_token': 'foo'
@@ -85,16 +85,16 @@ describe('purchases api', () => {
 
     describe('responses', () => {
 
-      it('should stream responses from SCA customers endpoint', (done) => {
+      it('should stream responses from Store customers endpoint', (done) => {
 
         const body = {
           'stripe_token': 'foo'
         };
 
-        // mock the request to SCA
-        const sca = nock(SCA_URL)
+        // mock the request to Store
+        const store_api = nock(STORE_API_URL)
           .matchHeader('authorization', authorization)
-          .post('/purchases/v1/customers', body)
+          .post('/api/v1/snaps/purchases/customers', body)
           .reply(200);
 
         // send the request via our handler
@@ -102,21 +102,21 @@ describe('purchases api', () => {
           .post('/api/purchases/customers')
           .send(body)
           .expect(200, (err) => {
-            sca.done();
+            store_api.done();
             done(err);
           });
       });
 
-      it('should stream errors from SCA customers endpoint', (done) => {
+      it('should stream errors from Store customers endpoint', (done) => {
 
         const body = {
           'stripe_token': 'foo'
         };
 
-        // mock the request to SCA
-        const sca = nock(SCA_URL)
+        // mock the request to Store
+        const store_api = nock(STORE_API_URL)
           .matchHeader('authorization', authorization)
-          .post('/purchases/v1/customers', body)
+          .post('/api/v1/snaps/purchases/customers', body)
           .reply(500);
 
         // send the request via our handler
@@ -124,7 +124,7 @@ describe('purchases api', () => {
           .post('/api/purchases/customers')
           .send(body)
           .expect(500, (err) => {
-            sca.done();
+            store_api.done();
             done(err);
           });
       });
