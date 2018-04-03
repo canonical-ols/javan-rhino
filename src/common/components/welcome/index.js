@@ -11,7 +11,7 @@ export default function Welcome()  {
         <li>Log in using Ubuntu Single Sign On.</li>
         <li>Provide us your payment details.</li>
       </ul>
-      <p>Once complete, simply use your software installer or the <i>snap</i> command-line utility to complete your purchase.</p>
+      <p>Once complete, simply use your software installer or the <code className={ styles.code }>snap</code> command-line utility to complete your purchase.</p>
     </div>
   );
 }
