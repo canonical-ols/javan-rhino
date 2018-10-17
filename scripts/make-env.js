@@ -81,11 +81,6 @@ var schema = {
       default: 'http://localhost:3000/login/verify'
     },
 
-    SERVER__OPENID__TEAMS: {
-      description: 'Please enter a JSON string of openid teams',
-      default: '"[\"ubuntuone-hackers\"]"'
-    },
-
     /**
      * Purchases backend settings
      */
